@@ -1,0 +1,36 @@
+import 'dart:math';
+
+main() {
+  // var num = 14;
+  // var result = Solution().middleNode();
+  // var result = Solution().numberOfSteps(num);
+  return 0;
+}
+
+class ListNode {
+  int val;
+  ListNode? next;
+  ListNode([this.val = 0, this.next]);
+}
+
+class Solution {
+  ListNode? middleNode(ListNode? head) {
+    if (head!.next == null) return head;
+    //Move one step if possible and shift pointers. Because if tailPointer at 2, middlePointer should be at 2 also.
+    // Then for each two step of tailPointer, middlePointer will shift 1 step.
+    ListNode tailPointer = head.next!;
+    ListNode middlePointer = head.next!;
+
+    int stepCounter = 0;
+
+    while (tailPointer.next != null) {
+      tailPointer = tailPointer.next!;
+      stepCounter++;
+      if (stepCounter.isEven) {
+        middlePointer = middlePointer.next!;
+      }
+    }
+
+    return middlePointer;
+  }
+}
