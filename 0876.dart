@@ -13,6 +13,7 @@ class ListNode {
   ListNode([this.val = 0, this.next]);
 }
 
+//First solution
 class Solution {
   ListNode? middleNode(ListNode? head) {
     if (head!.next == null) return head;
@@ -28,6 +29,36 @@ class Solution {
       stepCounter++;
       if (stepCounter.isEven) {
         middlePointer = middlePointer.next!;
+      }
+    }
+
+    return middlePointer;
+  }
+}
+
+// Upgraded solution as per LeetCode solution
+class SolutionII {
+  ListNode? middleNode(ListNode? head) {
+    ListNode? tailPointer = head;
+    ListNode? middlePointer = head;
+
+    while (tailPointer != null && tailPointer.next != null) {
+      tailPointer = tailPointer.next!.next;
+      middlePointer = middlePointer!.next;
+    }
+
+    return middlePointer;
+  }
+}
+
+class SolutionIII {
+  ListNode? middleNode(ListNode? head) {
+    ListNode? tailPointer = head;
+    ListNode? middlePointer = head;
+
+    for (int i = 0; tailPointer != null && tailPointer.next != null; tailPointer = tailPointer.next!.next) {
+      if ((i++).isEven) {
+        middlePointer = middlePointer!.next;
       }
     }
 
