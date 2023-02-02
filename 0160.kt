@@ -11,28 +11,21 @@ package LeetCodeProblems
 
 class Solution {
     fun getIntersectionNode(headA:ListNode?, headB:ListNode?):ListNode? {
+
+
         var p1 = headA
         var p2 = headB
-        var p1headChanged = false
-        var p2headChanged = false
+        if(p1 == null || p2 == null) return null
+
 
         while(p1 != p2){
-            if(p1?.next == null){
-                if(p1headChanged){
-                    return null
-
-                }
+            if(p1 == null){
                 p1 = headB
-                p1headChanged = true
             }else{
-                p1 = p1.next
+                p1 = p1.next;
             }
-            if(p2?.next == null){
-                if(p2headChanged){
-                    return null
-                }
+            if(p2 == null){
                 p2 = headA
-                p2headChanged = true
             }else{
                 p2 = p2.next
             }
