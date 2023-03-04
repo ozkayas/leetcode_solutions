@@ -11,7 +11,7 @@ bool canConstruct(String target, List<String> wordBank) {
     // print(target.substring(0, i));
     if (table[i]) {
       for (var word in wordBank) {
-        if (target.indexOf(word, i) == i) {
+        if (i + word.length <= target.length && target.indexOf(word, i) == i) {
           table[i + word.length] = true;
         }
       }
