@@ -1,3 +1,12 @@
+# listeleri birleştirmek:
+lst = [3] + [4] # lst --> [3, 4]
+
+
+# listeyi tersten okumak için:
+    lst = [1, 2, 3]
+    for i in reversed(lst):
+        print(i) # 3,2,1 basar
+        
 #* String i şu şekilde terse çeviriyoruz, iki yöntem de olur
 
 	original_string = "Hello, World!"
@@ -24,6 +33,7 @@ sliced4 = s[2:]     # Output: "cdefgh"
 #* 
   for i in range(5) # 0 1 2 3 4
   for i in range (5,-1,-1) # 5 4 3 2 1 0
+  for i in range(0, 9, 3): # 0 3 6
 
 #* 
     s = 'deneme'
@@ -218,4 +228,198 @@ flattened = [num for sublist in nested_list for num in sublist]
     print(s[-3:]) #lik
     print(s[3:])  #emelik  
 
-            
+#* Burda unique olarak sayıları ekleyip, set yapiyor
+    # mesela en başta my_set = {3} desek, bunun type ı set olur ama my_dict = {3:5} dersek bunun type ı dictionary olur.
+    # ama my_set = {} dersek bu set olmaz, dictionary olur.
+    # boş set tanımlamak için şunu yaparsın: my_set = set() ve eleman eklemek istersen my_set.add(3), çıkarmak için my_set.remove(3)
+    # ama eleman sette yoksa hata verir, my_set.discard(3) hata vermez yoksa bile
+    # my_set.pop() rastgele eleman çıkarır, my_set.clear() tüm seti siler.
+    my_list = [1, 2, 3, 4, 2, 3, 5]
+    my_set = {item for item in my_list}
+    my_total = sum(my_set) # tüm sayıları topluyor
+
+#* words["apple", "orange", "banana"]
+for i, word in enumerate(words):
+    print(f"{i},{word}")
+#Output: 0,apple ....   
+
+#* 202. Happy Number
+# Hem sum(list) yapmasi, hem for loop kullanımı, hem de basit mantığı oldukça güzel bir çözüm
+'''
+Example 1:
+
+Input: n = 19
+Output: true
+Explanation:
+12 + 92 = 82
+82 + 22 = 68
+62 + 82 = 100
+12 + 02 + 02 = 1
+'''
+class Solution(object):
+    def isHappy(self, n):
+        hset = set()
+        while n != 1:
+            if n in hset: return False
+                hset.add(n)
+                n = sum([int(i) ** 2 for i in str(n)])
+            else:
+                return True
+
+#* Sort a dictionary according to values(item[1] refers to value, item[0] refers to key)                
+    my_dict = {'apple': 3, 'banana': 1, 'orange': 5, 'grape': 2}
+    sorted_dict = dict(sorted(my_dict.items(), key=lambda item: item[1])) # ascending order
+    sorted_dict = dict(sorted(my_dict.items(), key=lambda item: item[1], reverse=True)) # descending order
+
+
+# 347. Top K Frequent Elements
+# Given an integer array nums and an integer k, return the k most frequent elements. You may return the answer in any order.
+class Solution:
+    def topKFrequent(self, nums: List[int], k: int) -> List[int]:
+        my_dict = {}
+        for i in nums:
+            if i not in my_dict:
+                my_dict[i] = 1
+            else:
+                my_dict[i] += 1
+        
+        sorted_dict = dict(sorted(my_dict.items(), key=lambda item: item[1], reverse=True)) 
+        
+        first_k_keys = list(sorted_dict.keys())[:k] # burdaki mantık da güzel, key ya da value ya da her ikisi bu şekilde listeye dönüşünce [:k] slice almanı sağlıyor.
+
+        return first_k_keys
+
+# 128. Longest Consecutive Sequence
+    # Burda aynı sinking island mantığı kullandım, tek seferde direkt notepad a yazdım çalıştı. Sol ve sağ pointer tutup, üstünden geçtiğim elemanın değerini 0 yaptım dictionary da
+
+# 680. Valid Palindrome II
+    # Burda ilk hatayi bulana kadar kodu çalıştırıyorum, sonra ilk hatada başka bir method çağırıyorum. Ama şuna dikkat etmeli:
+    # indis i = 1, j = 3 ise s[i+1, j] gönderirsen j = 3 ü kaçırırsın,j değeri 2 olarak gidiyor, j + 1 göndermen lazım.
+    s = "abc"
+    print(s[0:3]) # "abc"
+    
+
+# List of lists tanımlama
+my_list = [[]]  # This is a valid list of lists with one empty inner list.
+# böyle yaparsan içinde bir eleman tutmuş olur onun yerine, klasik liste tanımla: my_list = [], sonra sorted_list = sorted(list1) ve my_list.append(sorted_list) yaparsın.
+sorted_list = sorted(my_list, reverse=True) # bu da 9,8,7... diye sort eder.
+
+
+    
+# bir listeyi kendi içinde sort etmek için:
+my_list = [4, 2, 7, 1, 9, 5]
+my_list.sort()  # This will sort the list in-place
+## new_list = my_list.sort() dersen hata olur, bu sadece aynı liste üstünde bir işlem, assign için aşağıdaki "sorted()" kullanılmalı
+
+
+#Sort edilmiş yeni bir liste yapmak için:
+my_list = [4, 2, 7, 1, 9, 5]
+sorted_list = sorted(my_list)  # This creates a new sorted list    
+
+# List kullanarak for loop yazmadan dictionary yapma kodu: 
+# num[i] key oluyor, i de value, istersen değiştirebilirsin duruma göre
+my_dict = {nums[i] : i for i in range(len(nums))}
+
+# Dictionary de ikişerli item compare etmek için ve a==b, b==a gibi çifte tekrar olmasın diye şunu kullanıyosun:
+from itertools import combinations
+my_dict = {'a': 1, 'b': 2, 'c': 3}
+for (key1, value1), (key2, value2) in combinations(my_dict.items(), 2):
+    print(key1, value1, key2, value2)
+    #a1b2, a1c3, b2c3 basar yani tüm kombinasyonları tekrar etmeden basıyor.
+
+#Dictionary de item silme:
+my_dict = {'a': 1, 'b': 2, 'c': 3}
+removed_value = my_dict.pop('b')  # Removes the key 'b' and returns its associated value
+
+#11. Container With Most Water
+# Bu soruda sağdan ve soldan pointer ile içeri doğru ilerliyosun ama ilerleme şöyle oluyor hangisi daha küçükse onunkini iterate ediyorsun içeri doğru.
+# bu en fazla su miktarını hesaplatıyor çubuk grafikte.
+
+
+#min-heap diye bir yapı var. Bu bir tree yapısı, parent her zaman child node lardan eşit veya küçük olmalı.
+#Kod olarak şu şekilde:
+import heapq
+min_heap = [] # boş liste tanımlayıp, onu doldurtuyoruz. Ağaca dizerken küçükten büyüğe doğru soldan sağa dizilir. Yani root --> soldaki 2 eleman, sağdaki iki eleman sırasıyla, sonra yeni level a geçer aşağıdaki dalı doldurur.
+heapq.heappush(min_heap, 5)
+heapq.heappush(min_heap, 2)
+heapq.heappush(min_heap, 8)
+min_element = heapq.heappop(min_heap) # root node  yani 2 yi getirir, sonra ağaç 5 ve 8 ile tekrar oluşur arka tarafta
+
+#set te şu trick, belki list ya da dict de öyledir(boşsa yapı, false, en az bir eleman varsa true veriyor):
+    my_set = set()
+    my_set.add(5)
+    if my_set:
+        print("dolu")
+
+# Listeye aynı elemanları yükleme:
+lst = [False]*10
+    print(lst) # içinde 10 tane False olan liste yapar. [3] dersen 10 tane 3 olur listende        
+
+# Bir method birşey return etmeyecekse -> None diye belirtiyosun, syntax olarak böyle yazıyosun bu kısmı omit etmek yerine.
+
+# Ayrı bir method yazmaktansa sum yapmak için aşağıdaki syntax ı kullan:
+sum = lambda x, y: x + y
+result = sum(4, 5)
+print(result)
+
+#Listenin sonundan eleman silmek için 3 yöntem:
+my_list.pop()
+my_list = my_list[:-1]
+del my_list[-1] 
+
+# eval() diye bir function var, bir tutorial dikkatli kullanın istemediğiniz sonuçlar verebilir demişti. Zaten performansı rezalet ama kullanımı şöyle:
+if ch in ("+", "-", "*", "/"):
+    num1 = my_stack.pop()
+    num2 = my_stack.pop()
+    my_stack.append(int(eval(f"{num2} {ch} {num1}")))
+
+#COUNTER sınıfına bir bak, bu sayıların frekansını veren, gerekirse direkt o hazır yapıyı kullanırsın sıkışırsan, bunun altına bir örnek ekle öğrenince
+
+# set i parameter ve return type olarak şu şekilde kullanıyoruz:
+def dp(self, lst: List[str], st: set) -> set():
+
+#22. Generate Parentheses (Backtracking için güzel bir örnek)
+class Solution:
+    def generateParenthesis(self, n: int) -> List[str]:
+        res=[]
+        def gen(lcount,rcount,tmp):
+            nonlocal res
+            if lcount==0 and rcount==0:
+                res.append(tmp)
+            if lcount>0:
+                gen(lcount-1,rcount,tmp+"(")
+            if rcount>lcount:
+                gen(lcount,rcount-1,tmp+")")
+
+        gen(n,n,"")
+        return res
+
+#Stack kullanmak için bir tane List tanımlıyorsun. Sonra ona append ediyorsun yani push, sonra pop yapıyorsun LIFO yapıyor. arada del my_stack[2] deyip ortadakini de silebilirsin.        
+
+#Zip function kullanımı:
+names = ("Ali", "Veli", "Deli")
+comps = ("Apple", "Google", "Dell")
+
+zipped = zip(names,comps)
+
+for (a,b) in zipped:
+    print(a,b)  # Ali Apple basar ve alt alta diğerlerini basar
+    #853 - car fleet sorusunda şu şekilde kullanımı var:
+    sorted_position = sorted(zip(position,speed), reverse = True)
+    #sort işlemi position a göre yapıyor ve 10,9,8 diye sort ediyor.
+    #2 listeyi zip ettiği için oluşan yeni yapı da bir list.
+
+#List of lists kullanımı şu şekilde:
+#stack.pop()[1] --> burda pop edilen liste olduğu için onun 2. elemanına bu şekilde ulaşılıyor. İndis değeri basılmak istense [0] kullanılırdı.
+#stack[-1][1], son elemanın j değeri, yani append ederken(indis,value) koyulduğuna göre value değeri
+    temp = [1, 2, 3]
+    stack = []
+
+    for i, j in enumerate(temp):
+        while stack and j > stack[-1][1]:
+            print(stack.pop()[1])  # Print the value 'j'
+        stack.append([i, j])
+
+    # Print any remaining elements in the stack
+    while stack:
+        print(stack.pop()[1])  # Print the value 'j'   

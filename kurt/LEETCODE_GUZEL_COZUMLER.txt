@@ -1,0 +1,59 @@
+#496. Next Greater Element I
+# (739. Daily Temperatures problemi gibi monotonic stack sorusu, stack mantığı daha basit burda)
+#https://www.youtube.com/watch?v=Du881K7Jtk8&t=1035s
+#Bu videoda güzel anlatmış.
+
+    def nextGreaterElement(self, nums1: List[int], nums2: List[int]) -> List[int]:
+        if not nums2:
+            return None
+
+        mapping = {}
+        result = []
+        stack = []
+        stack.append(nums2[0])
+
+        for i in range(1, len(nums2)):
+            while stack and nums2[i] > stack[-1]:       # if stack is not empty, then compare it's last element with nums2[i]
+                mapping[stack[-1]] = nums2[i]           # if the new element is greater than stack's top element, then add this to dictionary 
+                stack.pop()                             # since we found a pair for the top element, remove it.
+            stack.append(nums2[i])                      # add the element nums2[i] to the stack because we need to find a number greater than this
+
+        for element in stack:                           # if there are elements in the stack for which we didn't find a greater number, map them to -1
+            mapping[element] = -1
+
+        for i in range(len(nums1)):
+            result.append(mapping[nums1[i]])
+        return result
+
+
+
+#739. Daily Temperatures
+    def dailyTemperatures(self, temperatures: List[int]) -> List[int]:
+        result = [0] * len(temperatures) # having list with 0`s elements of same lenght as temperature array.
+        stack = [] # taking empty stack. 
+        for index, temp in enumerate(temperatures): # Traversing through provided list. 
+            while stack and temperatures[stack[-1]] < temp: # stack should not be empty and checking previous temp with current temp. 
+                # the above while loop and taking stack for saving index is very common practice in monotonic stack questions. Suggestion: understand it properly. 
+                prev_temp = stack.pop() # stack.pop() will provide index of prev temp, taking in separate var as we are using it more then on place. 
+                result[prev_temp] = index - prev_temp #at the index of prev_temp and i - prev_temp by this we`ll get how many step we moved to have greater temp. 
+            stack.append(index) # in case stack is empty we`ll push index in it. 
+
+        return result # returing the list of number of days to wait.     
+
+
+
+
+#46. Permutations
+    def permute(self, nums: List[int]) -> List[List[int]]:
+        visited = set()
+        res = []
+        self.backtracking(res,visited,[],nums)
+        return res
+    def backtracking(self,res,visited,subset,nums):
+        if len(subset) == len(nums):
+            res.append(subset)
+        for i in range(len(nums)):
+            if i not in visited:
+                visited.add(i)
+                self.backtracking(res,visited,subset+[nums[i]],nums)
+                visited.remove(i)        
