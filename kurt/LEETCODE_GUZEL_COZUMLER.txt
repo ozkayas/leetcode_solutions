@@ -38,9 +38,32 @@
                 result[prev_temp] = index - prev_temp #at the index of prev_temp and i - prev_temp by this we`ll get how many step we moved to have greater temp. 
             stack.append(index) # in case stack is empty we`ll push index in it. 
 
-        return result # returing the list of number of days to wait.     
+        return result # returing the list of number of days to wait. 
+    
+    #Ben çok sonra kendim tekrar yazmayı denedim ve çalıştı:
 
+        def dailyTemperatures(self, temperatures: List[int]) -> List[int]:
+        my_stack = []
+        ret_list = []
 
+        my_stack.append(len(temperatures) - 1)
+        ret_list.append(0)
+
+        for i in range(len(temperatures) - 2, -1, -1):
+            while my_stack:
+                if temperatures[i] >= temperatures[my_stack[-1]]:
+                    my_stack.pop()
+                else:
+                    break
+
+            if not my_stack:
+                ret_list.append(0)
+            else:
+                ret_list.append(my_stack[-1] - i)
+
+            my_stack.append(i)
+        ret_list.reverse()
+        return ret_list
 
 
 #46. Permutations
@@ -57,3 +80,210 @@
                 visited.add(i)
                 self.backtracking(res,visited,subset+[nums[i]],nums)
                 visited.remove(i)        
+
+#74. Search a 2D Matrix
+# 2d array i, 1d gibi hesaplatiyor. 
+# left = mid+1 ve right = mid-1 kullanımı önemli. Mid check edildiği için, onu check etmiyor ve bir de while loop tan çıkarıyor.
+class Solution:
+    def searchMatrix(self, matrix: List[List[int]], target: int) -> bool:
+        if not matrix:
+            return False
+        m, n = len(matrix), len(matrix[0])
+        left, right = 0, m * n - 1
+
+        while left <= right:
+            mid = (left + right) // 2
+            mid_row, mid_col = divmod(mid, n)
+
+            if matrix[mid_row][mid_col] == target:
+                return True
+            elif matrix[mid_row][mid_col] < target:
+                left = mid + 1
+            else:
+                right = mid - 1
+
+        return False                
+
+
+#15. 3Sum
+#Given an integer array nums, return all the triplets [nums[i], nums[j], nums[k]] such that i != j, i != k, and j != k, and nums[i] + nums[j] + nums[k] == 0.
+#Notice that the solution set must not contain duplicate triplets.
+
+#Soldan 2 pointer sağdan 1 pointer ile sıkıştırarak geliyor, güzel ve temiz bir çözüm
+class Solution:
+    def threeSum(self, nums: List[int]) -> List[List[int]]:
+        nums.sort()
+        triplets = set()
+        for i in range(len(nums) - 2):
+            firstNum = nums[i]
+            j = i + 1
+            k = len(nums) - 1
+            while j < k:
+                secondNum  = nums[j]
+                thirdNum = nums[k]
+
+                potentialSum = firstNum + secondNum + thirdNum 
+                if potentialSum > 0:
+                    k -= 1
+                elif potentialSum < 0:
+                    j += 1
+                else:
+                    triplets.add((firstNum , secondNum ,thirdNum))
+                    j += 1
+                    k -= 1
+        return triplets        
+
+
+#11. Container With Most Water
+'''The optimal solution can be using two pointer approach, i.e.,
+
+keeping left pointer at the left most index of the array
+keeping the right pointer at the right most index of the array
+ℹ️ as the focus is on maximum area to be covered, keep the pointer which is at the maximum value between the two and play with moving the pointer which has the least of the two elements the pointers are currently pointing to.
+The code snippet will be:'''
+
+l=0
+r = len(height)-1
+height_tracker=0
+while l<=r:
+    length = r-l
+    h = min(height[l],height[r])
+    if height_tracker<length*h:
+        height_tracker=length*h
+    if height[l]<=height[r]:
+        l+=1
+    else:
+        r-=1        
+
+
+#22. Generate Parentheses
+#Recursive yani backtracking için en ideal örnek. Çok ilginç if yerine elif kullanmışım, sadece ((())) üretti. Kafa karıştırıcı ama bu örneği akılda tutmalı:
+    def generateParenthesis(self, n: int) -> List[str]:
+        ret_list = []
+
+        def genPa(acpa, kapa, concat):
+
+            if acpa == kapa == n:
+                ret_list.append(concat)
+                return
+            if acpa < n:
+                genPa(acpa+1, kapa, concat+"(")
+            if kapa < acpa:
+                genPa(acpa, kapa+1, concat+")")
+        
+        genPa(0,0,"")
+        return ret_list        
+
+#33. Search in Rotated Sorted Array
+#<= kullanımı önemli ve nums[0]  yerine nums[i]. Ben önce soldaki mi sağdaki mi parçada arıycaz diye o kontrolü  yapıyordum hata veriyordu.
+    def search(self, nums: List[int], target: int) -> int:
+        i = 0
+        j = len(nums) - 1
+
+        while i <= j:
+            mid = (i + j) // 2
+
+            if target == nums[mid]:
+                return mid
+            elif nums[mid] >= nums[i]:
+                if target  > nums[mid] or target < nums[i]:
+                    i = mid + 1
+                else:
+                    j = mid - 1
+            else:
+                if target  < nums[mid] or target > nums[j]:
+                    j = mid - 1
+                else:
+                    i = mid +1
+        return -1
+
+#981. Time Based Key-Value Store
+# Eğer init ve diğer methodlar verilip doldurulması istenirse, bu güzel bir örnek:
+class TimeMap:
+
+    def __init__(self):
+        self.my_dict = {}
+        
+
+    def set(self, key: str, value: str, timestamp: int) -> None:
+        if key not in self.my_dict:
+            self.my_dict[key] = []
+        self.my_dict[key].append([value,timestamp])
+        
+
+    def get(self, key: str, timestamp: int) -> str:
+        ret = ""
+        values = self.my_dict.get(key,[])
+
+        i,j = 0, len(values)-1
+
+        while i <= j:
+            mid = (i+j)//2
+            if values[mid][1] == timestamp:
+                return values[mid][0]
+            elif  values[mid][1] < timestamp:
+                i = mid + 1
+                ret = values[mid][0]
+            else:
+                j = mid - 1
+        
+        return ret   
+
+#456. 132 Pattern
+# Stack i her elemanı 2 liste olan bir liste olarak düşünmüş.
+#[max_element, min_element] gibi gitmesi gerekiyor ki, yeni gelen sayı bu ikisinin arasında mı diye bakabilesin.
+#Stack.pop yapıyor daha büyük eleman gelince ama min element değişmiyor, yeni halini tekrar append ediyor.
+#Arada sayı gelince de true dönüyorsun.
+https://www.youtube.com/watch?v=q5ANAl8Z458        
+
+    def find132pattern(self, nums: List[int]) -> bool:
+        my_stack = []
+        min_elm = nums[0]
+
+        for i in range(1,len(nums)):
+            while my_stack and my_stack[-1][0]<=nums[i]:
+                my_stack.pop()
+
+            min_elm = min(min_elm, nums[i])
+
+            if my_stack and my_stack[-1][1] < nums[i]:
+                return True
+
+            my_stack.append([nums[i], min_elm])
+        return False
+
+#567. Permutation in String
+#
+    def checkInclusion(self, s1: str, s2: str) -> bool:
+        if len(s1) > len(s2):
+            return False
+
+        s1Count, s2Count = [0] * 26, [0] * 26
+        for i in range(len(s1)):
+            s1Count[ord(s1[i]) - ord("a")] += 1
+            s2Count[ord(s2[i]) - ord("a")] += 1
+
+        matches = 0
+        for i in range(26):
+            matches += 1 if s1Count[i] == s2Count[i] else 0
+
+        l = 0
+        for r in range(len(s1), len(s2)):
+            if matches == 26:
+                return True
+
+            index = ord(s2[r]) - ord("a")
+            s2Count[index] += 1
+            if s1Count[index] == s2Count[index]:
+                matches += 1
+            elif s1Count[index] + 1 == s2Count[index]:
+                matches -= 1
+
+            index = ord(s2[l]) - ord("a")
+            s2Count[index] -= 1
+            if s1Count[index] == s2Count[index]:
+                matches += 1
+            elif s1Count[index] - 1 == s2Count[index]:
+                matches -= 1
+            l += 1
+        return matches == 26

@@ -6,6 +6,9 @@ lst = [3] + [4] # lst --> [3, 4]
     lst = [1, 2, 3]
     for i in reversed(lst):
         print(i) # 3,2,1 basar
+#Yalniz şunu yaparsan hata veriyor:
+return reversed(lst)
+# Çünkü return type o zaman list değil iterator oluyor. Onun yerine list(reversed(lst)) yapabilirsin ya da return etmeden önce lst.reverse() yapıp return lst yapmalısın.
         
 #* String i şu şekilde terse çeviriyoruz, iki yöntem de olur
 
@@ -44,6 +47,10 @@ sliced4 = s[2:]     # Output: "cdefgh"
     s = re.sub(r'[^a-z0-9]', '', s)  #  The expression [^a-z0-9] matches any character that is not a lowercase letter or a digit.  
     # The r before the pattern string indicates a "raw string," which is used to treat the backslashes (\) as literal characters rather than escape characters.
     print(re.sub(r'[.]', '[.]', "111.000.255")) # "111[.]000[.]255" döndürüyor, soru zaten bunu istiyordu.
+
+#küçük harfe çevirmek için:
+s = s.lower()
+
     
 #* 
   ord(character) - 64# 'A' için 1, B için 2 verir ama küçük harf için 64 olmaz. Daha güzeli
@@ -147,7 +154,7 @@ flattened = [num for sublist in nested_list for num in sublist]
     for word in strings:
         length = len(word)
         if length in number_groups:
-            number_groups[length].append(word)
+            number_groups[length].append(word) ####Burda dictionary e değil value ya yani list type olan kısma append ediyor, direkt number_groups.append zaten yok dictionary de.
         else:
             number_groups[length] = [word]
 
@@ -193,7 +200,7 @@ flattened = [num for sublist in nested_list for num in sublist]
         anagram_dict = {}
 
         for word in strs:
-            word_key = ''.join(sorted(word))
+            word_key = ''.join(sorted(word))###sorted() hem string  hem de list tipine uygulanabilir. Sonucu list döner, bunu da join ile string e çevirebilirsin
 
             if word_key in anagram_dict:
                 anagram_dict[word_key].append(word)
@@ -270,7 +277,12 @@ class Solution(object):
     my_dict = {'apple': 3, 'banana': 1, 'orange': 5, 'grape': 2}
     sorted_dict = dict(sorted(my_dict.items(), key=lambda item: item[1])) # ascending order
     sorted_dict = dict(sorted(my_dict.items(), key=lambda item: item[1], reverse=True)) # descending order
+#Önce value sonra key e göre sort için aşağıdakini kullan. -x[1] number ise işe yarıyor, stringde hata veriyor, onun için reverse=True yapıyorsun.
+#O zaman hem key hem value descending oluyor, sayı olan değeri yani value yu -x[1] ile ascending yapabiliyorsun    
 
+#https://leetcode.com/problems/top-k-frequent-words/submissions/
+#Bu soruda value ya göre descending, key e göre ascending i şöyle yaptım:
+sorted_dict = dict(sorted(my_dict.items(), key=lambda item: (-item[1],item[0])))
 
 # 347. Top K Frequent Elements
 # Given an integer array nums and an integer k, return the k most frequent elements. You may return the answer in any order.
@@ -319,6 +331,9 @@ sorted_list = sorted(my_list)  # This creates a new sorted list
 # List kullanarak for loop yazmadan dictionary yapma kodu: 
 # num[i] key oluyor, i de value, istersen değiştirebilirsin duruma göre
 my_dict = {nums[i] : i for i in range(len(nums))}
+
+# 1 den 10 a kadar sayılardan oluşacak liste şöyle yapılıyor:
+my_list = [i for i in range(1,11)]
 
 # Dictionary de ikişerli item compare etmek için ve a==b, b==a gibi çifte tekrar olmasın diye şunu kullanıyosun:
 from itertools import combinations
@@ -423,3 +438,127 @@ for (a,b) in zipped:
     # Print any remaining elements in the stack
     while stack:
         print(stack.pop()[1])  # Print the value 'j'   
+
+
+x,y = divmod(12,5) # x == 2, y == 2 olur. 12//5 = 2(x yani bölüm), 12-10 = 2 (y yani kalan)
+math.ceil(7/5) # sonuc 2 olur. import math yapmalı en başta
+
+
+#Binary search kodu bu şekilde yazılır. mid_ver +- 1 olayına ve min_ver <= max_ver conditiona dikkat et.
+    def searchMatrix(self, matrix: List[int], target: int) -> bool:
+        min_ver = 0
+        max_ver = len(matrix) - 1
+
+
+        while min_ver <= max_ver:
+            mid_ver = (max_ver + min_ver) // 2
+
+            if matrix[mid_ver] == target:
+                return True
+            elif matrix[mid_ver] < target:
+                min_ver = mid_ver + 1
+            else:
+                max_ver = mid_ver - 1
+
+        return False
+
+#split fonksiyonu / ile yapılınca, // gördüğünde, bu ikisi arasında olan null değere göre / karakterini replace ediyor. Yani sanki arada birşey var gibi düşün ama yok:)
+    str = "/home/kurt//deneme///dosya/.././"
+    res = ""
+
+    for word in str.split('/'):
+        res += word
+    print(res)
+    #Sonuc: homekurtdenemedosya...
+
+#set() aldığı listeyi unique elemanlar olarak tekrar oluşturur:
+    my_list = [1,1,2,2,4]
+    my_set = set(my_list)
+    print(my_set) # 1,2,4 basar    
+
+#Fonksiyon içinde fonksiyon örneği yaz, bir de dışarda fonksiyon yazıp çağırma örneği. self ile çağırma vs syntax karışmasın. İçerde yazdığnda parameter veri tipi vermiyorsun.
+
+
+#List içinde tuple veya list veya set tutabilirsin. Hepsini aynı anda tutup, listeyi karışık type olarak kullanabilirsin.
+#Ama set içinde liste olmaz çünkü onu unique nasıl tutacağını bilemez, "unhashable type" hatası verir. Set içinde set de olmaz. Integer, string vs koyman lazım
+
+
+#Şu şekilde bir kullanım var:
+    my_list = []
+    my_list.append([1,2])
+    print(my_list[-1][1]) # 2 basıyor
+   
+    #Bir de şu var:
+    my_list = [1,2,3]
+    for num in my_list + [4,5,6]
+        print(num)# 1 2 3 4 5 6 basar
+
+#2 dictionary nasıl birleştirilir?
+    my_dict = {1:"bir", 2:"iki"}
+    my_dict2 = {3: "uc", 4: "dort"}
+    my_dict.update(my_dict2)
+    print(my_dict) # {1: 'bir', 2: 'iki', 3: 'uc', 4: 'dort'} basar    
+# dictionary de get kullanımı:
+sayi = ""
+sayi = my_dict.get(3,"bulamadim")
+#Bulursa value yu assign eder yoksa, 2. parametreyi assign eder. get(3) dersen de None assign eder.
+
+# set a item ekleme ve silme:
+my_set.add(3)
+my_set.remove(3) # eleman yoksa hata verir
+my_set.discard(3) #eleman yoksa da hata vermez    
+
+#Bir dictionary var, her harf key ve onların sayı olarak value ları var. O anki en yüksek value kimde diye bakmak istersen:
+my_dict = {"a":3, "b":2, "c":9}
+max_value = max(my_dict.values())
+
+#for i in range(len(nums)/2) hata veriyor çünkü bu bölme sonucu float oluyormuş, onun yerine //2 kullanmalı ya da int() içine almalı işlemi
+
+#Listede ekleme append. Silme işleminde indis bazlı ya da value bazlı silebiliyorsun:
+my_list.remove(5) # soldan başlayıp ilk bulduğu 5 i siliyor
+del my_list[0] # ilk elemanı siliyor
+
+#Bir string kullanarak hangi harf kaç tane varmış şeklinde bir dictionary oluşturabiliriz:
+    my_dict = Counter("bbbca")
+    for keys,values in my_dict.items():
+        print(f"{keys} {values}")# b 3   c 1  a 1 basar
+
+    val = my_dict.get("z",0)
+    print(val)# 0 basar
+
+#Init ve main kullaniminin en yalin hali: Bu kodun syntaxini ezbere bilmeli çünkü facebook boş kağıda tamamen çalışan kod yazmanı istiyor.
+class MyClass:
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+    
+    def display_info(self):
+        print(f"Name: {self.name}")
+        print(f"Age: {self.age}")
+    
+    def main(self):
+        print("Performing some main tasks...")
+        # You can perform various tasks here
+
+# This code will only run if the script is executed directly (not imported)
+if __name__ == "__main__":
+    # Create an instance of the class
+    obj1 = MyClass("Alice", 30)
+    
+    # Call the display_info method
+    obj1.display_info()
+    
+    # Call the main method
+    obj1.main()
+
+#4*4 lük bir arrayi nokta ile doldurmak için:
+    n= 4
+    board = [["."] * n for i in range(n)]
+    print(board)# [['.', '.', '.', '.'], ['.', '.', '.', '.'], ['.', '.', '.', '.'], ['.', '.', '.', '.']] basar    
+    # Sonra bunları 4 kelimeden oluşan bir listeye şöyle çevirirsin:
+    copy = ["".join(row) for row in board]
+    
+#my_set = set()  my_set.add(5)   my_set.add(5)  --> ikinci elemanı eklemez, hata da vermez, sonuç sadece 5 olur.  
+
+#https://www.youtube.com/watch?v=Ph95IHmRp5M     9. dk da anlatıyor.
+#2d array de diagonal olarak gidersen row+column ve row-column olarak değer alıyor ve bu o hat boyunca unique. N-queuen sorusunda adam bunu kullanmış, set olarak tutmuş.  
