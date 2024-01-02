@@ -1,24 +1,16 @@
 class Solution:
     def minCostClimbingStairs(self, cost: List[int]) -> int:
+        
+        n = len(cost)
+        dp = [0 for _ in range(n)]
 
-        N = len(cost)
-        memo = {}
+        dp[-1], dp[-2] = cost[-1], cost[-2]
 
-        def fn(i:int) -> int:
-            if i >= N-2:
-                memo[i] = cost[i]
-                return memo[i]
-            
-            if i+2 not in memo:
-                memo[i+2] = fn(i+2)
-            if i+1 not in memo:
-                memo[i+1] = fn(i+1)
+        print(dp)
+        for i in range(n-2-1,-1,-1):
+            print(i)
+            dp[i] = cost[i] + min(dp[i+1],dp[i+2])
 
-            nextStepCost = memo[i+1]
-            nextNextStepCost = memo[i+2]
 
-            costOfThis = cost[i] + min(nextStepCost, nextNextStepCost)
+        return min(dp[0], dp[1])
 
-            return costOfThis
-
-        return min(fn(0), fn(1))
