@@ -7,9 +7,9 @@ class Solution:
             path[edge[0]].append(edge[1])
             path[edge[1]].append(edge[0])
 
-        print(path)
+        # print(path)
         def dfs(s) -> int:
-            print("s:{}, dest:{}".format(s, destination))
+            # print("s:{}, dest:{}".format(s, destination))
             visited.add(s)
             if s == destination:
                 return True
