@@ -6,38 +6,37 @@
 class Solution:
     def rotateRight(self, head: Optional[ListNode], k: int) -> Optional[ListNode]:
         if not head: return None
+        N = 1 # length of the list
 
-        # find the length of the list and also tail Node
         tail = head
-        lenList = 1
         while tail.next:
-            lenList += 1
-            tail = tail.next
-        # print("tail.value, lenList", tail.val, lenList)
+           N +=1
+           tail = tail.next
+        
+        # print("N:", N, "tail:", tail.val)
 
-        k = k % lenList
+        k = k % N
         if k == 0:
             return head
 
-        #find newTail and newHead after cutting the list
-        len1 = lenList - k -1
+        #Find new tail
+        steps = N - k -1
         newTail = head
 
-        while len1 > 0:
-            len1 -= 1
+        while steps > 0:
             newTail = newTail.next
+            steps -= 1
+        
+        # print("newTail", newTail.val)
 
         newHead = newTail.next
-
-        #Cut the list
-        newTail.next = None
-        # Link oldTail to old head and return newHead
         tail.next = head
+        newTail.next = None
+
         return newHead
 
 
 
-
-
-
         
+
+
