@@ -17,7 +17,7 @@ class Solution:
             r1, r2 = find(n1), find(n2)
 
             if r1 == r2: 
-                return False
+                return True
 
             if rank[r1] > rank[r2]:
                 par[r2] = r1
@@ -27,10 +27,10 @@ class Solution:
                 par[r1] = r2
                 rank[r2] += rank[r1]
             
-            return True
+            return False
 
         for n1, n2 in edges:
-            if not union(n1, n2):
+            if union(n1, n2):
                 return [n1, n2]
 
 
