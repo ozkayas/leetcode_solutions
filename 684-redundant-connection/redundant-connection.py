@@ -5,12 +5,11 @@ class Solution:
 
         print(par)
         print(rank)
-
-        def find(n):
-            root = n
-            while root != par[root]: # not at the top, root 
-                root = par[root]
-            return root
+        
+        def find(node):
+            if par[node] != node:
+                par[node] = find(par[node])  # Path compression
+            return par[node]
         
         def union(n1, n2):
             print("union", n1, n2)
