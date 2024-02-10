@@ -1,28 +1,29 @@
 class Solution:
     def letterCombinations(self, digits: str) -> List[str]:
-        if len(digits) == 0: return []
+        if not digits: return ""
 
-        # character map
-        cMap  = {"2":"abc","3":"def","4":"ghi","5":"jkl","6":"mno","7":"pqrs","8":"tuv","9":"wxyz"}
+        cMap = {"2":"abc", "3":"def", "4":"ghi", "5":"jkl", "6":"mno", "7":"pqrs", "8":"tuv", "9":"wxyz"}
+        # print( list(cMap[digits[0]]) )
+        
+        def rec(digit)-> List[str]:
+            
+            if digit == len(digits)-1:
+                return list(cMap[digits[digit]])
+            
+            res = []
+            nxtNodeRes = rec(digit+1)
+            for c in cMap[digits[digit]]:
+                for cc in nxtNodeRes:
+                    # print(c+cc)
+                    res.append(c+cc)
+                    # print(res)
+            
+            return res
 
-        # last index to decide for reaching base case
-        maxIndex = len(digits)-1
-        result = []
 
-        def fn(i:int, arr:str):
-            # print("fn called -> i:{}, arr:{}".format(i, arr))
-            num = digits[i]
+        return rec(0)
 
-            for s in cMap[num]:
-                arrCopy = arr+s
-                if i == maxIndex:
-                    result.append(arrCopy)
-                else:
-                    fn(i+1, arrCopy)
 
-            return    
 
-        fn(0, "")
-        return result
 
         
