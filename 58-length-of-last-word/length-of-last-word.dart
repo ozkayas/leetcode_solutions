@@ -1,9 +1,21 @@
 class Solution {
   int lengthOfLastWord(String s) {
-      final arr = s.trim().split(' ');
-    //   print(arr);
-    //   print(arr.last);
+        int p = s.length -1;
+        
+        // Son Elemani Bul
+        while (s[p] == " "){
+            p--;  
+        }
+        int lastCharOfLastWord = p;
 
-      return arr.last.length;
+        // Ilk bosluga rastlayana kadar sola ilerle
+        while (p >=0 && s[p] != " "){
+            p--;
+        }
+        int firstCharOfLastWord = p;
+
+
+      return lastCharOfLastWord - firstCharOfLastWord;
   }
 }
+
