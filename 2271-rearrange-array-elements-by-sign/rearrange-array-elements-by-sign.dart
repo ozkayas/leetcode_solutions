@@ -8,11 +8,9 @@ class Solution {
         int n = 0;
 
         while (r < nums.length){
-            if (nums[r]>0){
-                pos.add(nums[r]);
-            }else{
-                negs.add(nums[r]);
-            }
+            (nums[r]>0)?
+                pos.add(nums[r]):
+                negs.add(nums[r]);            
             r++;
         }
 
