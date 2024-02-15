@@ -1,34 +1,26 @@
 class Solution {
   List<int> rearrangeArray(List<int> nums) {
-        var pos = [];
-        var negs = [];
-        int w = 0;
-        int r = 0;
-        int p = 0;
-        int n = 0;
+      var pos = [];   /// [ 3, 2, 1]
+      var neg = [];
+      int p = 0;
+      int n = 0;
 
-        while (r < nums.length){
-            (nums[r]>0)?
-                pos.add(nums[r]):
-                negs.add(nums[r]);            
-            r++;
+        for(int n in nums){    //O(n)
+            n > 0 ? pos.add(n) : neg.add(n);
         }
-
-        while (w < nums.length){
-            if(w.isEven){ //cift sayi ise, pos listesinden yaz
-                nums[w] = pos[p];
-                p++;            
-            }else{                
-                nums[w] = negs[n];
+        // print(pos);
+        // print(neg);
+        for(int i=0; i<nums.length; i++){  //O(n)
+            if(i.isEven){ //positif olmasi gereken index
+                nums[i] = pos[p];  // okuma O(n)
+                p++;  
+            } else {
+                nums[i] = neg[n];
                 n++;
             }
-            w++;
         }
 
     return nums;
-
+    
+  }
 }
-}
-
-
-
