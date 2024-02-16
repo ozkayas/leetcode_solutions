@@ -7,7 +7,6 @@ class Solution {
             if(a < 0){
                 nums1[w] = nums2[b];
                 b--;
-                
             }
 
             else if(b < 0 || nums1[a] >= nums2[b]){
@@ -16,9 +15,9 @@ class Solution {
             }else{
                 nums1[w] = nums2[b];
                 b--;
-                if(b < 0){
-                    return;
-                }
+                // if(b < 0){
+                //     return;
+                // }
             }
             w--;
         }
