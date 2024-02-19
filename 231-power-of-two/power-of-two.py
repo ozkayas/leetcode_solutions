@@ -9,6 +9,6 @@ class Solution:
             else:
                 n /= 2
 
-        if n == 0 or n == 1 : return True
+        if n == 1 : return True
 
         
