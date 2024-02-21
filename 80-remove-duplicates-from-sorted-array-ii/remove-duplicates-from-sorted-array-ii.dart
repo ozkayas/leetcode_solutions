@@ -4,16 +4,21 @@ class Solution {
         var map = {};
 
         while(r < nums.length){
+            if(!map.containsKey(nums[r]))
+            {map.clear();}
+
             map[nums[r]] = (map[nums[r]] ?? 0) + 1;
 
             if(nums[r] > nums[w]){
                 w++;
                 nums[w] = nums[r];
+                // map.clear();
             }
 
             if(nums[r] == nums[w] && map[nums[r]] == 2){
                 w++;
-                nums[w] = nums[r];   
+                nums[w] = nums[r];  
+                // map.clear(); 
             }
 
             r ++;
