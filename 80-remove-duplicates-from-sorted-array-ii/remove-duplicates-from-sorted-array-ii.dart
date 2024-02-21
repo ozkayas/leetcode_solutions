@@ -1,31 +1,22 @@
 class Solution {
-  int removeDuplicates(List<int> nums) {
-        int r = 0, w = 0;
-        var map = {};
 
-        while(r < nums.length){
-            if(!map.containsKey(nums[r]))
-            {map.clear();}
+int removeDuplicates(List<int> nums) {
+  if (nums.isEmpty) return 0; // Handle the edge case where the list is empty
 
-            map[nums[r]] = (map[nums[r]] ?? 0) + 1;
+  int writeIndex = 0; // Initialize the write index to 0
 
-            if(nums[r] > nums[w]){
-                w++;
-                nums[w] = nums[r];
-                // map.clear();
-            }
-
-            if(nums[r] == nums[w] && map[nums[r]] == 2){
-                w++;
-                nums[w] = nums[r];  
-                // map.clear(); 
-            }
-
-            r ++;
-        }
-
-    return w + 1;
+  for (int i = 0; i < nums.length; i++) {
+    if (writeIndex < 2 || nums[i] != nums[writeIndex - 2]) {
+      // If the write index is less than 2 or the current element is different from
+      // the element two positions before the write index
+      nums[writeIndex] = nums[i]; // Overwrite the write index with the current number
+      writeIndex++; // Move the write index forward
+    }
   }
+
+  return writeIndex; // Return the length of the modified list
+}
+
 }
 
 // herhangi bir sayiya 2. kez denk gelirsek w++ ve ustune yaz
