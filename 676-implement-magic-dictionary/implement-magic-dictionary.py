@@ -1,15 +1,18 @@
 class MagicDictionary:
 
     def __init__(self):
-        self.dick = dict()
+        self.dick = defaultdict(list)
         
     def buildDict(self, dictionary: List[str]) -> None:
         
         for s in dictionary:
-            if len(s) not in self.dick.keys():
-                self.dick[len(s)] = [s]
-            else:
-                self.dick[len(s)].append(s)
+        #     if len(s) not in self.dick.keys():
+        #         self.dick[len(s)] = [s]
+        #     else:
+        #         self.dick[len(s)].append(s)
+
+            self.dick[len(s)] += [s]
+
 
 
     def search(self, searchWord: str) -> bool:
@@ -21,7 +24,6 @@ class MagicDictionary:
         #     print(k, v)
 
         b = self.dick[len(searchWord)]
-
 
         for word in b:
             counter = 0
