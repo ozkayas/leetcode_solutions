@@ -9,29 +9,20 @@ class Node:
 from typing import Optional
 class Solution:
     def cloneGraph(self, node: Optional['Node']) -> Optional['Node']:
-        if not node : return None
-        visited = set()
+        if not node: return None
         clones = dict()
-        queue = [node]
-        clones[node.val]= Node(node.val)
-        
-        while queue:  
+        q = [node] 
+        clones[node] = Node(node.val)
 
-            cur = queue.pop(0)
-            if cur.val in visited: 
-                continue
-            visited.add(cur.val)
-            clone = clones[cur.val] 
-            for n in cur.neighbors:
-                queue.append(n)
-                if n.val in clones:
-                    clone.neighbors.append(clones[n.val])
-                else:
-                    clones[n.val] = Node(n.val)
-                    clone.neighbors.append(clones[n.val])
+        #BFS Algo 
+        while q:
+            cur = q.pop(0)
 
+            for nei in cur.neighbors:
+                if nei not in clones:
+                    q.append(nei)
+                    clone = Node(nei.val)
+                    clones[nei] = clone
+                clones[cur].neighbors.append(clones[nei])
 
-        # # print(clones)
-        # print(clones[1].neighbors)
-        # print(clones[2].neighbors)
-        return clones[node.val]
+        return clones[node]
