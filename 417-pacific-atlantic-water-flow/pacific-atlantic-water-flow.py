@@ -1,30 +1,38 @@
 class Solution:
     def pacificAtlantic(self, heights: List[List[int]]) -> List[List[int]]:
-        if not heights: return [[]]
-        R , C = len(heights), len(heights[0])
-        va, vp = set(), set()
-        a, p = [], []
+        M, N = len(heights), len(heights[0])
+        pList, aList = [],[]
+        pVisited, aVisited = set(), set()
+        res = []
 
-        for r in range(R):
-            a.append((r, 0))
-            p.append((r, C-1))
-        for c in range(C):
-            a.append((0,c))
-            p.append((R-1,c))
-
+        for r in range(M):
+            pList.append((r,0))
+            aList.append((r,N-1))
+        for c in range(N):
+            pList.append((0,c))
+            aList.append((M-1,c))
+    
         def dfs(r,c,visited):
             visited.add((r,c))
             for rr,cc in (r-1,c),(r+1,c),(r,c-1),(r,c+1):
-                if 0 <= rr < R and 0 <= cc < C and heights[r][c] <= heights[rr][cc] and (rr,cc) not in visited:
-                    dfs(rr,cc, visited)
+                if -1<rr<M and -1<cc<N and heights[rr][cc] >= heights[r][c] and (rr,cc) not in visited:
+                    dfs(rr,cc,visited)
+            
 
-        for r,c in a:
-            dfs(r,c,va)
-        for r,c in p:
-            dfs(r,c,vp)
+
+        for r,c in pList:
+            if (r,c) not in pVisited:
+                dfs(r,c,pVisited)
+
+        for r,c in aList:
+            if (r,c) not in aVisited:
+                dfs(r,c,aVisited)
         
-        res = []
-        for r,c in va.intersection(vp):
+        for r,c in pVisited.intersection(aVisited):
             res.append([r,c])
         
         return res
+
+
+
+        
