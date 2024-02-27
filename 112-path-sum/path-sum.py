@@ -12,7 +12,7 @@ class Solution:
             return not node.left and not node.right
 
         def dfs(node, target) -> bool:
-            print(node.val, target)
+            # print(node.val, target)
             if target == node.val and isLeaf(node): return True
             r = target - node.val #remainder to pass to children
 
