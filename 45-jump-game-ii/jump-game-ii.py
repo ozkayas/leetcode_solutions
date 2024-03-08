@@ -13,14 +13,15 @@ class Solution:
 
             for j in range(n):
                 ind = i + j + 1 # looked index to add steps
+                if (ind == len(nums)-1):
+                    # print(ind, hMap[ind])
+                    return stepTillThis+1
 
                 if (ind) in hMap:
                     hMap[ind].append(stepTillThis+1)
                 else:
                     hMap[ind] = [stepTillThis+1]
-                if (ind == len(nums)-1):
-                    # print(ind, hMap[ind])
-                    return stepTillThis+1
+
                     # return min(hMap[ind])
 
         # print(hMap)
