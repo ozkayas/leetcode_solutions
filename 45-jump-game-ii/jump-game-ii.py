@@ -5,17 +5,23 @@ class Solution:
 
 
         for i,n in enumerate(nums):
+            if len(nums) == 1: return 0
             stepTillThis = min(hMap[i]) if hMap[i] else float('inf')
             # print(i,hMap)
-            if (i == len(nums)-1):
-                return min(hMap[i])
+            # if (i == len(nums)-1):
+            #     return min(hMap[i])
 
             for j in range(n):
                 ind = i + j + 1 # looked index to add steps
+
                 if (ind) in hMap:
                     hMap[ind].append(stepTillThis+1)
                 else:
                     hMap[ind] = [stepTillThis+1]
+                if (ind == len(nums)-1):
+                    # print(ind, hMap[ind])
+                    return stepTillThis+1
+                    # return min(hMap[ind])
 
         # print(hMap)
 
