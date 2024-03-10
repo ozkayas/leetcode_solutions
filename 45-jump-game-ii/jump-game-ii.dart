@@ -6,6 +6,9 @@ class Solution {
       while(p < nums.length){
           for(int i = 1; i <= nums[p]; i++ ){
               int scanner = p + i;
+              if(scanner == nums.length-1){
+                  return jumps[scanner] = jumps[p]+1;
+              }
               if (scanner >= nums.length){
                   break;
               }
@@ -24,6 +27,6 @@ class Solution {
 }
 
 
-//  0 1 1 2 2 3 4
-// [2,3,1,0,1,2,4]
+//  0 1         2
+// [2,5,1,0,1,2,4]
 //            |
