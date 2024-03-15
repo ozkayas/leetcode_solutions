@@ -1,6 +1,6 @@
 class Solution:
     def productExceptSelf(self, nums: List[int]) -> List[int]:
-# This is the easiest way but requires extra space, 
+# This is the easiest way but requires extra space,
 # The point is while creating preFixSum or preFixProduct we have 2 options
 # 1 -> Use and then reCalculte preFix
 # 2 -> Recalculte and then Use preFix
@@ -14,19 +14,17 @@ class Solution:
         for i in range(N):
             lProd[i] = pFix
             pFix *= nums[i]
-        print(lProd)
 
         for i in range(N-1,-1,-1):
-            # rProd[i] = sFix
+            # rProd[i] = sFix  # Instead of a newArr we can write on the lProd and just return it as optimal solution
             lProd[i] = lProd[i] * sFix
             sFix *= nums[i]
 
-        print(rProd)
 
         for i in range(N):
             ans.append(lProd[i]*rProd[i])
 
-        return lProd
+        return ans
             
 '''
         ans = [1] * len(nums)
