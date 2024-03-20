@@ -29,4 +29,4 @@ class Solution:
         a_prev.next = list2
         tail.next = b_next
     
-        return list1
+        return list1 
