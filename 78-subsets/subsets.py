@@ -1,30 +1,21 @@
 class Solution:
     def subsets(self, nums: List[int]) -> List[List[int]]:
-
+        N = len(nums)
         ans = []
-
-        def bt(i, subset):
-            if i == len(nums):
+        
+        def dfs(i, subset):
+            if i == N:
                 ans.append(subset.copy())
                 return
             
             subset.append(nums[i])
-            bt(i + 1, subset)
+            dfs(i+1, subset)
+
             subset.pop()
-            bt(i + 1, subset)
+            dfs(i+1, subset)
 
-        
-        bt(0, [])
 
+
+        dfs(0,[])    
         return ans
-
-
-
-
-
-
-
-
-
-    
         
