@@ -2,20 +2,26 @@ class Solution:
     def combinationSum(self, candidates: List[int], target: int) -> List[List[int]]:
         ans = []
         candidates.sort()
-        
-        def dfs(i, target, comb):
-            if target == 0:
-                ans.append(comb.copy())
-                return
-            if i >= len(candidates) or candidates[i] > target:
-                return
-            cur = candidates[i]
-            
-            comb.append(cur)
-            dfs(i, target - cur, comb)
-            comb.pop()
-            dfs(i+1, target , comb)
 
-        dfs(0, target, [])        
-        return ans
+        def bt(i, curSum, comb):
+            if i == len(candidates):return
+            curVal = candidates[i]
+            if curSum + curVal == target:
+                comb.append(curVal)
+                ans.append(comb.copy())
+                comb.pop()
+                return
+            elif curSum + curVal > target:
+                return
+            
+            else:
+                comb.append(curVal)
+                bt(i, curSum + curVal, comb)
+                comb.pop()
+                bt(i+1, curSum, comb)
+
+
+            
+        bt(0, 0, [])
         
+        return ans
