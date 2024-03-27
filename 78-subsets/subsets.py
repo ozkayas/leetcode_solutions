@@ -1,20 +1,25 @@
 class Solution:
     def subsets(self, nums: List[int]) -> List[List[int]]:
-
         ans = []
-        def dfs(i, subset):
-            if i == len(nums):
-                ans.append(subset.copy())
+
+        def backTrack(i, subset):
+            print("BT called i, subset",i, subset)
+            #bu son index ise, leaf node, subsete kendin ekle ve sonuca ekle ve return
+            if i == len(nums)-1:
+                s = subset.copy()
+                ans.append(s.copy())
+                s.append(nums[i])
+                ans.append(s.copy())
+                print("leaf node returning", ans)
                 return
-            
+
             subset.append(nums[i])
-            dfs(i+1,subset)
+            backTrack(i+1, subset)
             subset.pop()
-            dfs(i+1,subset)
+            backTrack(i+1, subset)
 
         
-
-        dfs(0,[])
+        backTrack(0,[])
 
         return ans
         
