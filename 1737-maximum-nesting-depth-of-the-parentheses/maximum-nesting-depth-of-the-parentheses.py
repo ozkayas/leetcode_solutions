@@ -1,9 +1,6 @@
 class Solution:
     def maxDepth(self, s: str) -> int:
-        # if s == "()": return 1
-        # if not s : return 0
-
-        o , c , ans = 0 , 0, 0
+        o , c , ans = 0, 0, 0
 
         for char in s:
             if char == "(":
@@ -27,9 +24,4 @@ class Solution:
        1 2 1 2 3 2 1 0
 
 
-      ( ) ( ( ) ) ( ( ( ) ) )
-a:1   o                     c   
-a:2       o               c   
-a:3         o           c   
-a:3               o c   
 '''
