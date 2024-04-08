@@ -4,14 +4,12 @@ class Solution:
     def countStudents(self, students: List[int], sandwiches: List[int]) -> int:
         std = deque(students)
         sand = deque(sandwiches)
-        allowed_ro = len(std) 
         ro  = 0
 
-        while sand and ro < allowed_ro:
+        while sand and ro < len(sand):
             if std[0] == sand[0]:
                 sand.popleft()
                 std.popleft()
-                allowed_ro -= 1
                 ro = 0
             else:
                 std.rotate(-1)
