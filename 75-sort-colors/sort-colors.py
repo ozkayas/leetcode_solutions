@@ -26,4 +26,6 @@ class Solution:
 
         
 
+[3, 2, 0, 0, -1]
+
 
