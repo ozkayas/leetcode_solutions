@@ -41,4 +41,54 @@ Month 4: [1, 3, 2, 4] and [5], averages = 2 and 5, net price change = 3
 The minimum net price change is 1, and it occurs at month 2 :D.
 
 '''
+"""
+Explanation to myself
 
+preFS:   [1   4   6  10  15]
+postFS:  [15  14  11  9  5]
+
+iterate from 0 till -2 index
+
+         [1, 3, 2, 4, 5]
+          |
+          1-14/4=1-3
+             |
+             4/2 - 11/3= 2-3
+                 |
+                 6/3-9/2=2-4
+                    |
+                    10/4-5/1 = 2-5
+
+"""
+
+
+
+# stockPrice = [1, 3, 2, 3]
+stockPrice = [1, 3, 2, 4, 5]
+
+prefixSum, postFixSum = [],[]
+N = len(stockPrice)
+summ = 0
+for p in stockPrice:
+    summ += p
+    prefixSum.append(summ)
+summ = 0
+for p in reversed(stockPrice):
+    summ += p
+    postFixSum.append(summ)
+postFixSum.reverse()
+
+
+net_change = []
+## Main iteration 
+for i in range(N-1): # we do not need the last index
+    preAverage = prefixSum[i] // (i+1)
+    postAverage = postFixSum[i+1] // (N-i-1)
+    net_change.append(abs(preAverage-postAverage))
+
+min_value = min(net_change)
+
+for i in range(len(net_change)):
+    if net_change[i] == min_value:
+        print("RESULT: ",i+1) 
+        break
