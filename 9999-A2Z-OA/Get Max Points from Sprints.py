@@ -33,9 +33,10 @@ def get_max_points(days:List[int], k:int) -> int:
 
     ## Lets use 2 pointers and  try to find the max point
     ans = sum(schedule[:k])
-    l, r = 1, k
+
+    l, r = 1, k+1
     while r < len(schedule):
-        curSum = ans + schedule[r] - schedule[l]
+        curSum = sum(schedule[l:r])
         ans = max(ans, curSum)
         r += 1
         l += 1
