@@ -53,5 +53,61 @@ s consists only of characters '0', '1', and 'l'
 
 
 '''
+from typing import List
 
-## Lets count all 0 and 1s after an index i
+MOD = 10 ** 9 + 7
+# errorString = "101!1"
+# x = 2
+# y = 3
+
+errorString = "01!0"
+x = 2
+y = 2
+
+# errorString = "!!!!!!!"
+# x = 23
+# y = 27
+
+
+#### HELPER METHODS ###
+## Function that counts 0 & 1s succeding an index
+def freq_counter(bits:List[int]) -> List[List[int]]:
+    N = len(bits)
+    freqs = [[0,0] for _ in range(N)] 
+    for i in range(N-2,-1,-1):
+        if bits[i+1] == 0:
+            freqs[i][0] = freqs[i+1][0] + 1
+            freqs[i][1] = freqs[i+1][1]
+        else:
+            freqs[i][1] = freqs[i+1][1] + 1
+            freqs[i][0] = freqs[i+1][0]
+
+    return freqs
+
+# Function that calculate errors
+def error_counter(bits:List[int], x:int, y:int) -> int:
+    freqs = freq_counter(bits)
+    # print(freqs)
+    x_count , y_count = 0, 0
+    for i, b in enumerate(bits):
+        if b == 0:
+            x_count += freqs[i][1]
+        else:
+            y_count += freqs[i][0]
+    # print("01", x_count, "10", y_count)
+    return ((x_count*x) % MOD + (y_count * y ) % MOD) % MOD
+        
+
+### MAIN CODE ####
+
+# Put 0 and 1 instead of !
+zero_case = [0 if c == "!" else int(c) for c in errorString]
+one_case = [1 if c == "!" else int(c) for c in errorString]
+
+# print(error_counter(zero_case,x,y))
+# print(error_counter(one_case,x,y))
+
+print("RESULT: ", min(error_counter(zero_case,x,y),error_counter(one_case,x,y)))
+
+
+    
