@@ -50,6 +50,8 @@ distance start from 6 to 4 is 8
 distance start from 9 to 6 is 7
 so the minimum distance is 7'''
 
+from typing import List
+
 ## INPUT
 total_servers = 8
 servers = [2, 6, 8]
