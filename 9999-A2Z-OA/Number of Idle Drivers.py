@@ -33,7 +33,7 @@ y = [-1, 0, 1, 2, -2, 0, 1, -1, 0, 1, -1, 0, 0]
 # y = [1, 2, 3, 1, 2, 3, 5, 1, 2, 3]
 
 ## First Create vertical and horizontal limits for each axis point
-vertical_limits, horizontal_limits = dict(), dict()
+vertical_limits, horizontal_limits = dict(), dict()  # 1: [-2,2]
 
 # Fill vertical Limits for each X position
 for i in range(len(x)):
