@@ -96,7 +96,7 @@ The subarray_uniqueness array is [1, 2, 2, 1, 2, 1]. After sorting, the arr is [
            
 '''
 from typing import List
-arr = [1, 2, 3]
+array = [1, 2, 3]
 # arr = [1, 2, 1]
 
 def medianForPair(a:int, b:int, subarr:List[int]) -> int:
@@ -106,16 +106,11 @@ def medianForPair(a:int, b:int, subarr:List[int]) -> int:
 def findMedianOfSubarrayUniqueness(arr:List[int]) -> int:
     subarr_medians = []
 
-    l, r = 0, len(arr)
-    while l < len(arr): 
 
-      if r == len(arr): ## r out of bounds
-         l += 1
-         r = l
-
-      subarr_medians.append(medianForPair(l,r,arr))
-      r += 1
+    for l in range(len(arr)): 
+      for r in range(l,len(arr)):
+        subarr_medians.append(medianForPair(l,r,arr))
 
     return subarr_medians[len(subarr_medians)//2]
 
-print(findMedianOfSubarrayUniqueness(arr))
+print(findMedianOfSubarrayUniqueness(array))
