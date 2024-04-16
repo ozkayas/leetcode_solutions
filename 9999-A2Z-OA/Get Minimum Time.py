@@ -56,32 +56,37 @@ from typing import List
 total_servers = 8
 servers = [2, 6, 8]
 
-total_servers = 5
-servers = [1, 5]
+# total_servers = 5
+# servers = [1, 5]
 
-total_servers = 10
-servers = [4, 6, 2, 9]
+# total_servers = 10
+# servers = [4, 6, 2, 9]
 
 ## Calculates distance in clockwise direction
 def calculateDist(a:int, b:int, total:int)->int:
+    print("total in calculateDist:", total)
+    print("a, b", a,b)
     if a < b:
         return b-a
     else:
         return (total-b) + (a)
 
 
-def getMinTime(total_servers:List[int], servers:List[int]) -> int:
+def getMinTime(total_servers:int, servers:List[int]) -> int:
     servers.sort()
-    min_dist = 0
+    N = len(servers)
+    min_dist = float("inf")
 
-    s, e = 0 , len(servers)-1
+    s, e = 0 , N-1
 
-    while s < len(servers):
+    while s < N:
         a, b = servers[s], servers[e]
-        min_dist = min(min_dist, calculateDist(a,b))
+        curDist = calculateDist(a,b,total_servers)
+        # print("curDist for a b:",a,b,curDist)
+        min_dist = min(min_dist, curDist)
         s += 1
         e += 1
-        e = e % len(servers)
+        e = e % N
     return min_dist
 
 
