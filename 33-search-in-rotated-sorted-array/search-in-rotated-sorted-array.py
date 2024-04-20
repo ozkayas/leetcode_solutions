@@ -1,34 +1,55 @@
 class Solution:
     def search(self, nums: List[int], target: int) -> int:
-        if nums[0] == nums[-1] and nums[0] == target: return 0
 
-        l, r = 0 , len(nums)-1
+        if len(nums) == 1:
+            return 0 if nums[0]==target else -1
 
+        l, r = 0, len(nums)-1
+        
         while l <= r:
-            mid = (l+r)//2
-            cur = nums[mid]
-            if target == cur:
-                return mid
+            ans = -1
+            m = l + (r-l)//2
 
-            onLeft = True if cur >= nums[0] else False
+            if nums[m] == target: return m
 
-            if onLeft:
-                if target > cur:
-                    l = mid + 1
+            # On the left portion? 
+            if nums[m] > nums[-1]:
+                if nums[0] <= target < nums[m]:
+                    r = m - 1
                 else:
-                    if target >= nums[0]: # target on the left
-                        r =  mid - 1
-                    else:
-                        l = mid + 1
-            else:
-                if target < cur:
-                    r = mid - 1
+                    l = m + 1
+            else: # on the right portion
+                if nums[m] < target <= nums[-1]: # target is also on the right portion
+                    l = m + 1
                 else:
-                    if target <= nums[-1]: # target on the right
-                        l = mid + 1
-                    else:
-                        r = mid - 1
+                    r = m - 1
+        return ans
+        
+        
+
+'''        while l <= r:
             
-        return -1
-        
-        
+            # print(f"beginning loop with {nums[l:r+1]}")
+            i = (l+r)//2
+            if nums[i] == target: # if we hit the target
+                return i
+
+            if nums[0] <= nums[i]: # on the left portion
+                if nums[i] < target: 
+                    l = i +1 # crop left of i
+                else:
+                    if nums[0] <= target:
+                        r = i -1
+                    else:
+                        l = i +1 # crop left of i
+
+            if nums[0] >= nums[i]: # on the right portion
+                if target < nums[i]: 
+                    r = i -1 # crop right of i
+                else:
+                    if target <= nums[-1]:
+                        l = i +1
+                    else:
+                        r = i -1 
+                    
+        return -1'''
