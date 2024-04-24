@@ -27,6 +27,7 @@ Input:  wait = [3, 1, 2, 1]
 Output: [4, 1, 0] 
 '''
 import heapq
+from typing import List
 
 
 
