@@ -25,6 +25,7 @@ Input:  sideLengths = [3, 4, 5, 5, 6]
 Output: 20 
 
 '''
+from collections import deque
 
 s = [2, 6, 2, 6, 3, 5]
 # Output = 12 
