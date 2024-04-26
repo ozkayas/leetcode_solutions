@@ -1,4 +1,5 @@
-'''Given an array A with only positive numbers. We are allowed to negate any entries in the array, (i.e set A[i] = -A[i]). What is the maximum number of entries you can negate in the array such that every prefix sum after the negate operations is positive.
+'''Given an array A with only positive numbers. We are allowed to negate any entries in the array, (i.e set A[i] = -A[i]). 
+What is the maximum number of entries you can negate in the array such that every prefix sum after the negate operations is positive.
 
 Example 1:
 
@@ -33,7 +34,7 @@ from typing import List
 import heapq
 
 # A = [4,1,1,1] # output = 3
-A = [5,2,2, 2, 2, 2, 2 ] # output = 5
+A = [5,5,2, 2, 2, 2, 2 ] # output = 5
 
 
 def func(nums:List[int]) -> int:
@@ -42,10 +43,10 @@ def func(nums:List[int]) -> int:
   heapq.heapify(heap)
 
   for n in nums:
-    if pref >= n:
+    if pref >= n: # Negate this and insert into heap
       pref -= n
       heapq.heappush(heap,-n)
-    else:
+    else: # Can not negate this n, but maybe swith with a previous one
       if heap and (-heap[0]) > n:
         last = heapq.heappop(heap) * (-1)
         print(last)
