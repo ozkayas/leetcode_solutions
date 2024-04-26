@@ -1,10 +1,11 @@
 class Solution:
     def repeatedCharacter(self, s: str) -> str:
-        setOfOccurance = set()
+        occuranceList = [0 for _ in range(26)]
 
-        for ch in s:
-            if ch in setOfOccurance:
-                return ch
+        for i in range(len(s)):
+            charIndex = ord(s[i]) - ord("a")
+            if occuranceList[charIndex] == 1:
+                return s[i]
             else:
-                setOfOccurance.add(ch)
+                occuranceList[charIndex] = 1
         
