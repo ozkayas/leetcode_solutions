@@ -1,6 +1,11 @@
 '''
 https://www.fastprep.io/problems/amazon-count-pairs
-Given an integer k and a list of integers, count the number of distinct valid pairs of integers (a, b) in the list for which 1 + k = b. Two pairs of integers (a, b) and (c, d) are considered dinstinct if at least one element of (a, b) does not also belong to (c, d). Note that the elements in a pair might be the same element in the array. An instance of this is below where k = 0.
+Given an integer k and a list of integers, count the number of distinct valid pairs of integers (a, b)
+ in the list for which 1 + k = b. 
+ Two pairs of integers (a, b) and (c, d) are considered dinstinct if at least one element 
+ of (a, b) does not also belong to (c, d). 
+ Note that the elements in a pair might be the same element in the array. 
+ An instance of this is below where k = 0.
 
 Function Description
 
@@ -39,29 +44,56 @@ from typing import List
 # 2. hash Map like 2 sum problem, T = O(n) S = (n)
 # 3. sorting and 2 pointers, T = (n log n), S = O(1)
 
-# numbers = [1, 1, 1, 2]
+# numbers = [1, 1, 1, 2] ## output: 1
 # k = 1
 
-# numbers = [1, 2]
+# numbers = [1, 2] ## output: 2
 # k = 0
 
-numbers =[3, 1, 4, 1, 5]
-k = 0
+# numbers =[3, 1, 4, 1, 5] ## output: 4
+# k = 0
 
-## 2. method using hash map
+numbers =[3, 1, 4, 1, 5] ## output: 2
+k = 1
+
 def countPairs(numbers:List[int], k:int) -> int:
-    hMap = dict()
-    numbers = list(set(numbers)) # clean doubles
+
+    seen = set()
     counter = 0
 
     for n in numbers:
-        hMap[n] = True
-    
-    for n in numbers:
-        if (n-k) in hMap:
+        # If already in list, prevent double counting
+        if n in seen:
+            continue
+
+        seen.add(n)
+        smallerPairOfN = n - k
+        greaterPairOfN = n + k
+        if smallerPairOfN in seen:
+            counter += 1
+        
+        # smaller and greater pairs are distinct so check for both
+        if k != 0 and greaterPairOfN in seen:
             counter += 1
 
 
+
     return counter
+
+## 2. method using hash map
+# def countPairs(numbers:List[int], k:int) -> int:
+#     hMap = dict()
+#     numbers = list(set(numbers)) # clean doubles
+#     counter = 0
+
+#     for n in numbers:
+#         hMap[n] = True
+    
+#     for n in numbers:
+#         if (n-k) in hMap:
+#             counter += 1
+
+
+#     return counter
 
 print(countPairs(numbers,k))
