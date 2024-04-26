@@ -1,3 +1,4 @@
+
 enum Suit { club, diamond, heart, spade }
 
 abstract class Card {
@@ -10,6 +11,8 @@ abstract class Card {
   bool get isAvailable => _isAvailable;
   void setAvailable() => _isAvailable = true;
   void setUnavailable() => _isAvailable = false;
+
+  int value();
 }
 
 class Deck<T extends Card> {
@@ -18,26 +21,79 @@ class Deck<T extends Card> {
     cards.addAll(cardsToAdd);
   }
 
-  int dealtIndex = 0;
+    int get size => cards.length;
 
   int remainingDeckSize() {
-    throw ("Unimplemented");
+    return size;
   }
 
   void shuffle() {
-    throw ("Unimplemented");
+    cards.shuffle();
   }
 
   List<T> dealHand(int number) {
-    throw ("Unimplemented");
+
+    List<T> toDealt = [];
+    for(int i = 0; i < number; i++){
+        toDealt.add(cards.removeLast());
+    }
+    return toDealt;
   }
 
   T dealCard() {
-    throw ("Unimplemented");
+    return cards.removeLast();
   }
 }
 
 class Hand<T extends Card> {
     List<T> cards = [];
-    
+
+    int value(){
+        int val = 0;
+        for(T card in cards ){
+            val += card.value();
+        }
+        return val;
+    }
+
+    void addCard(T card) => cards.add(card);
+
+}
+
+//// BlackJack Implementation
+////
+
+class BlackJackCard extends Card{
+    BlackJackCard({required super.faceValue, required super.suit});
+
+    bool get _isAce => faceValue == 1;
+
+    int value(){
+        int val = 0;
+
+        if(_isAce){
+            val = 1;
+        } else if(faceValue >= 11 && faceValue <= 13){
+            val = 10;
+        } else {
+            val = faceValue;
+        }
+        return val;
+    }
+
+    int minValue(){
+        return _isAce ? 1 : value();
+    }
+
+        int maxValue(){
+        return _isAce ? 11 : value();
+    }
+
+    bool get isFaceCard => (faceValue >= 11 && faceValue <= 13);
+}
+
+class BlackJackHand extends Hand<BlackJackCard>{
+    int score(){
+        throw UnimplementedError();
+    }
 }

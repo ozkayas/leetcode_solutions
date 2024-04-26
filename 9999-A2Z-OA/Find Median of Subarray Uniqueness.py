@@ -2,6 +2,13 @@
 In an Amazon coding marathon, the following challenge was given.
 
 The uniqueness of an array of integers is defined as the number of distinct elements present. For example, the uniqueness of [1, 5, 2, 1, 3, 5] is 4, element values 1, 2, 3, and 5. 
+
+## LEETCODE SIMILAR
+
+===>> https://leetcode.com/problems/count-unique-characters-of-all-substrings-of-a-given-string/
+
+The uniqueness of an array of integers is defined as the number of distinct elements present. 
+For example, the uniqueness of [1, 5, 2, 1, 3, 5] is 4, element values 1, 2, 3, and 5. 
 For an array arr of n integers, the uniqueness values of its subarrays is generated and stored in another array, call it subarray_uniqueness for discussion. 
 Find the median of the generated array subarray_uniqueness.
 
@@ -26,7 +33,6 @@ Constraints
 Input:  arr = [1, 1]
 Output: 1 
 Explanation:
-
 
 The subarrays along with their uniqueness values are:
         
@@ -66,26 +72,14 @@ The subarrays with their uniqueness values are:
 [2, 1]: uniqueness = 2
 [1]: uniqueness = 1
 
-The subarray_uniqueness array is [1, 2, 2, 1, 2, 1]. After sorting, the arr is [1, 1, 1, 2, 2, 2]. The choice is between the two bold values. Return the min of the two, 1.
+The subarray_uniqueness array is [1, 2, 2, 1, 2, 1]. After sorting, the arr is [1, 1, 1, 2, 2, 2]. 
+The choice is between the two bold values. Return the min of the two, 1.
 [1]: uniqueness = 1
 
 '''
 
 '''
-### My Explanation
-
-[1, 2, 3] 
-
- 1        -> 1
-    2     -> 1
- 1  2     -> 2
-       3  -> 1
-    2  3  -> 2
- 1  2  3  -> 3    
-
-         
-[1,1,1,1,1,1,2,2,2,2,2,3,3,3,3]
-
+           
 '''
 
 from typing import List
