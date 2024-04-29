@@ -1,64 +1,43 @@
 class Solution:
     def canFinish(self, numCourses: int, prerequisites: List[List[int]]) -> bool:
-        memo = dict()
+        # Kahns Algo:
+        orders = []
+        # Adjacency list, holds {pre:[course1,course2]} 
+        adj = defaultdict(list)
+        in_degrees = [0 for _ in range(numCourses)]
+        
+        ## Fill indegrees list, and adj list
+        for course, preReq in prerequisites:
+            in_degrees[course] += 1
+            adj[preReq].append(course)
 
-        # Create Adjacency list
-        graph = dict()
-        for k,v in prerequisites:
-            graph.setdefault(k,[]).append(v)
+        ## Init BFS queue
+        bfs_queue = deque()
+        # find nodes without pre to start with
+        for i, inDegree in enumerate(in_degrees):
+            if inDegree == 0:
+                bfs_queue.append(i)
+        
+        while bfs_queue:
+            cur = bfs_queue.popleft()
 
-        # Method detects if a cycle exists
-        def hasCycle(node, seen):
-            if node in memo:
-                return memo[node]
+            # put this in orders list and remove if this is a pre for any node indegrees list, 
+            orders.append(i)
 
-            if node in seen:
-                return True
-            if node not in graph: 
+            # check if there is a cycle
+            # If orders > numCourses, this means there is a cycle
+            if len(orders) > numCourses:
                 return False
-
-            seen.add(node)
-
-            for child in graph[node]:
-                if hasCycle(child, seen):
-                    memo[child] = True
-                    return True
             
-            seen.remove(node)
-           
-            memo[node] = False
-            return False
+            # decrese in_degrees for courses from this cur
+            for course in adj[cur]:
+                in_degrees[course] -= 1
+                if in_degrees[course] == 0:
+                    bfs_queue.append(course)
+                
 
 
+        return len(orders) == numCourses
 
-        # Loop over all nodes, because there may be separate graphs
-        for n in graph.keys():
-            seen = set()
-            if hasCycle(n, seen):
-                return False
-
-        return True
-
-
-
-
-
-
-'''  BFS SOLUTiON , !!!! 
-
-        indeg = [0]*numCourses
-        graph = {}
-        for u, v in prerequisites:
-            indeg[u] += 1
-            graph.setdefault(v, []).append(u)
-
-        stack = [i for i, x in enumerate(indeg) if not x]
-        seen = []
-        while stack:
-            x = stack.pop()
-            seen.append(x)
-            for xx in graph.get(x, []):
-                indeg[xx] -= 1
-                if indeg[xx] == 0: stack.append(xx)
-        return len(seen) == numCourses
-''' 
+        
+        
