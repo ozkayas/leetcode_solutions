@@ -1,0 +1,5 @@
+{
+    "python.analysis.extraPaths": [
+        "./LLD_OOD/call_center"
+    ]
+}
