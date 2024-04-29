@@ -31,51 +31,87 @@ from typing import List
 
 
 
-def findRequestsInQueue(wait: List[int]) -> List[int]:
+## My first code:
+# def findRequestsInQueue(wait: List[int]) -> List[int]:
     
-    total_jobs = len(wait)
+#     total_jobs = len(wait)
     
-    ans = [total_jobs] #Starting ans with current length
+#     ans = [total_jobs] #Starting ans with current length
 
-    expired_jobs = set() ##To hold indexes of expireds
-    removed_jobs = 0 ## Just a counter for Processed and expired in total
+#     expired_jobs = set() ##To hold indexes of expireds
+#     removed_jobs = 0 ## Just a counter for Processed and expired in total
 
-    ## Fill minheap
+#     ## Fill minheap
+#     minHeap = []
+#     for idx, wait_time in enumerate(wait):
+#         heapq.heappush(minHeap, (wait_time, idx))
+    
+
+#     curr_time = 1
+#     idx = 0
+#     while removed_jobs < total_jobs:
+#         # If faced an expired during iteraion on wait, just pass it
+#         if idx in expired_jobs:
+#             idx += 1
+#             continue
+        
+#         # Process and remove
+#         removed_jobs += 1
+        
+#         # Expire tasks <= curTime
+#         while minHeap and minHeap[0][0] <= curr_time:
+#             expired_time, expired_idx = heapq.heappop(minHeap)
+#             if expired_idx > idx:
+#                 expired_jobs.add(expired_idx)
+#                 removed_jobs += 1
+        
+#         #print(minHeap, idx, removed_jobs)
+#         ans.append(total_jobs - removed_jobs)
+#         idx += 1
+#         curr_time += 1
+    
+#     print(wait, ans)
+#     return ans
+
+## Second Trial
+
+
+
+
+def findRequestsInQueue(wait:List[int]) -> List[int]: 
     minHeap = []
-    for idx, wait_time in enumerate(wait):
-        heapq.heappush(minHeap, (wait_time, idx))
+    heapq.heapify(minHeap)   ## Will hold tuples (value, index) to check versus lazy removed set
+    ans = [len(wait)]
+    lazy_removed = set() ## Will hold removed indexes lazily
+    removedCount = 0
     
+    #Fill heap:
+    for i, jobTime in enumerate(wait):
+        heapq.heappush(minHeap, (jobTime, i))
 
-    curr_time = 1
-    idx = 0
-    while removed_jobs < total_jobs:
-        # If faced an expired during iteraion on wait, just pass it
-        if idx in expired_jobs:
-            idx += 1
+    for i in range(len(wait)):
+
+        # STEP 1: lazy remove the first job
+        if i in lazy_removed: # This may be expired long time ago, then just continue this index
             continue
-        
-        # Process and remove
-        removed_jobs += 1
-        
-        # Expire tasks <= curTime
-        while minHeap and minHeap[0][0] <= curr_time:
-            expired_time, expired_idx = heapq.heappop(minHeap)
-            if expired_idx > idx:
-                expired_jobs.add(expired_idx)
-                removed_jobs += 1
-        
-        #print(minHeap, idx, removed_jobs)
-        ans.append(total_jobs - removed_jobs)
-        idx += 1
-        curr_time += 1
-    
-    print(wait, ans)
-    return ans
+        lazy_removed.add(i)
+        removedCount += 1
 
+        # STEP 2: remove all expired jobs:   
+        # at t = 1 we are at index = 0 , so remove <=t values from heap & from removed if any
+        while removedCount < len(wait) and minHeap[0][0] <= (i+1):
+            t,index = heapq.heappop(minHeap)
+            if index not in lazy_removed:
+                lazy_removed.add(index)
+                removedCount += 1
+            
 
+        # STEP 3: calculate remainings
+        remaining_jobs = len(wait)-removedCount
+        ans.append(remaining_jobs)
+        if ans[-1] == 0:
+            return ans
 
-
-
-findRequestsInQueue([2, 2, 3, 1])
-findRequestsInQueue([4, 4, 4])
-findRequestsInQueue([3, 1, 2, 1])
+print(findRequestsInQueue([2, 2, 3, 1]))
+print(findRequestsInQueue([4, 4, 4]))
+print(findRequestsInQueue([3, 1, 2, 1]))
