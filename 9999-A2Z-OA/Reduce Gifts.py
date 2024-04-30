@@ -1,4 +1,7 @@
-'''New Year's Day is around the corner and Amazon is having a sale. They have a list of items they are considering but they may need to remove some of them. Determine the minimum number of items to remove from an array of prices so that the sum of prices of any k items does not exceed a threshold.
+'''New Year's Day is around the corner and Amazon is having a sale. 
+They have a list of items they are considering but they may need to remove some of them. 
+Determine the minimum number of items to remove from an array of prices so that the sum of prices of any 
+k items does not exceed a threshold.
 
 Note: If the number of items in the list is less than k, then there is no need to remove any more items.'''
 
