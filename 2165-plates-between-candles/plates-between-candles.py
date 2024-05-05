@@ -28,7 +28,6 @@ class Solution:
         totalPlates = []
 
         intervals = self.fillPlateIntervals(s)
-        print("intervals", intervals)
         for q in queries:
             plates = 0
             
@@ -39,7 +38,6 @@ class Solution:
             first = bisect_left(intervals, q[0], key=lambda i:i[0])
             last = bisect_left(intervals, q[1]+1, key=lambda i:i[1])-1
             if last >= first:
-                print("f,last", first, last)
                 lastBucketPlates =  intervals[last][2]
                 firstBucketPlates = intervals[first-1][2] if first>0 else 0
                 plates = lastBucketPlates - firstBucketPlates
