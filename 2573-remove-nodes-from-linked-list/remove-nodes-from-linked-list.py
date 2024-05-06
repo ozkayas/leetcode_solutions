@@ -6,7 +6,7 @@
 class Solution:
     def removeNodes(self, head: Optional[ListNode]) -> Optional[ListNode]:
         
-        mono_stack = deque([head])
+        mono_stack = [head]
         p = head
 
         while p:
@@ -15,14 +15,12 @@ class Solution:
             mono_stack.append(p)
             p = p.next
         
-        dummy = ListNode(None)
-        last = dummy
-        while mono_stack:
-            cur = mono_stack.popleft()
-            last.next = cur
-            last = last.next
+       
+        for i in range(len(mono_stack)-1):
+            mono_stack[i].next = mono_stack[i+1]
         
-        return dummy.next
+        return mono_stack[0]
+
 
 
         
