@@ -1,5 +1,6 @@
 {
     "python.analysis.extraPaths": [
-        "./LLD_OOD/call_center"
+        "./LLD_OOD/call_center",
+        "./9999-A2Z-OA/Scripts"
     ]
 }
