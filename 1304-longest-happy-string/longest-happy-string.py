@@ -11,7 +11,7 @@ class Solution:
                 break
 
             # Lets see if we can add this letter
-            if len(ans) < 2 or not(ans[-1] == ch and ans[-2] == ch):
+            if len(ans) < 2 or ans[-2:] != [ch, ch]:
                 ans.append(ch)
                 # decrese freq and push to heap again, +1 because it s already negative
                 heapq.heappush(mxHeap, (chFreq+1, ch))
