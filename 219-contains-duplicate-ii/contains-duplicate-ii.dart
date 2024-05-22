@@ -6,15 +6,21 @@ class Solution {
 
     for (int i=0; i < n; i++){
         final cur = nums[i];
-        if (!lastIndex.containsKey(cur)){
-            lastIndex[cur] = i;
-        } else {
-            // check if in the bounds
-            if (i - lastIndex[cur] <= k){
-                return true;
-            }
-            lastIndex[cur] = i;
-        }
+        final lastI = lastIndex[cur] ?? double.negativeInfinity;
+
+        if (i - lastI <= k) return true;
+
+        lastIndex[cur] = i;
+
+        // if (!lastIndex.containsKey(cur)){
+        //     lastIndex[cur] = i;
+        // } else {
+        //     // check if in the bounds
+        //     if (i - lastIndex[cur] <= k){
+        //         return true;
+        //     }
+        //     lastIndex[cur] = i;
+        // }
     }
     return false;
 
