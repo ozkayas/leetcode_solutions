@@ -2,11 +2,10 @@ class Solution:
     def commonChars(self, words: List[str]) -> List[str]:
         freq = Counter(words[0])
 
-        for word in words:
+        for word in words[1:]:
             freqW = Counter(word)
 
             for ch, f in list(freq.items()):
-                # print(ch,f)
                 if ch not in freqW:
                     del freq[ch]
                 else:
