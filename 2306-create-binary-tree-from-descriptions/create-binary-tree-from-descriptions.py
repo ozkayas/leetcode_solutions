@@ -26,7 +26,7 @@ class Solution:
         for parent in adjMap.keys():
             if parent not in children:
                 root = parent
-                continue
+                break
         # print("root", root)
         
         rootNode = TreeNode(root, None, None)
