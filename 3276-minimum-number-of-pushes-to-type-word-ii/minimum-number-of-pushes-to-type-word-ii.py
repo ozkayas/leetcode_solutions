@@ -18,15 +18,17 @@ class Solution:
         f = Counter(word)
         fList = f.most_common() # sorted tuple of [(a,7),(b,5),...]
 
+        ans = 0
         for letter, freq in fList:
             mapCounter += 1
-            letterMap[letter] = tapValueFor(mapCounter)
-        
-        ans = 0
-        for ch in word:
-            ans += letterMap[ch]
+            ans += tapValueFor(mapCounter) * freq
+            # letterMap[letter] = tapValueFor(mapCounter)
+        return ans 
+        # ans = 0
+        # for ch in word:
+        #     ans += letterMap[ch]
 
-        return ans
+        # return ans
 
 
 
