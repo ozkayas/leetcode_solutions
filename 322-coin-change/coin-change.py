@@ -1,23 +1,30 @@
 class Solution:
     def coinChange(self, coins: List[int], amount: int) -> int:
-        # dp[amount] will hold state , how many min coins needed to reach this sate
-        # dp[11] = 3, dp[0] = 0
-        # Forward push dp
+        memo = dict()
 
-        dp = [float('inf') for i in range(amount+1)]
-        dp[0] = 0
+        def dp(amount) -> int:
+            if amount == 0:
+                return 0
 
-        # try to fill each dp state
-        N = len(dp)
-        for i in range(N):
-            # try to jump to next possible states from this state
+            if amount in memo:
+                return memo[amount]
+            
+            # ask for each possibility and return the min result from next path
+            min_of_next_path = float("inf")
             for coin in coins:
-                if (i + coin) < N:
-                    dp[i + coin] = min(dp[i+coin] , (dp[i] + 1))
+                if amount - coin < 0:
+                    continue
+                path_result = dp(amount - coin)
+                if path_result >= 0:  # sadece geçerli yolları dikkate al
+                    min_of_next_path = min(min_of_next_path, path_result)
 
-        return dp[amount] if dp[amount] < float("inf") else -1
-'''
-            i
-0 1 2 3 4 5 6 7 8 9 10 11
-0 1 1 2 2 1 2 2 3 3 2  3
-'''
+            # no way to give a coin change
+            if min_of_next_path == float("inf"):
+                memo[amount] = -1
+            else:
+                memo[amount] = min_of_next_path + 1
+            
+            print("amount",amount,"returnin", memo[amount] )
+            return memo[amount]
+
+        return dp(amount)
