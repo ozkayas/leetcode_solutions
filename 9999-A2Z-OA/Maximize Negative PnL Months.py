@@ -56,30 +56,50 @@ Constraints:
 1 <= PnL[i] <= 109
 
 '''
+from typing import List
+import heapq
 
+def maximizeNegativePnLMonths(pnl: List[int]):
+    # Will use this to time travel and reverse a negated value
+    maxHeap = []
+    heapq.heapify(maxHeap)
 
-# pnl = [3,2,5,6,1]
-pnl = [5, 3, 1, 2]
-N = len(pnl)
-count = 0
+    N = len(pnl)
+    count = 0
+    pSum = 0
 
-pSum = [0 for i in range(N)]
-pSum[0] = pnl[0]
-
-# I will try a greedy approach
-
-for i in range(1, N):
-    if pnl[i] < pSum[i-1]: # We can negate this month
-        pnl[i] *= -1
-        count += 1
-    pSum[i] = pSum[i-1] + pnl[i] # Update pSum for this month
-    # else:
-    #     pSum[i] = pSum[i-1] + pnl[i]
+    # I will try a greedy approach with a heap to switch with a past value
+    for i in range(N):
+        if pnl[i] <= pSum: # We can negate this month
+            pSum -= pnl[i]
+            count += 1
+            # add negated value to the heap, for later if needed to change
+            heapq.heappush(maxHeap, -pnl[i])
+        else:
+            # Maybe there is a bigger negated value and we can switch it with this one
+            if maxHeap and ( pSum - 2* maxHeap[0] ) > pnl[i]:
+                item_to_reverse = -heapq.heappop(maxHeap)
+                pSum += 2 * item_to_reverse
+                pSum -= pnl[i]
+                heapq.heappush(maxHeap, -pnl[i])
+            else:
+                pSum += pnl[i]
+        print(maxHeap)
+    return count
     
-print(pnl, count)
+pnl = [5,5,1,1,1,1,1]
+print(maximizeNegativePnLMonths(pnl))
+pnl = [5, 3, 1, 2]
+print(maximizeNegativePnLMonths(pnl))
 
 
+'''
+0 5 2 1
+5 3 1 2
+    ^
+  c =2
 
+'''
 
 
 

@@ -36,11 +36,7 @@ channel 1 -> {2, 2, 1, 3,}, median = 2
 channel 2 -> {5, 5}, median = 5
 total quality 2 + 5 = 7
 '''
-## INPUTS
-# packets = [1, 2, 3 , 4 , 5] 
-# n = 2
-packets = [5, 2, 2, 1, 5, 3]
-n = 2
+
 
 from typing import List
 import math
@@ -80,5 +76,10 @@ def calculateMedianSum(packets:List[int], n:int) -> int:
     return sum_of_qualities
 
 
-
+## INPUTS
+packets = [1, 2, 3 , 4 , 5] 
+n = 2
+print(calculateMedianSum(packets, n))
+packets = [5, 2, 2, 1, 5, 3]
+n = 2
 print(calculateMedianSum(packets, n))
