@@ -30,7 +30,7 @@ class Solution:
             l = self.collapseWindow(l, k, nums)
 
             self.good_arrays += l
-            print(f"good arrays {self.good_arrays}")
+            # print(f"good arrays {self.good_arrays}")
 
         return self.good_arrays
         
