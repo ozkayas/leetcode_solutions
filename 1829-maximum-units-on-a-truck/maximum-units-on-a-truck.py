@@ -1,23 +1,24 @@
 class Solution:
     def maximumUnits(self, boxTypes: List[List[int]], truckSize: int) -> int:
-        # Sort box types
-        boxTypes.sort(key = lambda i:i[1])
-        # print(boxTypes)
 
         ans = 0
+        # sort boxes according to i[1]
+        boxTypes.sort(key = lambda item:item[1], reverse = True)
+        # print(boxTypes)
 
-        while truckSize > 0 and boxTypes:
-            lastTypeSize, unit = boxTypes.pop()
-
-            # If truck can take all
-            if truckSize >= lastTypeSize:
-                ans += lastTypeSize * unit
-                truckSize -= lastTypeSize
-            # Fill remaining small capacity with this
+        for boxT in boxTypes:
+            if truckSize == 0:
+                break
+            # truck has capacity to take all this boxType
+            if truckSize >= boxT[0]:
+                ans += boxT[0] * boxT[1]
+                truckSize -= boxT[0]
             else:
-                ans += truckSize * unit
+                ans += truckSize * boxT[1]
                 truckSize = 0
-            
+
         return ans
 
+
+        
         
