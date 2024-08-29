@@ -7,7 +7,6 @@ class Solution:
                     continue
                 if r > ratings[i-1] and candies[i] <= candies[i-1]:
                     candies[i] = candies[i-1]+1
-            print(candies)
             return candies
 
 
