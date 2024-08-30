@@ -1,14 +1,26 @@
 class Solution:
     def slowestKey(self, releaseTimes: List[int], keysPressed: str) -> str:
-        res = [releaseTimes[0],keysPressed[0]]
+        prevReleaseTime = 0
+        # hold max value and key
+        maxSoFar = (0,"")
 
-        for i in range(1,len(keysPressed)):
-            cur_time = releaseTimes[i] - releaseTimes[i-1]
-            cur_key = keysPressed[i]
+        for i, time in enumerate(releaseTimes):
+            duration = time - prevReleaseTime
+            prevReleaseTime = time
+            # print(f"duration: {duration}")
+            # print(f"maxSoFar: {maxSoFar}")
 
-            if cur_time > res[0]:
-                res = [cur_time, cur_key]
-            elif cur_time == res[0]:
-                res = [cur_time, max(res[1],cur_key)]
+            # We found a longer time with largest key
+            if duration > maxSoFar[0]:
+                maxSoFar = (duration, keysPressed[i])
+            elif duration == maxSoFar[0] and keysPressed[i]> maxSoFar[1]:
+                maxSoFar = (duration, keysPressed[i])
 
-        return res[1]
+
+
+        return maxSoFar[1]
+
+
+
+
+        
