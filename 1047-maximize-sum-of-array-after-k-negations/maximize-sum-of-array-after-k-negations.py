@@ -10,12 +10,11 @@ class Solution:
             elif cur == 0:
                 break
             else:
+                # print(f"{minHeap} - {cur} - i:{i}")
                 heapq.heappush(minHeap, -cur)
-                # print(f"{minHeap} - {cur}")
-                # if i % 2 != 0:
-                #     heapq.heappush(minHeap, -cur)
-                # else:
-                #     heapq.heappush(minHeap, cur)
+                if (k-i) % 2 != 0:
+                    break
+                    
         return sum(minHeap)
 
 
