@@ -5,38 +5,39 @@
 #         self.next = next
 class Solution:
     def rotateRight(self, head: Optional[ListNode], k: int) -> Optional[ListNode]:
-        if not head: return None
-        N = 1 # length of the list
+        if not head or not head.next: return head
 
-        tail = head
-        while tail.next:
-           N +=1
-           tail = tail.next
-        
-        # print("N:", N, "tail:", tail.val)
 
+        # First count the length of the list, to use module for k 
+        N, p = 1, head
+        while p.next:
+            p = p.next
+            N += 1
         k = k % N
-        if k == 0:
-            return head
-
-        #Find new tail
-        steps = N - k -1
-        newTail = head
-
-        while steps > 0:
-            newTail = newTail.next
-            steps -= 1
         
-        # print("newTail", newTail.val)
+        if k == 0: return head
+        # print(k,N)
 
-        newHead = newTail.next
-        tail.next = head
-        newTail.next = None
+        dummy = ListNode()
 
-        return newHead
+        e = head
+        # move head k times
+        while k and e.next:
+            e = e.next
+            k -= 1
+        # print(f"e: {e.val} - k:{k}")
 
+        p = head
+        # move p and e together until e reaches the end
+        while e.next:
+            p = p.next
+            e = e.next
+        
+        # print(p.val, e.val)
+        dummy.next = p.next
+        p.next = None
+        e.next = head
 
+        return dummy.next
 
         
-
-
