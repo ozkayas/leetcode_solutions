@@ -1,38 +1,54 @@
 class Solution:
     def isNStraightHand(self, hand: List[int], groupSize: int) -> bool:
-        # edge case
-        if len(hand) % groupSize != 0:
-            return False
-        numOfGroups = int(len(hand) // groupSize)
-        
-        freq = defaultdict(int)
+        N = len(hand)
+        if N % groupSize != 0: return False
+        hand.sort()
+        flag = [1 for _ in range(N)]
 
+        s = 0
 
-        for card in hand:
-            freq[card] += 1
+        while s < N:
+            while s < N and flag[s] == 0:
+                s += 1
 
-        def getMin(freq: dict) -> int:
-            # print(freq.keys())
-            return min(freq.keys())
+            # bir baslangic noktasi bulduk [1,2,3] 1 bulduk
+            e = s            
+            if s == N:
+                break
 
-        def canGroupN(freq: dict) -> bool:
-            cur = getMin(freq)
+            subarr = []
             for i in range(groupSize):
-                if freq[cur] > 0:
-                    freq[cur] -= 1
-                    if freq[cur] == 0:
-                        del freq[cur]
-                    cur += 1
-                else:
+                if e >= N: return False
+                if subarr and subarr[-1]+1 != hand[e]:
                     return False
-            return True
-
-        while numOfGroups:
-            if canGroupN(freq):
-                numOfGroups -= 1
-                continue
-            else:
+                subarr.append(hand[e])
+                flag[e] = 0
+                while e < N and (flag[e] == 0 or hand[e] == subarr[-1]):
+                    e += 1
+            print(subarr)
+            if len(subarr) < groupSize:
                 return False
-            
 
         return True
+
+
+            
+        
+
+
+
+
+"""
+
+1 1 1 2 2 2 3 3 3
+f t t f f t f t t
+
+  s.          e 
+   
+
+
+
+
+""" 
+
+        
