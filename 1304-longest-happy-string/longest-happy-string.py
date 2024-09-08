@@ -1,34 +1,40 @@
 class Solution:
     def longestDiverseString(self, a: int, b: int, c: int) -> str:
-        mxHeap = [(-a, "a"), (-b, "b"), (-c, "c")]
-        heapq.heapify(mxHeap)
+        freq = []
+        if a > 0: freq.append([a,"a"])
+        if b > 0: freq.append([b,"b"])
+        if c > 0: freq.append([c,"c"])
+        
         ans = []
-
-        while True:
-            chFreq, ch = heapq.heappop(mxHeap)
-
-            if chFreq == 0:
+        while freq:
+            freq.sort(key = lambda item:-item[0])
+            cur = freq[0][1]
+            if len(ans) < 2 or ans[-2:] != [cur, cur]:
+                ans.append(cur)
+                freq[0][0] -= 1
+                if freq[0][0] == 0: freq.pop(0)
+            # we will try to use next if exists, otherwise stop loop
+            elif len(freq) == 1:
                 break
-
-            # Lets see if we can add this letter
-            if len(ans) < 2 or ans[-2:] != [ch, ch]:
-                ans.append(ch)
-                # decrese freq and push to heap again, +1 because it s already negative
-                heapq.heappush(mxHeap, (chFreq+1, ch))
-
             else:
-                # try the second most
-                secondMostFreq, secondCh = heapq.heappop(mxHeap)
-                # If no second, not third also, just stop here
-                if secondMostFreq == 0:
-                    break
-                
-                ans.append(secondCh)
-
-                # and most and second most back to heap
-                heapq.heappush(mxHeap, (chFreq, ch))
-                heapq.heappush(mxHeap, (secondMostFreq + 1, secondCh))
-
+                nxt = freq[1][1]
+                ans.append(nxt)
+                freq[1][0] -= 1
+                if freq[1][0] == 0: freq.pop(1)
 
         return "".join(ans)
         
+
+
+
+
+
+
+
+
+"""
+a2 b1 c9
+
+cc a cc a cc b cc
+
+"""
