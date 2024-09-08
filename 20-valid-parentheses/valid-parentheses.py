@@ -1,24 +1,17 @@
 class Solution:
     def isValid(self, s: str) -> bool:
+        open = {")":"(", "]":"[", "}":"{"}
         stack = []
-        for c in s:
-            if c == "(" or c == "{" or c == "[":
-                stack.append(c)
-            elif c == ")":
-                if not stack or stack[-1] != "(":
-                    return False
+
+        for ch in s:
+            if not stack or ch not in open.keys():
+                stack.append(ch)
+            else:
+                if stack[-1] == open[ch]:
+                    stack.pop()
                 else:
-                    stack.pop()     
-            elif c == "}":                 
-                if not stack or stack[-1] != "{":
                     return False
-                else:
-                    stack.pop()  
-            elif c == "]":
-                if not stack or stack[-1] != "[":
-                    return False
-                else:
-                    stack.pop() 
         
-        return len(stack) == 0
+        return False if stack else True
+
         
