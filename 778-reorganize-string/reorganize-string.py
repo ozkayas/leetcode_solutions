@@ -1,32 +1,23 @@
 class Solution:
     def reorganizeString(self, s: str) -> str:
-        maxHeap = [(-freq, ch) for ch, freq in Counter(s).items()]
-        heapq.heapify(maxHeap)
-        # Init ans with the most freq char, and pop it from the heap
-        f , ch = heapq.heappop(maxHeap)
-        ans = [ch]
-        if -f > 1:
-            heapq.heappush(maxHeap, (f + 1, ch))
+        freq = list(Counter(s).items())
+        freq.sort(key = lambda i:i[1], reverse = True)
+        # print(freq)
 
-        while maxHeap:
-            most = heapq.heappop(maxHeap)
+        #fast exit if most common can not be filled in the space
+        most = freq[0][1]
+        if most * 2 - 1 > len(s): return ""
 
-            # If last != this, append
-            if ans[-1] != most[1]:
-                ans.append(most[1])
-                if -most[0] - 1 > 0:
-                    heapq.heappush(maxHeap, (most[0]+1, most[1]))
-            elif maxHeap:
-                secondMost = heapq.heappop(maxHeap)
-                ans.append(secondMost[1])
+        ans = ["" for _ in range(len(s))]
+        i = 0 # global pointer first fill 0 2 4 6 ,then reset to 1 an fill 1 3 5 7 etc.
+        for ch, f in freq:
+            for _ in range(f):
+                # print(i, ch)
+                ans[i] = ch
+                i = i+2 if i+2 < len(s) else 1
+        
+        return "".join(ans)
 
-                # Put most back in the heap
-                heapq.heappush(maxHeap, most)
-                if -secondMost[0] - 1 > 0:
-                    heapq.heappush(maxHeap, (secondMost[0]+1,secondMost[1]))
 
-            # Can not add the most freq and there is no char else, then quit
-            else:
-                break
-
-        return "".join(ans) if len(s) == len(ans) else ""
+        
+        
