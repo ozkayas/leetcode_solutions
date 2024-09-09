@@ -1,21 +1,23 @@
 class Solution:
     def dividePlayers(self, skill: List[int]) -> int:
-        teamTarget = sum(skill) // (len(skill)/2)
-        freq = defaultdict(int)
-        chemSum = 0
+        sm = sum(skill)
+        N = len(skill)
+        nOfTeams = N/2
+        teamSkill = sm / nOfTeams
+        if sm % nOfTeams != 0: return -1
 
-        for sk in skill:
-            pairOfSk = teamTarget - sk
-            if pairOfSk in freq:
-                chemSum += (pairOfSk * sk)
-                freq[pairOfSk] -= 1
-                if freq[pairOfSk] == 0:
-                    del freq[pairOfSk]
-            else:
-                freq[sk] += 1
+        ans = 0
+        skill.sort()
+        l, r = 0, N-1
 
-        return int(chemSum) if len(freq) <= 0 else -1
-
-
+        while l < r:
+            sm = skill[l] + skill[r]
+            if sm != teamSkill: return -1
+            ans += skill[l] * skill[r]
+        
+            l += 1
+            r -= 1
+        
+        return ans
 
         
