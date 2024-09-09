@@ -1,15 +1,14 @@
 class Solution:
     def reorderLogFiles(self, logs: List[str]) -> List[str]:
 
-        def sort_algo(log):
 
-            leftPart, rightPart = log.split(" ",1)
-            if rightPart[0].isalpha():
-                return (0, rightPart, leftPart)
+        def compare(s: str) -> tuple:
+            [id, con] = s.split(" ", 1)
+            if con[0].isdigit():
+                return (1, )
             else:
-                return (1,)
+                return (0, con, id)
 
-
-
-        return sorted(logs, key=sort_algo)    
+        logs.sort(key = compare)
+        return logs
         
