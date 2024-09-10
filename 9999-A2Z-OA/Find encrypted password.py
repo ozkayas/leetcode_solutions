@@ -83,10 +83,11 @@ while len(freq) > 0:
         # Clear this from hashmap
         if freq[char] == 0:
             del freq[char]
+        # if 1, then this is the center of an odd palindrome, save it for later
         if freq[char] == 1:
             remainder_char = char
             del freq[char]
-            
+    # Next character, char++
     char = chr(ord(char) + 1)
 
 # If a remainder_char detected, it should be inserted in the middle after loop execution

@@ -101,14 +101,6 @@ def suitableLocations(center, d) -> int:
     return firstInvalid - firstValid
 
 
-# center = [-2, 1, 0]
-# d = 8
-# print(suitableLocations([-2, 1, 0], 8))  # 3
-print(suitableLocations([2, 6, 3, -4], 22))  # 5
+print(suitableLocations([-2, 1, 0], 8))  # 3
+print(suitableLocations([2, 0, 3, -4], 22))  # 5
 print(suitableLocations([-3,2,2], 8))  # 0
-
-# # center = [2, 6, 3, -4]
-# # d= 22
-#
-# center = [-3,2,2]
-# d= 8
