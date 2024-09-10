@@ -72,40 +72,43 @@ def hashFun(s:str) -> int:
     N = len(s)
     h = 0
     for i in range(N):
-        digitValue = (ord(s[i])*pow(power, N-i-1,MOD)) % MOD
+        digitValue = (ord(s[i]) * pow(power, N - i - 1, MOD)) % MOD
         h += digitValue
     return h % MOD
 
+
 # Take the current hash and roll it
 # b: char to be removed from hash, e: char to be added to the hash, n: length of pattern hashed
-def rollHash(b:str, e:str, n:int, curHash:int) -> int:
-    toRemoveValue = (ord(b) * pow(power, n-1, MOD)) % MOD
+def rollHash(b: str, e: str, n: int, curHash: int) -> int:
+    toRemoveValue = (ord(b) * pow(power, n - 1, MOD)) % MOD
     curHash = (curHash - toRemoveValue + MOD) % MOD
     curHash = (curHash * power) % MOD
-    curHash = (curHash + ord(e)*pow(power, 0, MOD)) % MOD
+    curHash = (curHash + ord(e) * pow(power, 0, MOD)) % MOD
 
     return curHash % MOD
+
 
 # print(hashFun("abcd"))
 # print(hashFun("bcde"))
 # print(rollHash("a","e",4,hashFun("abcd")))
 
-def findMaxSubarray(review:str, found:List) -> int:
+def findMaxSubarray(review: str, found: List) -> int:
     maxSub = 0
-    starts = [0] + sorted([s for s,e in found])
-    ends = sorted([e for s,e in found]) + [len(review)]
-    
-    for i in range (len(starts)):
-        maxSub = max(maxSub , ends[i] - starts[i] -1)
-            
+    starts = [0] + sorted([s for s, e in found])
+    ends = sorted([e for s, e in found]) + [len(review)]
+
+    for i in range(len(starts)):
+        maxSub = max(maxSub, ends[i] - starts[i] - 1)
+
     return maxSub
 
-def findReviewScore(review:str, prohibitedWords:List[str]) -> int:
+
+def findReviewScore(review: str, prohibitedWords: List[str]) -> int:
     review = review.lower()
     # Holds starting indexes of prohibitedWord in review
     found = []
 
-    for word  in prohibitedWords:
+    for word in prohibitedWords:
         targetHash = hashFun(word)
         curHash = 0
 
@@ -114,15 +117,16 @@ def findReviewScore(review:str, prohibitedWords:List[str]) -> int:
             if l == 0:
                 curHash = hashFun(review[l:r])
             else:
-                curHash = rollHash(review[l-1],review[r-1],len(word),curHash)
-            
+                curHash = rollHash(review[l - 1], review[r - 1], len(word), curHash)
+
             if curHash == targetHash:
-                found.append((l,r-1))
+                found.append((l, r - 1))
 
             l += 1
             r += 1
 
     return findMaxSubarray(review, found)
+
 
 print(findReviewScore("GoodProductButScrapAfterWash", ["crap", "odpro"]))
 print(findReviewScore("FastDeliveryOkayProduct", ["eryoka", "yo", "eli"]))
