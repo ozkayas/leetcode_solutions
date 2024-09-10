@@ -35,6 +35,7 @@ print(countDistinctPasswords("abc")) # 4
 print(countDistinctPasswords("abaa")) # 4
 print(countDistinctPasswords("abca")) # 6
 print(countDistinctPasswords("daadacca")) # 21
-print(countDistinctPasswords2("abc")) # 4
+# print(countDistinctPasswords2("abc")) # 4
 print(countDistinctPasswords2("abaa")) # 4
-print(countDistinctPasswords2("daadacca")) # 21
+# print(countDistinctPasswords("abca")) # 6
+# print(countDistinctPasswords2("daadacca")) # 21

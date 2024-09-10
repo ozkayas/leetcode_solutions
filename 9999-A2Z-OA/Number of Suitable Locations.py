@@ -42,69 +42,73 @@ o/p3: 0
 ### This is a binary search question, implement binary search on the set of possible answer set
 ## Like kooko eats banana
 
-# center = [-2, 1, 0]
-# d = 8
-
-# center = [2, 6, 3, -4]
-# d= 22
-
-center = [-3,2,2]
-d= 8
-
-
-min_point = None
-max_point = None
-
-def total_d(wh):
+# Calculate the total distance from a point to all other points
+def totalDistance(wh, center):
     sum = 0
     for c in center:
         sum += abs(c - wh)*2
     return sum
 
-center.sort()
+def suitableLocations(center, d) -> int:
+    center.sort()
 
-##### Just found a valid point to use as a bound to be used int 2 binary searches
-first_valid = None
-for i in range(len(center)):
-    if total_d(center[i]) <= d:
-        first_valid = center[i]
-        break
-#### There is not suitable point, even in the range of center
-if not first_valid:
-    print("ans", 0)
+    ##### Trying to found a valid point to use as a bound to be used in 2 binary searches
+    ### Searching between the leftmost center and the rightmost center
+    anyValid = None
+    for i in range(len(center)):
+        if totalDistance(center[i], center) <= d:
+            anyValid = center[i]
+            break
+
+    #### There is not suitable point, even in the range of center
+    if anyValid is None:
+        return 0
+
+    #####  Binary search to find the first valid point from left side
+    # l is potentially the left bound, l can be valid but l-1 is not
+    # r is a point we are sure is valid
+    # 0000011111 , we are trying to find the first 1
+    l = center[0] - (d // 2)
+    r = anyValid
+
+    firstValid = None
+    while l <= r:
+        mid = l + (r - l) // 2
+
+        if totalDistance(mid, center) <= d:
+            # we found a valid point, but maybe there is a better one,
+            # so set this now and continue searching to the left
+            firstValid = mid
+            r = mid - 1
+        else:
+            l = mid + 1
+
+    #####  Binary search to find the first 'IN-valid point' from right side
+    # 1111100000 , we are trying to find the first 0
+    l = anyValid
+    r = center[-1] + (d//2)
+
+    firstInvalid = None # first invalid at the right side
+    while l <= r:
+        mid = l + (r - l)//2
+
+        if totalDistance(mid, center) <= d:
+            l = mid + 1
+        else:
+            firstInvalid = mid
+            r = mid - 1
+
+    return firstInvalid - firstValid
 
 
+# center = [-2, 1, 0]
+# d = 8
+# print(suitableLocations([-2, 1, 0], 8))  # 3
+print(suitableLocations([2, 6, 3, -4], 22))  # 5
+print(suitableLocations([-3,2,2], 8))  # 0
 
-# for i in range(l,r+1):
-#     print(i, total_d(i))
-
-#####  Binary search to find the first valid point from left side
-l = center[0] - (d//2)
-r = first_valid 
-
-while l < r:
-    mid = (l+r)//2
-    
-    if total_d(mid) > d:
-        l = mid +1
-    else:
-        r = mid #not mid-1 because it is OK
-
-min_point = l 
-    
-#####  Binary search to find the first 'IN-valid point' from right side
-l = first_valid
-r = center[-1] + (d//2)
-
-while l < r:
-    mid = (r+l)//2
-    
-    if total_d(mid) <= d:
-        l = mid + 1
-    else:
-        r = mid #not mid-1 because it is OK
-
-max_point = r-1
-
-
-print("ans:", max_point-min_point+1)
+# # center = [2, 6, 3, -4]
+# # d= 22
+#
+# center = [-3,2,2]
+# d= 8
