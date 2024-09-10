@@ -25,26 +25,49 @@ The maximum number of points that can be attained = 2 + 1 + 2 + 3 = 8. One choic
 '''
 from typing import List
 
-def get_max_points(days:List[int], k:int) -> int:
-    schedule = []  #  [2,3,2] -> [1,2,1,2,3,1,2]
-    for d in days:
-        schedule.extend([i+1 for i in range(d)])
-    # print(schedule)
+# def get_max_points(days:List[int], k:int) -> int:
+#     schedule = []  #  [2,3,2] -> [1,2,1,2,3,1,2]
+#     for d in days:
+#         schedule.extend([i+1 for i in range(d)])
+#     # print(schedule)
+#
+#     ## Lets use 2 pointers and  try to find the max point
+#     ans = sum(schedule[:k])
+#
+#     l, r = 1, k+1
+#     while r < len(schedule):
+#         curSum = sum(schedule[l:r])
+#         ans = max(ans, curSum)
+#         r += 1
+#         l += 1
+#
+#     return ans
 
-    ## Lets use 2 pointers and  try to find the max point
-    ans = sum(schedule[:k])
-
-    l, r = 1, k+1
-    while r < len(schedule):
-        curSum = sum(schedule[l:r])
-        ans = max(ans, curSum)
-        r += 1
-        l += 1
-
-    return ans
+from collections import deque
 
 
-days = [2,3,2]
-k = 4
+def maxPointsWithKRounds(tournament, K):
+    q = deque()  # Use deque for queue operations
+    if K == 0:
+        return 0
 
-print(get_max_points(days,k))
+    res = 0
+    points = 0
+
+    for i in tournament:
+        for j in range(1, i + 1):
+            if len(q) < K:
+                points += j
+                q.append(j)
+            else:
+                points -= q.popleft()  # Equivalent to Java's poll()
+                points += j
+                q.append(j)
+
+            res = max(res, points)
+
+    return res
+
+print(maxPointsWithKRounds([2,3,2], 4)) # 8
+print(maxPointsWithKRounds([7, 4, 3, 7, 2], 8)) #32
+print(maxPointsWithKRounds([7, 4, 3, 7, 2], 3)) #18

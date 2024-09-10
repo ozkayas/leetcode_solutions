@@ -1,4 +1,4 @@
-'''
+"""
 https://www.fastprep.io/problems/amazon-maximize-negative-pnl_months
 
 You are analyzing the market trends of Amazon stocks. An AWS financial service model returned an array of integers, PnL (Profit and Loss), for your portfolio representing that in the ith month, you will either gain or lose PnL[i]. All reported PnL values are positive, representing gains.
@@ -23,17 +23,17 @@ int: the maximum number of months with a negative PnL such that the cumulative P
 Example 2:
 
 Input:  PnL = [1, 1, 1, 1, 1]
-Output: 2 
+Output: 2
 Explanation:
 
 There are multiple possible PnLs such as [1, -1, -1, 1, 1], [-1, 1, -1, 1, -1], etc.
 
 However, it is optional to modify the PnL to be [1, 1, -1, 1, -1] or [1, 1, 1, -1, -1].
-      
+
 Example 3:
 
 Input:  PnL = [5, 2, 3, 5, 2, 3]
-Output: 3 
+Output: 3
 Explanation:
 
 The possible PnLs such that all the cumulative PnLs are positive are:
@@ -50,12 +50,12 @@ The max num of negatives we can have ensuring that all the culmulative PnLs are 
 
 Note that [5, 2, 3, -5, -2, -3] is not a valid case as the culative PnLs are [5, 7, 10, 5, 2, 0] but they must be strictly positive.
 
-      
+
 Constraints:
 1 <= n <= 10
 1 <= PnL[i] <= 109
 
-'''
+"""
 from typing import List
 import heapq
 

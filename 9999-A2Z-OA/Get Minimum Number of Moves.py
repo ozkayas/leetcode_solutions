@@ -80,7 +80,7 @@ def getMinNumMoves(blocks:List[int]) -> int:
     movesForMax = len(blocks)-maxx[-1]-1
     totalMoves = movesForMin + movesForMax
 
-    # If max on the left of the min, it is also swapped a step while moving min, so deduce this step.
+    # If max was on the left of the min, it is also swapped a step while moving min, so deduce this step.
     if maxx[-1] < minn[-1]:
         totalMoves -= 1
 
