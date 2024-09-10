@@ -1,4 +1,4 @@
-'''
+"""
 https://www.fastprep.io/problems/get-max-points-from-sprints
 
 Amazon Care is a healthcare and wellbeing portal for its employees.
@@ -19,30 +19,10 @@ A sprint here denotes a set of activities performed in a particular time period
 Example 1:
 
 Input:  days = [2, 3, 2], k = 4
-Output: 8 
+Output: 8
 The maximum number of points that can be attained = 2 + 1 + 2 + 3 = 8. One choice is to start on the last day of the first sprint and end on the last day of the second sprint.
 
-'''
-from typing import List
-
-# def get_max_points(days:List[int], k:int) -> int:
-#     schedule = []  #  [2,3,2] -> [1,2,1,2,3,1,2]
-#     for d in days:
-#         schedule.extend([i+1 for i in range(d)])
-#     # print(schedule)
-#
-#     ## Lets use 2 pointers and  try to find the max point
-#     ans = sum(schedule[:k])
-#
-#     l, r = 1, k+1
-#     while r < len(schedule):
-#         curSum = sum(schedule[l:r])
-#         ans = max(ans, curSum)
-#         r += 1
-#         l += 1
-#
-#     return ans
-
+"""
 from collections import deque
 
 
@@ -54,15 +34,16 @@ def maxPointsWithKRounds(tournament, K):
     res = 0
     points = 0
 
-    for i in tournament:
-        for j in range(1, i + 1):
+    for tournNo, tournDays in enumerate(tournament+tournament):  # Double the tournament to handle cyclic nature
+        print(f"tournNo: {tournNo}, tournDays: {tournDays}")
+        for day in range(1, tournDays + 1):
             if len(q) < K:
-                points += j
-                q.append(j)
+                points += day
+                q.append(day)
             else:
                 points -= q.popleft()  # Equivalent to Java's poll()
-                points += j
-                q.append(j)
+                points += day
+                q.append(day)
 
             res = max(res, points)
 
@@ -71,3 +52,4 @@ def maxPointsWithKRounds(tournament, K):
 print(maxPointsWithKRounds([2,3,2], 4)) # 8
 print(maxPointsWithKRounds([7, 4, 3, 7, 2], 8)) #32
 print(maxPointsWithKRounds([7, 4, 3, 7, 2], 3)) #18
+print(maxPointsWithKRounds([2,1,1,4], 5)) #12
