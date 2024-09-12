@@ -1,4 +1,4 @@
-'''
+"""
 https://www.fastprep.io/problems/amazon-get-max-aggregate-temperature-change
 
 Alexa is Amazon's virtual AI assistant. It makes it easy to set up your Alexa-enabled devices, listen to music, get weather updates, and much more. The team is working on a new feature that evaluates the aggregate temperature change for a period based on the changes in temperature of previous and upcoming days.
@@ -21,7 +21,7 @@ long: the maximum aggregate temperature change
 Example 1:
 
 Input:  tempChange = [6, -2, 5]
-Output: 9 
+Output: 9
 Explanation:
 
 The aggregate temperature change on each day is evaluated as:
@@ -39,21 +39,21 @@ For day 2, consider [6, -2] -> 6 + (-2) = 4, and [-2, 5] -> (-2) + 5 = 3. The ma
 For day 3,consider [6, -2, 5] -> 6 + (-2) + 5  = 9, and [5]. The maximum of 9 and 5 is 9.
 
 The max aggregate temp change is max (9, 4, 9) = 9.
-      
+
 Example 2:
 
 Input:  tempChange = [-1, 2, 3]
-Output: 5 
+Output: 5
 Explanation:
 
 Explanation hasn't been found yet. If you happen to know about it, feel free to lmk! Manyyy thanks in advance! 💜
-      
+
 Constraints:
 1 <= n <= 105
 -109 <= tempChange[i] <= 109 where, 1 <= i <= n
 
 
-'''
+"""
 nums = [6, -2, 5, 7 ]
 
 preFix = 0
