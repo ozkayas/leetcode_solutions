@@ -112,6 +112,7 @@ def findReviewScore(review: str, prohibitedWords: List[str]) -> int:
         targetHash = hashFun(word)
         curHash = 0
 
+        # search for word in review, in chunks of len(word)
         l, r = 0, len(word)
         while r < len(review):
             if l == 0:
@@ -119,12 +120,14 @@ def findReviewScore(review: str, prohibitedWords: List[str]) -> int:
             else:
                 curHash = rollHash(review[l - 1], review[r - 1], len(word), curHash)
 
+            # This prohibited word is found in review in the range [l, r)
             if curHash == targetHash:
                 found.append((l, r - 1))
 
             l += 1
             r += 1
 
+    # Check for the longest substring
     return findMaxSubarray(review, found)
 
 

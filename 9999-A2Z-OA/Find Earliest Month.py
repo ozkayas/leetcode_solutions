@@ -1,4 +1,4 @@
-'''
+"""
 https://www.fastprep.io/problems/amazon-find-earliest-month
 
 The interns at Amazon were asked to review the company's stock value over a period. Given the stock prices of n months, the net price change for the ith month is defined as the absolute difference between the average of stock prices for the first i months and for the remaining (n - i) months where 1 ≤ i < n. Note that these averages are rounded down to an integer.
@@ -15,18 +15,18 @@ int: the earliest month at which the net price change is minimum
 
 Example 1:
 Input:  stockPrice = [1, 3, 2, 3]
-Output: 2 
+Output: 2
 Explanation:
 The minimum net price change is 0, and it occurs in the 2nd month. Return 2 :)
-      
+
 Example 2:
 Input:  stockPrice = [1, 3, 2, 4, 5]
-Output: 2 
+Output: 2
 Explanation:
 
 The net price change can be calculated as:
 
-      
+
 Month 1: [1] and [3, 2, 4, 5], their respective averages, rounded down = 1 and 3, net price change = 2
 
 
@@ -40,7 +40,9 @@ Month 4: [1, 3, 2, 4] and [5], averages = 2 and 5, net price change = 3
 
 The minimum net price change is 1, and it occurs at month 2 :D.
 
-'''
+"""
+import math
+
 """
 Explanation to myself
 
@@ -92,3 +94,66 @@ for i in range(len(net_change)):
     if net_change[i] == min_value:
         print("RESULT: ",i+1) 
         break
+
+
+#### Another way to do it,
+# https://github.com/Rohit91singh9/Coding-DP-DSA/blob/main/findEarliestmonth.py
+# 1st Approach
+def findEarliestMonth(stockPrice):
+    # Write your code here
+    n = len(stockPrice)
+    first = stockPrice[0]
+    average_frst = math.floor(first)
+    second = sum(stockPrice[1:])
+    average_scnd = math.floor(second/(n-1))
+    diff = abs(average_frst - average_scnd)
+    result = 1
+    for i in range(1, n-1):
+        first+= stockPrice[i]
+        second-= stockPrice[i]
+        average_frst = math.floor(first/(i+1))
+        average_scnd = math.floor(second/(n-i-1))
+        difference_temp = abs(average_frst - average_scnd)
+        if(difference_temp<diff):
+            diff = difference_temp
+            result = i+1
+    return result
+
+# 2nd Approach
+def findEarliestMonth(stockPrice):
+    sum1= 0
+    sum2= sum(stockPrice)
+    n= len(stockPrice)
+
+    mini= 1000000
+    month= 0
+
+    for i in range(0, n-1):
+        sum1 += stockPrice[i]
+        sum2 -= stockPrice[i]
+        avg1= sum1 // (i + 1)
+        avg2= sum2 // (n - i - 1)
+        if abs(avg2-avg1)< mini:
+            mini= abs(avg2-avg1)
+            month= i+1
+    return month
+print(findEarliestMonth([1,3,2,3]))
+
+
+#3rd Approach
+def findEarliestmonth(stockPrice):
+    #initialize month variable with 0
+    month=0
+    change=max(stockPrice)
+    l=[]
+    while(len(stockPrice)>1):
+        l.append(stockPrice.pop(0))
+        avg1=sum(l)//len(1)
+        avg2=sum(stockPrice)//len(stockPrice)
+        if(abs(avg1-avg2)<change):
+            change=abs(avg1-avg2)
+            month=len(l)
+    return month
+
+stockPrice[1,3,2,3]
+print("Minimum changes in the month :",findEarliestmonth(stockPrice))

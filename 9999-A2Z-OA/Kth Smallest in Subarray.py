@@ -69,10 +69,12 @@ def giveSmallestWithSortedList(arr:List[int], k:int, m:int)->List[int]:
 
     return res
 
+print(giveSmallestNums([3, 1, 4, 2],2,3)) # [3, 2]
+print(giveSmallestNums([3, 1, 4, 2, 2],2,3)) # [3, 2, 2]
+print(giveSmallestNums([3, 1, 4, 2, 5, 5, 1],2,3)) # [3, 2, 4,5,5]
+print(giveSmallestNums([3, 1, 4, 2, 5, 5, 1],1,3)) # [1, 1, 2, 2, 1]
 
-# arr, k, m = [3, 1, 4, 2], 2, 3
-arr, k, m = [3, 1, 4, 2, 2], 2, 3
-# arr, k, m = [3, 1, 4, 2, 5, 5, 1], 2, 3
-
-print(giveSmallestNums(arr,k,m))
-print(giveSmallestWithSortedList(arr,k,m))
+print(giveSmallestWithSortedList([3, 1, 4, 2],2,3)) # [3, 2]
+print(giveSmallestWithSortedList([3, 1, 4, 2, 2],2,3)) # [3, 2, 2]
+print(giveSmallestWithSortedList([3, 1, 4, 2, 5, 5, 1],2,3)) # [3, 2, 4,5,5]
+print(giveSmallestWithSortedList([3, 1, 4, 2, 5, 5, 1],1,3)) # [1, 1, 2, 2, 1]

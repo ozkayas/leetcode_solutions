@@ -1,4 +1,4 @@
-'''
+"""
 Amazon games have introduced a new mathematical game for kids. You will be given n sticks and the player is required to form rectangles from those sticks.
 
 Formally, given an array of n integers representing the lengths of the sticks, you are required to create rectangles using those sticks. Note that a particular stick can be used in at most one rectangle and in order to create a rectangle we must have exactly two pairs of sticks with the same lengths. For example, you can create a rectangle using sticks of lengths [2, 2, 5, 5] and [4, 4, 4, 4] but not with [3, 3, 5, 8]. The goal of the game is to maximize the total sum of areas of all the rectangles formed.
@@ -16,16 +16,17 @@ getMaxTotalArea has the following parameter(s):
 int sideLengths[n]: the side lengths that can be used to form rectangles
 
 Input:  sideLengths = [2, 6, 2, 6, 3, 5]
-Output: 12 
+Output: 12
 
 Input:  sideLengths = [2, 3, 3, 4, 6, 8, 8, 6]
-Output: 54 
+Output: 54
 
 Input:  sideLengths = [3, 4, 5, 5, 6]
-Output: 20 
+Output: 20
 
-'''
+"""
 from collections import deque
+from typing import List
 
 s = [2, 6, 2, 6, 3, 5]
 # Output = 12 
@@ -36,9 +37,6 @@ s = [2, 3, 3, 4, 6, 8, 8, 6]
 s = [3, 4, 5, 5, 6]
 # Output: 20 
 
-total_area = 0
-pairs = deque()
-MOD = 10**9 + 7
 
 # [2, 3, 3, 4, 6, 8, 8, 6]
 # 8 8 6 6 4 3 3 2
@@ -49,22 +47,35 @@ MOD = 10**9 + 7
 
 # 8 6 3 2
 
-s.sort(reverse = True)
-i = 0
-while i < len(s)-1:
-    if s[i] == s[i+1]:
-        pairs.append(s[i])
-        i += 2
-    elif s[i]-1 == s[i+1]:
-        pairs.append(s[i]-1)
-        i += 2
-    else:
-        i += 1
+def getMaxTotalArea(s: List[int]) -> int:
+    total_area = 0
+    pairs = deque()
+    MOD = 10 ** 9 + 7
+
+    s.sort(reverse = True)
+    i = 0
+    while i < len(s)-1:
+        if s[i] == s[i+1]:
+            pairs.append(s[i])
+            i += 2
+        elif s[i]-1 == s[i+1]:
+            pairs.append(s[i]-1)
+            i += 2
+        else:
+            i += 1
 
 
-while len(pairs) > 1:
-    a = pairs.popleft()
-    b = pairs.popleft()
-    total_area += (a*b) % MOD
-    
-print(total_area)
+    while len(pairs) > 1:
+        a = pairs.popleft()
+        b = pairs.popleft()
+        total_area += (a*b) % MOD
+
+    return total_area
+
+
+from Scripts.test_utils import test_case
+
+test_case(getMaxTotalArea, ([2, 6, 2, 6, 3, 5],), 12)
+test_case(getMaxTotalArea, ([2, 3, 3, 4, 6, 8, 8, 6],), 54)
+test_case(getMaxTotalArea, ([3, 4, 5, 5, 6],), 20)
+test_case(getMaxTotalArea, (([2, 3, 3, 4, 6, 8, 8, 6]),), 54)

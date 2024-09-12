@@ -24,6 +24,8 @@ Add 1 unit to subarray (1, 2) and 1 unit to subarray (2, 2). The final arrangeme
 
 '''
 from typing import List
+from Scripts.test_utils import test_case
+
 
 def makePowerNonDecreasing(power:List[int]) -> int:
     if len(power) < 2 : return 0
@@ -42,3 +44,6 @@ def makePowerNonDecreasing(power:List[int]) -> int:
 
 print(makePowerNonDecreasing([3, 4, 1, 6, 2]))
 print(makePowerNonDecreasing([3, 2, 1]))
+
+test_case(makePowerNonDecreasing, ([3, 4, 1, 6, 2],), 7)
+test_case(makePowerNonDecreasing, ([3, 2, 1,],), 2)

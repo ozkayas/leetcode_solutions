@@ -83,3 +83,97 @@ print(calculateMedianSum(packets, n))
 packets = [5, 2, 2, 1, 5, 3]
 n = 2
 print(calculateMedianSum(packets, n))
+
+
+### Another solution:
+def solution(packets, channels):
+    if len(packets) < 1 or len(packets) > 500000:
+        return
+    for i in range(len(packets)):
+        if packets[i] < 1 or packets[i] > 1000000000:
+            return
+    if channels < 1 or channels > len(packets):
+        return
+    if channels == 1:
+        result = sum(packets)
+        print(result)
+    packets_sorted = sorted(packets, reverse=True)
+    result = 0
+    for i in range(channels - 1):
+        result += packets_sorted[i]
+    median_temp = packets_sorted[channels - 1:len(packets_sorted)]
+    print(median_temp)
+    temp = 0
+    if len(median_temp) % 2 == 0:
+        temp = (median_temp[len(median_temp) // 2] + median_temp[len(median_temp) // 2 - 1]) / 2
+    else:
+        temp = (median_temp[len(median_temp) // 2])
+
+    result += temp
+
+    print(math.ceil(result))
+
+
+### Approach 3 ; quick select for better performance
+import math
+import random
+
+def quick_select(arr, left, right, k):
+    if left == right:
+        return arr[left]
+
+    pivot_index = random.randint(left, right)
+    pivot_index = partition(arr, left, right, pivot_index)
+
+    if k == pivot_index:
+        return arr[k]
+    elif k < pivot_index:
+        return quick_select(arr, left, pivot_index - 1, k)
+    else:
+        return quick_select(arr, pivot_index + 1, right, k)
+
+
+def partition(arr, left, right, pivot_index):
+    pivot_value = arr[pivot_index]
+    arr[pivot_index], arr[right] = arr[right], arr[pivot_index]
+    store_index = left
+
+    for i in range(left, right):
+        if arr[i] > pivot_value:
+            arr[store_index], arr[i] = arr[i], arr[store_index]
+            store_index += 1
+
+    arr[right], arr[store_index] = arr[store_index], arr[right]
+
+    return store_index
+
+def top_k_minus_one_sum(arr, k):
+    if k <= 1:
+        return []
+
+    quick_select(arr, 0, len(arr) - 1, k - 1)
+
+    return sum(arr[:k-1])
+
+def last_channel_median(arr, k):
+    remain_arr = arr[k - 1:]
+    n = len(remain_arr)
+    if n % 2 == 1:
+        return remain_arr[n // 2]
+    else:
+        a = float(remain_arr[n // 2 - 1])
+        b = float(remain_arr[n // 2])
+        return (a + b) / 2
+
+
+def max_median_distribute_channels(nums, k):
+    res = 0
+    res += top_k_minus_one_sum(nums, k)
+    res += last_channel_median(arr, k)
+    return res
+
+
+arr = [1, 2, 3, 2, 1, 5]
+k = 3
+result = max_median_distribute_channels(arr, k)
+print(result)

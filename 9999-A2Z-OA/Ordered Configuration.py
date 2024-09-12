@@ -115,12 +115,10 @@ def orderedConfiguration(configuration:str) -> List[str]:
                 s = e+1 # shift s to the beginning of the next config
         e +=1
 
-    if len(indexConfig) != maxIndexSoFar:
-        return errorString
-
     ans = []
-    for i in range(len(indexConfig)):
-        ans.append(indexConfig[i+1])
+    for i in range(maxIndexSoFar +1):
+        if i in indexConfig:
+            ans.append(indexConfig[i])
 
     return ans
 
@@ -128,3 +126,29 @@ print(orderedConfiguration("0001LAJ5KBX9H8|0003UKURNK403F|0002MO6K1Z9WFA|0004OWR
 print(orderedConfiguration("000533B8XLD2EZ|0001DJ2M2JBZZR|0002Y9YK0A7MYO|0004IKDJCAPG5Q|0003IBHMH59SBO"))
 print(orderedConfiguration("0002f7c22e7904|000176a3a4d214|000305d29f4a4b"))
 print(orderedConfiguration("0002f7c22e7904|000176a3a4d214|000205d29f4a4b"))
+
+#
+#
+# ### a solution from LeetCode discussion
+# import re
+# def ordered_configuration(configuration: str) -> list[str]:
+#     validator = re.compile(r'(\d{4})(\w{10})')
+#     split_configs = sorted(configuration.split("|"))
+#     result = {}
+#     last_val = None
+#     for val in split_configs:
+#         x = validator.fullmatch(val)
+#         if x and len(x.groups()) == 2:
+#             id, config = x.group(1), x.group(2)
+#             if last_val == None:
+#                 last_val = int(id)
+#             elif id in result or last_val != int(id) - 1:
+#                 return False
+#             last_val = int(id)
+#             result[id] = config
+#         else:
+#             print(f"Failed, {x}")
+#             return False
+#     return list(result.values())
+#
+# print(ordered_configuration("1002f7c22e7904|000176a3a4d212|000305d29f4a4b"))
