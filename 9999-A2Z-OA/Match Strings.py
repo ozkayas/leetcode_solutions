@@ -1,4 +1,4 @@
-'''Match Strings 🍑 (Amazon CN)
+"""Match Strings 🍑 (Amazon CN)
 🤘 INTERN
 Amazon is developing an efficient string matching library. Develop a prototype service that matches a simple pattern with a text. There are two arrays of strings, text, and pat, each of size n. Each string in pat is a regex expression that contains exactly one wildcard character (*).
 
@@ -6,30 +6,36 @@ A wildcard character (*) matches any sequence of zero or more lowercase English 
 
 For every i from 1 to n, your task is to find out whether pat[i] matches text[i]. Return the answer as an array of strings of size n where the ith string is "YES" if pat[i] matches text[i], and "NO" otherwise.
 
-Note: The implementation shall not use any in build regex libraries.'''
+Note: The implementation shall not use any in build regex libraries."""
 
-# Input:  
-text = ["code", "coder"]
-pat = ["co*d", "co*er"]
-# # Output: ["NO", "YES"] 
 
-# Input:  
-# text = ["hackerrank", "hackerrnak"]
-# pat = ["hac*rank", "hac*rank"]
-# Output: ["YES", "NO"] 
 
 # output = ["" for i in text]
-output = []
+def matchStrings(text, pat):
+    output = []
 
-for i in range(len(pat)):
-    leftPat, rightPat = pat[i].split("*")
-    l_pat_size = len(leftPat)
-    r_pat_size = len(rightPat)
-    # print(leftPat, text[i][0:l_pat_size])
-    # print(rightPat, text[i][-r_pat_size:])
-    if leftPat == text[i][0:l_pat_size] and rightPat == text[i][-r_pat_size:]:
-        output.append("YES")
-    else:
-        output.append("NO")
+    for i in range(len(pat)):
+        leftPat, rightPat = pat[i].split("*")
+        l_pat_size = len(leftPat)
+        r_pat_size = len(rightPat)
+        # print(leftPat, text[i][0:l_pat_size])
+        # print(rightPat, text[i][-r_pat_size:])
+        if leftPat == text[i][0:l_pat_size] and rightPat == text[i][-r_pat_size:]:
+            output.append("YES")
+        else:
+            output.append("NO")
 
-print(output)
+    return output
+
+# Input:
+text = ["code", "coder"]
+pat = ["co*d", "co*er"]
+# # Output: ["NO", "YES"]
+
+# Input:
+# text = ["hackerrank", "hackerrnak"]
+# pat = ["hac*rank", "hac*rank"]
+# Output: ["YES", "NO"]
+print(matchStrings(["code", "coder"],["co*d", "co*er"])) # ["NO", "YES"]
+print(matchStrings(["hackerrank", "hackerrnak"],["hac*rank", "hac*rank"])) # ["YES", "NO"]
+print(matchStrings(["abcbcd", "abcdefbcd", "abccbcd", "abcbd", "abzbcd", "abcd"],["abc*bcd","abc*bcd","abc*bcd","abc*bcd","abc*bcd","abc*bcd"])) # ["YES", "NO"]

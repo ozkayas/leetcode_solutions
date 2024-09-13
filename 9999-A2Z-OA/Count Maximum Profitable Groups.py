@@ -80,7 +80,8 @@ def countSubArray(nums: List[int]) -> int:
     return ans
 
 print(countSubArray([3, 1, 3, 5]), 10)
-print(countSubArray([1, 3, 2]), 5)
+print(countSubArray([2, 3, 2]), 5)
+print(countSubArray([1, 5, 2]), 5)
 print(countSubArray([8, 9, 5, 3, 7]), 12)
 print(countSubArray([10, 8, 9, 5, 3, 7]), 18)
 print(countSubArray([1, 2, 3, 4, 5, 6]), 21)

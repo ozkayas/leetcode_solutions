@@ -1,4 +1,4 @@
-'''
+"""
 https://leetcode.com/discuss/interview-question/2688170/New-OA-Question%3A-Bags-of-Rice
 
 You are shopping on Amazon.com for some bags of rice. Each listing displays the number of grains of rice that the bag contains. You want to buy a perfect set of rice bags. From the entire search results list, riceBags. A perfect set of rice bags, perfect, is defined as:
@@ -21,7 +21,7 @@ int: the size of the largest set possible or -1 if there is none
 Example 1:
 
 Input:  riceBags = [625, 4, 2, 5, 25]
-Output: 3 
+Output: 3
 Explanation:
 
 All of the possible perfect sets:
@@ -31,12 +31,12 @@ All of the possible perfect sets:
 - [5, 25]
 - [625, 5, 25]
 The largest perfect set has size 3.
-      
+
 Example 2:
 
 
 Input:  riceBags = [3, 9, 4, 2, 16]
-Output: 3 
+Output: 3
 Explanation:
 
 Let the bags of rice available on Amazon have grain counts [3, 9, 4, 2, 16]. The following are the perfect sets:
@@ -48,11 +48,11 @@ Set perfect = [4, 2, 16]. The size of this set is 3.
 
 The size of the largest set is 3.
 The image above illustrates the correct ordering of the purchased rice bags by grains of rice.
-      
+
 Constraints:
 1 ≤ n ≤ 2 × 105
 2 ≤ riceBags[i] ≤ 106
-'''
+"""
 from typing import List
 
 

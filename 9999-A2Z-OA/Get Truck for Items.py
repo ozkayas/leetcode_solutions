@@ -54,7 +54,7 @@ from typing import List
 def getTrucksForItems(trucks, items) -> List[int]:
     # create truck list with index, sorted
     arr = sorted([(trucks[i], i) for i in range(len(trucks)) ], key= lambda i:(i[0], i[1]))
-    print(arr)
+    # print(arr)
     ans = []
     for item in items:
         index = bisect_left(arr, item+1, key= lambda i:i[0])
