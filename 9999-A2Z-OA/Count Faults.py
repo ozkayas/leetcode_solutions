@@ -1,4 +1,4 @@
-'''
+"""
 https://www.fastprep.io/problems/amazon-count-faults
 Implement a prototype service to automate the detection and replacement of faulty servers to improve the availabity of an application.
 
@@ -21,17 +21,17 @@ int: the number of times servers were replaced
 Example 1:
 
 Input:  n = 2, logs = ["s1 error", "s1 error", "s2 error", "s1 error", "s1 error", "s2 success"]
-Output: 1 
+Output: 1
 Explanation:
 
 
 
 s1 was replaced one time. So output should be 1.
-      
+
 Constraints:
 1 <= n <= 200
 1 <= m <= 2 * 104 (The source image is too blurry. It looked like 104 to me. If you find it incorrect, please let me know! Many thanks in advance 💛💚🧡💖)
-'''
+"""
 from typing import List
 from collections import defaultdict
 
@@ -47,7 +47,7 @@ def countFaults(logs) -> int:
             freq[serverId] += 1
         if freq[serverId] == 3:
             replacements += 1
-            freq[serverId] == 0
+            freq[serverId] = 0
 
     return replacements
 

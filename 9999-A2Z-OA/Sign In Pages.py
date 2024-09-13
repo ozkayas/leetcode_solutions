@@ -1,4 +1,4 @@
-'''
+"""
 Notes:
 
 Initially, there are no users registered.
@@ -20,8 +20,8 @@ String[]: an array of responses for each API request
 Example 1:
 
 Input:  requests = ["register david david123", "register adam 1Adam1", "login david david123", "login adam 1adam1", "logout david"]
-Output: ["Registered Successfully", "Registered Successfully", "Logged In Successfully", "Login Unsuccessful", "Logged Out Successfully"] 
-'''
+Output: ["Registered Successfully", "Registered Successfully", "Logged In Successfully", "Login Unsuccessful", "Logged Out Successfully"]
+"""
 from typing import List
 
 def signInPages(requests:List[str]) -> List[str]:

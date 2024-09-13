@@ -1,4 +1,4 @@
-'''
+"""
 Amazon is developing a string matching library. You are to develop a service that finds the longest substring that matches a given regex.
 
 More formally, you are given two strings, a text string text, and a regex expression regex. The string regex contains exactly one wildcard character(*). A wildcard character (*) matches any sequence of zero or more lowercase English characters. A regex matches some string if it is possible to replace the wildcard character with some sequence of characters such that the regex expression becomes equal to the string. No other character can be changed. For example, regex "abc*bcd" matches "abcbcd", "abcefgbcd" and "abccbcd", whereas it does not match the strings "abcbd", "abzbcd", "abcd".
@@ -24,7 +24,7 @@ int: the length of the longest substring that matches the regex, or -1 if there 
 Example 1:
 
 Input:  text = "hackerrank", regex = "ack*r"
-Output: 6 
+Output: 6
 Explanation:
 
 The following substrings match regex:
@@ -37,7 +37,7 @@ Return the length of the longest matching substring, 6.
 Example 2:
 
 Input:  text = "programming", regex = "r*in"
-Output: 9 
+Output: 9
 Explanation:
 
 "rammin", len = 6. We can replace * with "amm"
@@ -46,7 +46,7 @@ Explanation:
 Example 3:
 
 Input:  text = "debug", regex = "ug*eb"
-Output: -1 
+Output: -1
 Explanation:
 
 No substring of text begins with 'u' and ends with 'eb'
@@ -54,7 +54,7 @@ Constraints:
 1 <= |text|, |regex| <= 106
 text contains lowercase English letters only
 regex contains lowercase English letters and exactly one wildcard(*) characterj
-'''
+"""
 from typing import List
 def getLongestMatch(s:str, p:str) -> int:
 

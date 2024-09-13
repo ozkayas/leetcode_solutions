@@ -1,4 +1,4 @@
-'''
+"""
 ########################################################################################################
 ########## QUESTION: 3
 ########################################################################################################
@@ -50,18 +50,23 @@ Operation 4: Let the prefix length be 2, and decrement by 1. cart after this ope
 Operation 5: Let the prefix length be 5, and increment by 1. cart after this operation is [0,0,0,0,0]
 
 The answer is 5.
-'''
+"""
 
-# arr = [3, 2, 0, 0, -1]
-# arr = [3, 2, 1]
-arr = [0, 0, 1, 2]
-cur = arr[0]
-operations = 0
+def minOperations(arr) -> int:
+    cur = arr[0]
+    operations = 0
 
-for i in range(1, len(arr)):
-    target = arr[i]
-    operations += abs(cur - target)
-    cur = target
+    for i in range(1, len(arr)):
+        target = arr[i]
+        operations += abs(cur - target)
+        cur = target
 
-operations += abs(cur - 0)
-print(operations)
+    operations += abs(cur - 0)
+
+    print(operations)
+    return operations
+
+from Scripts.test_utils import test_case
+test_case(minOperations,([3, 2, 1],),3)
+test_case(minOperations,([3, 2, 0, 0, -1],),5)
+test_case(minOperations,([0, 0, 1, 2],),4)
