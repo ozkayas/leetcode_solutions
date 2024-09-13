@@ -1,4 +1,4 @@
-'''
+"""
 Get Max Reward Points 🍐
 🤘 INTERN
 Amazon shopping periodically has offers to attract more customer.
@@ -25,7 +25,7 @@ Example 1:
 
 
 Input:  reward = [5, 2, 2, 3, 1]
-Output: 7 
+Output: 7
 Explanation:
 
 
@@ -38,12 +38,12 @@ Considering 0-based indexing, the items can be purchased in the following order:
 3. Finally, purchase item 0, points earned = reward[0] = 3. Points of remainig items after this purchase reward = [0, 0, 0, 0, 0]
 
 At this point, no items have reward points left. The maximum reward points is 2 + 2 + 3 = 7.
-      
+
 Example 2:
 
 
 Input:  reward = [5 ,5 ,5]
-Output: 12 
+Output: 12
 Explanation:
 
 
@@ -56,11 +56,11 @@ Using 0-based indexing, the items can be purchased in the following order:
 3. Finally, purchase item 2, points earned = reward[2] = 3 and reward = [0, 0, 0].
 
 The maximum reward points is (5 + 4 + 3 = 12).
-     
+
 Constraints:
 1 <= n <= 105
 0 <= reward[i] <= 106
-'''
+"""
 from typing import List
 
 def getMaxRewardPoints(reward:List[int]) -> int:
