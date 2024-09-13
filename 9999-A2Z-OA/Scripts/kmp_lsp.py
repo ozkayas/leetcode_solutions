@@ -27,13 +27,17 @@ def getLsp(pattern:str) -> List[int]:
 from typing import List, Tuple
 
 
-def KMP_search(pattern: str, text: str) -> Tuple[bool, int, int]:
+def KMPSearch(pattern: str, text: str) -> Tuple[bool, int, int]:
     # Edge case if pattern is empty
     if not pattern:
         return False, -1, -1
 
     M = len(pattern)
     N = len(text)
+
+    # Edge case if pattern is longer than text
+    if M > N:
+        return False, -1, -1
 
     # Get the LSP array for the pattern
     lsp = getLsp(pattern)
@@ -66,6 +70,7 @@ def KMP_search(pattern: str, text: str) -> Tuple[bool, int, int]:
 print(getLsp("aaacaaaa"))
 print(getLsp("onions"))
 
-print(KMP_search("onions", "onionionsions"))
-print(KMP_search("onions", "onionns"))
-print(KMP_search("", "onionns"))
+# print(KMP_search("onions", "onionionsions"))
+# print(KMP_search("onions", "onionns"))
+# print(KMP_search("", "onionns"))
+print(KMPSearch("ABABAC", "ABABABCABABABACABABABC"))

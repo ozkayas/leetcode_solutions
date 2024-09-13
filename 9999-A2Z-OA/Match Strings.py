@@ -8,34 +8,44 @@ For every i from 1 to n, your task is to find out whether pat[i] matches text[i]
 
 Note: The implementation shall not use any in build regex libraries."""
 
-
+from Scripts.kmp_lsp import KMPSearch
 
 # output = ["" for i in text]
-def matchStrings(text, pat):
-    output = []
+def matchStrings(text: str, pat: str):
 
-    for i in range(len(pat)):
-        leftPat, rightPat = pat[i].split("*")
-        l_pat_size = len(leftPat)
-        r_pat_size = len(rightPat)
-        # print(leftPat, text[i][0:l_pat_size])
-        # print(rightPat, text[i][-r_pat_size:])
-        if leftPat == text[i][0:l_pat_size] and rightPat == text[i][-r_pat_size:]:
-            output.append("YES")
-        else:
-            output.append("NO")
+    # for i in range(len(pat)):
+    #     leftPat, rightPat = pat[i].split("*")
+    #     l_pat_size = len(leftPat)
+    #     r_pat_size = len(rightPat)
+    #     # print(leftPat, text[i][0:l_pat_size])
+    #     # print(rightPat, text[i][-r_pat_size:])
+    #     if leftPat == text[i][0:l_pat_size] and rightPat == text[i][-r_pat_size:]:
+    #         output.append("YES")
+    #     else:
+    #         output.append("NO")
 
-    return output
+    leftPat, rightPat = pat.split("*")
+    # Search for leftPat in text;
+    leftFound, li, lj = KMPSearch(leftPat, text)
+    if not leftFound:
+        return False
+    rightPat = rightPat[::-1]
+    # Search for rightPat in text;
+    rightFound, ri, rj = KMPSearch(rightPat, text[::-1])
+    if not rightFound:
+        return False
 
-# Input:
-text = ["code", "coder"]
-pat = ["co*d", "co*er"]
-# # Output: ["NO", "YES"]
+    # If both left and right are found, we must check if they overlap
+    if li + len(leftPat) <= len(text) - rj:
+        return True
 
-# Input:
-# text = ["hackerrank", "hackerrnak"]
-# pat = ["hac*rank", "hac*rank"]
-# Output: ["YES", "NO"]
-print(matchStrings(["code", "coder"],["co*d", "co*er"])) # ["NO", "YES"]
-print(matchStrings(["hackerrank", "hackerrnak"],["hac*rank", "hac*rank"])) # ["YES", "NO"]
-print(matchStrings(["abcbcd", "abcdefbcd", "abccbcd", "abcbd", "abzbcd", "abcd"],["abc*bcd","abc*bcd","abc*bcd","abc*bcd","abc*bcd","abc*bcd"])) # ["YES", "NO"]
+    return False
+
+print(matchStrings("hackerrank","hac*rank"))
+print(matchStrings("abcbcd","abc*bcd"))
+print(matchStrings("abcdefbcd","abc*bcd"))
+print(matchStrings("abccbcd","abc*bcd"))
+print(matchStrings("aaxsdfabccbcdxx","abc*bcd"))
+print(matchStrings("abcbd","abc*bcd"))
+print(matchStrings("abzbcd","abc*bcd"))
+print(matchStrings("abcd","abc*bcd"))
