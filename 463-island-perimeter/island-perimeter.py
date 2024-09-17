@@ -1,46 +1,34 @@
 class Solution:
-    def calculate_edges(self, vector:List[int]) -> int:
-        edges = 0 # 2
-        onWater = True # True
-        for p in vector:
-            if onWater and p == 1: #We are stepping on a land
-                edges += 1
-                onWater = False
-            elif not onWater and p == 0: # We are stepping on water
-                edges += 1
-                onWater = True
-        
-        if not onWater: ## Land is at the border, so add last edge
-            edges += 1
-
-        return edges
-
-    def columnsOfMatrix(self, m:List[List[int]]) -> List[int]:
-        R, C = len(m), len(m[0])
-        # Get columns and edges
-        columns = []
-        # 00, 10, 20. 30
-        for c in range(C):
-            temp = []
-            for r in range(R):
-                temp.append(m[r][c])
-            columns.append(temp) 
-
-        return columns
-
     def islandPerimeter(self, grid: List[List[int]]) -> int:
-        R, C = len(grid), len(grid[0])
-        ans = 0
+        R = len(grid)
+        C = len(grid[0])
+        edges = 0
 
-        ## Loop for each row and column
-        ## Count vertical and horizontal edges
-        for row in grid:
-            edges = self.calculate_edges(row)
-            ans += edges
+        def north(r, c):
+            nonlocal edges
+            if r == 0 or grid[r-1][c] == 0:
+                edges += 1
+        def south(r, c):
+            nonlocal edges
+            if r == R-1 or grid[r+1][c] == 0:
+                edges += 1
+        def west(r, c):
+            nonlocal edges
+            if c == 0 or grid[r][c-1] == 0:
+                edges += 1
+        def east(r, c):
+            nonlocal edges
+            if c == C-1 or grid[r][c+1] == 0:
+                edges += 1
 
-        for col in self.columnsOfMatrix(grid):
-            edges = self.calculate_edges(col)
-            ans += edges
+        for r in range(R):
+            for c in range(C):
+                if grid[r][c] == 0: 
+                    continue
+                north(r,c)
+                south(r,c)
+                west(r,c)
+                east(r,c)
 
-        return ans
-        
+        return edges 
+
