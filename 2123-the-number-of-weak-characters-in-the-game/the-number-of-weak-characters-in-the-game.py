@@ -5,6 +5,7 @@ class Solution:
         stack = []
         weaks = 0
         
+        # this is told in the hints, we pop since this is a weak player and count
         for a, d in properties:
             while stack and stack[-1] < d:
                 stack.pop()
@@ -16,7 +17,7 @@ class Solution:
 
         
 """
-[5,5],[6,3],[3,6],[6,8],[5,9]
+[5,5],[6,3],[3,6],[6,8],[5,7]
 
 36
 57
