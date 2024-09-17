@@ -1,17 +1,28 @@
 class Solution:
     def maximalSquare(self, matrix: List[List[str]]) -> int:
-        M, N = len(matrix), len(matrix[0])
-        dp = [[0 for c in range(N+1)] for r in range(M+1)] 
-        mx = 0
+        R = len(matrix)
+        C = len(matrix[0])
 
-        for m in range(M):
-            for n in range(N):
-                if matrix[m][n] == "1":
-                    min_of_adj = min(dp[m][n],dp[m][n+1],dp[m+1][n])
-                    dp[m+1][n+1] = min_of_adj + 1
-                    mx = max(mx, dp[m+1][n+1])
+        dp = [[0 for _ in range(C)] for _ in range(R)]
+        maxSoFar = 0
 
-        return mx ** 2
-        
+        for r in range(R):
+            for c in range(C):
+                if r == 0 or c == 0:
+                    dp[r][c] = int(matrix[r][c])
+                    maxSoFar = max(maxSoFar, dp[r][c])
+                else:
+                    cur = matrix[r][c]
+                    north = dp[r-1][c]
+                    west = dp[r][c-1]
+                    nw = dp[r-1][c-1]
+
+                    if cur == "0":
+                        dp[r][c] = 0
+                    else:
+                        dp[r][c] = min(north, west, nw) + 1
+                        maxSoFar = max(maxSoFar, dp[r][c])
+
+        return maxSoFar **2
 
         
