@@ -6,21 +6,20 @@ class Solution:
 
         # dp matrisini bir satır ve bir sütun fazlasıyla başlatıyoruz (0. indeks için boşluk)
         dp = [[0] * (C + 1) for _ in range(R + 1)]
+        ans = 0
+
+        # Fill this cell and return the filled value also
+        def fillCell(r, c) -> int:
+            if text1[r-1] == text2[c-1]:  # 0 indeksli dizilerdeki karakterleri karşılaştır
+                dp[r][c] = dp[r-1][c-1] + 1
+            else:
+                dp[r][c] = max(dp[r-1][c], dp[r][c-1])
+            return dp[r][c]
 
         for r in range(1, R + 1):
             for c in range(1, C + 1):
-                if text1[r-1] == text2[c-1]:  # 0 indeksli dizilerdeki karakterleri karşılaştır
-                    dp[r][c] = dp[r-1][c-1] + 1
-                else:
-                    dp[r][c] = max(dp[r-1][c], dp[r][c-1])
-
-        # dp[R][C] en büyük ortak alt diziyi verir
-
-
-        ans = 0
-        for row in dp:
-            for n in row:
-                ans = max(ans, n)
+                n = fillCell(r,c)
+                ans = max(n, ans)
 
         return ans
 
