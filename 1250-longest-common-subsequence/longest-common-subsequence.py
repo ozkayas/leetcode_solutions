@@ -4,28 +4,18 @@ class Solution:
         R = len(text1)
         C = len(text2)
 
-        dp = [[0 for _ in range(C)] for _ in range(R)]
-        for r in range(R):
-            for c in range(C):
-                if r == 0 and c == 0:
-                    if text1[r] == text2[c]:
-                        dp[r][c] = 1
-                elif r == 0:
-                    if text1[r] == text2[c]:
-                        dp[r][c] = 1
-                    else:
-                        dp[r][c] = dp[r][c-1]
-                elif c == 0:
-                    if text1[r] == text2[c]:
-                        dp[r][c] = 1
-                    else:
-                        dp[r][c] = dp[r-1][c]
+        # dp matrisini bir satır ve bir sütun fazlasıyla başlatıyoruz (0. indeks için boşluk)
+        dp = [[0] * (C + 1) for _ in range(R + 1)]
 
+        for r in range(1, R + 1):
+            for c in range(1, C + 1):
+                if text1[r-1] == text2[c-1]:  # 0 indeksli dizilerdeki karakterleri karşılaştır
+                    dp[r][c] = dp[r-1][c-1] + 1
                 else:
-                    if text1[r] == text2[c]:
-                        dp[r][c] = dp[r-1][c-1] + 1
-                    else:
-                        dp[r][c] = max(dp[r-1][c], dp[r][c-1])
+                    dp[r][c] = max(dp[r-1][c], dp[r][c-1])
+
+        # dp[R][C] en büyük ortak alt diziyi verir
+
 
         ans = 0
         for row in dp:
