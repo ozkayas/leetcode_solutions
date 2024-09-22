@@ -1,30 +1,17 @@
 class Solution:
     def coinChange(self, coins: List[int], amount: int) -> int:
-        memo = dict()
 
-        def dp(amount) -> int:
-            if amount == 0:
-                return 0
-
-            if amount in memo:
-                return memo[amount]
-            
-            # ask for each possibility and return the min result from next path
-            min_of_next_path = float("inf")
+        dp = [float("inf") for _ in range(amount+1)]
+        dp[0] = 0
+        N = len(dp)
+        
+        for i in range(N):
             for coin in coins:
-                if amount - coin < 0:
-                    continue
-                path_result = dp(amount - coin)
-                if path_result >= 0:  # sadece geçerli yolları dikkate al
-                    min_of_next_path = min(min_of_next_path, path_result)
+                if i + coin < N:
+                    dp[i+coin] = min((dp[i+coin]), dp[i]+1)
 
-            # no way to give a coin change
-            if min_of_next_path == float("inf"):
-                memo[amount] = -1
-            else:
-                memo[amount] = min_of_next_path + 1
-            
-            print("amount",amount,"returnin", memo[amount] )
-            return memo[amount]
+        return -1 if dp[amount]== float("inf") else dp[amount]
 
-        return dp(amount)
+
+
+        
