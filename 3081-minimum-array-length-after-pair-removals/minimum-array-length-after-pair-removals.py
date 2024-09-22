@@ -1,26 +1,29 @@
 class Solution:
-    def minLengthAfterRemovals(self, nums: list[int]) -> int:
+    def minLengthAfterRemovals(self, nums: List[int]) -> int:
         N = len(nums)
-        l, r = N//2 -1 , N-1
+        i = 0
+        j = N // 2
         removed = 0
 
-        while l >= 0:
-            if nums[r] > nums[l]:
+        while j < N and i < N//2:
+            if nums[i] < nums[j]:
                 removed += 2
-                r -= 1
-            l -= 1
+                i += 1
+            j += 1
         
         return N - removed
-            
 
 
+"""
+1 3 3 3 3 3 4
+i     j
+  i         j  
 
+1 3 3 3 3 4
+i     j
+  i       j  
 
+2 3 4
+i j
 
-
-'''
-
-1 1 3 3 5 5 
-
-'''
-        
+"""
