@@ -1,51 +1,41 @@
 class Solution:
     def shipWithinDays(self, weights: List[int], days: int) -> int:
-        # Yanit uzerinde binary search yapma mantigi var. Yanit kumesi
-        # Bu tip sorularda bir yardimci metot var genelde
-         
-        def daysForCapacity(capacity: int) -> int:
-            total = 0
+
+        # helper method, calculate the required days for a given ship capacity
+        def countDays(capacity: int)-> int:
             days = 0
-
+            temp = 0
             for w in weights:
-                total += w
-                if total == capacity:
-                    #found the last of a package
+                if w + temp > capacity:
                     days += 1
-                    total = 0
-                elif total > capacity:
-                    # prev index was the last of a package
-                    days += 1
-                    total = w
+                    temp = w
+                else:
+                    temp += w
 
-            if total > 0: days += 1  
-            return days
+            return days + 1
+            
 
-        l = max(weights)
-        r = sum(weights)
-
-        while l <= r:
-            m = (l+r)//2
-            # We will try to minimize the m
-            # capacity inc -> days decrease
-            d = daysForCapacity(m)
-            if d <= days: #We are ok or maybe still can decrease capacity
-                r = m - 1
-            else:
-                l = m + 1
-            # print("l,r,m", l,r,m)
         
-        return l
+        # Binary search between 10 - 55 // first Example
+        # Can extract as a helper method, for O(N)
+        lo, hi = max(weights), sum(weights)
+
+        # Best ship capacity so far, we are trying to minimize it
+        bestSoFar = hi
+        while lo <= hi:
+            mid = lo + (hi-lo)//2
+
+            if countDays(mid) <= days:
+                # This is good, this capacity [mid] is ok. lets save it and continue for a better one
+                bestSoFar = mid
+                hi = mid - 1
+            else:
+                lo = mid + 1
+
+
+        return bestSoFar
 
 
 
 
-
-
-'''        # [1,2,3,4,5,6,7,8,9,10]
-                              ^
-                   d = 4
-                   total = 10
-        # 10 - sumof array arasi binary search?
-
-'''
+        
