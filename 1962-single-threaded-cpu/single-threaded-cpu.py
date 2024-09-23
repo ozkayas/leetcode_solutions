@@ -2,7 +2,7 @@ class Solution:
     def getOrder(self, tasks: List[List[int]]) -> List[int]:
 
         sortedTasks = sorted([(eTime, pTime, i) for i, [eTime, pTime] in enumerate(tasks)])
-        print(sortedTasks)
+        # print(sortedTasks)
         taskQueue = deque(sortedTasks)
 
         # init minHeap with the first value
