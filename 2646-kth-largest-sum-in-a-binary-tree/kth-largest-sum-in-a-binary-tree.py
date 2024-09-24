@@ -22,7 +22,7 @@ class Solution:
                 heapq.heappush(minHeap, levelSum[level-1])
                 while len(minHeap) > k:
                     heapq.heappop(minHeap)
-                # del levelSum[level-1]
+                del levelSum[level-1]
 
 
         lastLevelVisited = 0
