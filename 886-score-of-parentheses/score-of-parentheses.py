@@ -4,7 +4,6 @@ class Solution:
 
         # Slice s into sub valid pairs -> (..) / () / (..)
         def sliceIntoPairs(s: str) -> List[str]:
-            print(f"slicing {s}")
             pairs, st = [], []
             start = 0
             for i in range(len(s)):
