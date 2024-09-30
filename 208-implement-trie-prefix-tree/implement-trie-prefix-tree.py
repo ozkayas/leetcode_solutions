@@ -2,7 +2,6 @@ class Trie:
 
     def __init__(self):
         self.root = TrieNode()
-        self.isWord = False
 
     def insert(self, word: str) -> None:
         curNode = self.root
@@ -20,9 +19,6 @@ class Trie:
 
             if i == len(word)-1:
                 curNode.isWord = True
-                return
-
-
         
 
     def search(self, word: str) -> bool:
@@ -32,7 +28,6 @@ class Trie:
             idx = ord(w)-ord("a")
             node_for_w = curNode.children[idx]
 
-
             if node_for_w == None: # This letter not exists so return False
                 return False
 
@@ -40,20 +35,12 @@ class Trie:
         
         return curNode.isWord
             
-
-
-
-
-
-        
-
     def startsWith(self, prefix: str) -> bool:
         curNode = self.root
         
         for w in prefix:
             idx = ord(w)-ord("a")
             node_for_w = curNode.children[idx]
-
 
             if node_for_w == None: # This letter not exists so return False
                 return False
