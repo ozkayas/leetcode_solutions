@@ -1,19 +1,20 @@
 class Solution:
     def countSubstrings(self, s: str) -> int:
-        res = 0
+        N = len(s)
+        ans = 0
+        #DP solution
+        dp = [[False for _ in range(N)] for _ in range(N)]
 
-        for i in range(len(s)):
-            res += self.countPalindromes(s, i, i)
-            res += self.countPalindromes(s, i, i+1)
+        for i in reversed(range(N)):
+            dp[i][i] = True
+            ans += 1
+            for j in range(i+1,N):
+                if s[i] == s[j]: 
+                    if j - i == 1 or dp[i+1][j-1]:
+                        dp[i][j] = True
+                        ans += 1
 
-        return res
+        return ans
 
-    def countPalindromes(self, s: str, l: int, r: int) -> int:
-        res = 0
 
-        while l >= 0 and r < len(s) and s[l] == s[r]:
-            res += 1
-            l -= 1
-            r += 1
-
-        return res    
+        
