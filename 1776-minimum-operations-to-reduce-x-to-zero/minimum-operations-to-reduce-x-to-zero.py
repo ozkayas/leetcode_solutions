@@ -19,7 +19,6 @@ class Solution:
                 subarrays.append((hMap[pfSum-targetSum]+1,i))
             hMap[pfSum] = i
 
-        print(subarrays)
         # check the longest subarray of targetSum
         if not subarrays: return -1
 
