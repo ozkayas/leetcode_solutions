@@ -5,10 +5,9 @@ class Solution:
             if ch == "(":
                 o += 1
             else:
-                if o > 0:
+                if o > 0: 
                     o -= 1
                 else:
                     c += 1
-        
         return o + c
         
