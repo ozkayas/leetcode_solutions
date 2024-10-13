@@ -1,15 +1,13 @@
 class Solution:
     def minimumDeletions(self, s: str) -> int:
-        st = []
-        deleteCounter = 0
-
-        for ch in s:
-            if st and st[-1] == "b" and ch == "a":
-                deleteCounter += 1
-                st.pop()
+        b_count = 0
+        ans = 0
+        for char in s:
+            if char == 'b':
+                b_count += 1
             else:
-                st.append(ch)
+                if b_count > 0:
+                    b_count -= 1
+                    ans += 1
+        return ans
             
-        return deleteCounter
-
-        
