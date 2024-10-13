@@ -1,54 +1,26 @@
 class Solution:
     def isNStraightHand(self, hand: List[int], groupSize: int) -> bool:
-        N = len(hand)
-        if N % groupSize != 0: return False
-        hand.sort()
-        flag = [1 for _ in range(N)]
+        if len(hand) % groupSize != 0:
+            return False
 
-        s = 0
+        # Counter to store the count of each card value
+        card_count = Counter(hand)
 
-        while s < N:
-            while s < N and flag[s] == 0:
-                s += 1
+        for card in hand:
+            start_card = card
+            # Find the start of the potential straight sequence
+            while card_count[start_card - 1]:
+                start_card -= 1
+            # Process the sequence starting from start_card
+            while start_card <= card:
+                while card_count[start_card]:
+                    print(f"Found starting {start_card}")
+                    # Check if we can form a consecutive sequence
+                    # of groupSize cards
+                    for next_card in range(start_card, start_card + groupSize):
+                        if not card_count[next_card]:
+                            return False
+                        card_count[next_card] -= 1
+                start_card += 1
 
-            # bir baslangic noktasi bulduk [1,2,3] 1 bulduk
-            e = s            
-            if s == N:
-                break
-
-            subarr = []
-            for i in range(groupSize):
-                if e >= N: return False
-                if subarr and subarr[-1]+1 != hand[e]:
-                    return False
-                subarr.append(hand[e])
-                flag[e] = 0
-                while e < N and (flag[e] == 0 or hand[e] == subarr[-1]):
-                    e += 1
-            print(subarr)
-            if len(subarr) < groupSize:
-                return False
-
-        return True
-
-
-            
-        
-
-
-
-
-"""
-
-1 1 1 2 2 2 3 3 3
-f t t f f t f t t
-
-  s.          e 
-   
-
-
-
-
-""" 
-
-        
+        return True 
