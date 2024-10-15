@@ -1,28 +1,13 @@
 class Solution:
     def minimumSteps(self, s: str) -> int:
-        onesOnLeft = []
+        ans = 0
         preFixSum = 0
         for ch in s:
             if ch == "1":
                 preFixSum += 1
-            onesOnLeft.append(preFixSum)
-
-        # Count 1s for each 0
-        ans = 0
-        for i in range(len(s)):
-            if s[i] == "0":
-                ans += onesOnLeft[i]
-
+            else:
+                ans += preFixSum
         return ans
-            
-
-
-
-
-
-
-
-
 
 
 """
