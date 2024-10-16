@@ -1,40 +1,26 @@
 class Solution:
     def longestDiverseString(self, a: int, b: int, c: int) -> str:
-        freq = []
-        if a > 0: freq.append([a,"a"])
-        if b > 0: freq.append([b,"b"])
-        if c > 0: freq.append([c,"c"])
-        
+        fHeap = []
+        for f, ch in zip((a,b,c), "abc"):
+            if f: heapq.heappush(fHeap, (-f, ch)) 
+
         ans = []
-        while freq:
-            freq.sort(key = lambda item:-item[0])
-            cur = freq[0][1]
-            if len(ans) < 2 or ans[-2:] != [cur, cur]:
-                ans.append(cur)
-                freq[0][0] -= 1
-                if freq[0][0] == 0: freq.pop(0)
-            # we will try to use next if exists, otherwise stop loop
-            elif len(freq) == 1:
-                break
+        while fHeap:
+            f, c = heapq.heappop(fHeap)
+            if ans[-2:] == [c, c]:
+                if not fHeap: break
+                ff, cc = heapq.heappop(fHeap)
+                ans.append(cc)
+                # add remaining cc if exists still
+                if -ff-1 > 0:
+                    heapq.heappush(fHeap,(ff+1, cc))
+                heapq.heappush(fHeap, (f,c))
             else:
-                nxt = freq[1][1]
-                ans.append(nxt)
-                freq[1][0] -= 1
-                if freq[1][0] == 0: freq.pop(1)
-
+                ans.append(c)
+                if -f-1 > 0:
+                    heapq.heappush(fHeap,(f+1, c))
         return "".join(ans)
+                
+
+
         
-
-
-
-
-
-
-
-
-"""
-a2 b1 c9
-
-cc a cc a cc b cc
-
-"""
