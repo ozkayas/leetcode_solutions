@@ -1,28 +1,44 @@
 class Solution:
     def maximumSwap(self, num: int) -> int:
-        # To ease swap and early return
-        numAsList = [int(ch) for ch in str(num)]
-        indexTable = defaultdict(list)
+        Max = namedtuple("Max", ["value", "index"])
+        
+        numList = [int(ch) for ch in str(num)]
+        N = len(numList)
 
-        def intParse(l:list[int]) -> int:
-            return int("".join([str(n) for n in l]))
+        # holds Max(value, index)
+        maxOnRight = [Max(0,N) for _ in range(N)] # [Max, Max] 
+        maxOnRight[-1] = Max(numList[-1], N-1) 
+        for i in range(N-2, -1, -1):
+            if numList[i] > maxOnRight[i+1].value:
+                maxOnRight[i] = Max(numList[i],i)
+            else:
+                maxOnRight[i] = maxOnRight[i+1]
 
-
-        # Filling indexes from back, for easier popping when an element is used
-        for i in range(len(numAsList)-1, -1, -1):
-            indexTable[numAsList[i]].append(i)
-
-        for i, n in enumerate(numAsList):
-            # does table has a bigger key than this at a later index?
-            for x in range(9, n, -1):
-                if x in indexTable and indexTable[x][0] > i:
-                    #swap and return
-                    numAsList[i], numAsList[indexTable[x][0]] = numAsList[indexTable[x][0]], numAsList[i] 
-                    return intParse(numAsList)
-            # can not swap so remove this from the table, because it is used now
-            indexTable[n].pop()
-            if not indexTable[n]: del indexTable[n]
-
-        return intParse(numAsList)
+        # Second pass from left, swap as soon as finding a max value greter than this
+        for i,n in enumerate(numList):
+            if n < maxOnRight[i].value:
+                j = maxOnRight[i].index
+                numList[i], numList[j] = numList[j], numList[i]
+                return int("".join([str(num) for num in numList]))
 
         
+        return int("".join([str(n) for n in numList]))
+
+
+
+
+
+        
+
+
+"""
+1st pass:
+right to left, hold maxSoFar and index of it
+2nd pass:
+mx =  
+273619 
+     i
+
+
+
+"""
