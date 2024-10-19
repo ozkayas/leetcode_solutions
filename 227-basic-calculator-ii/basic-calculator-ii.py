@@ -1,18 +1,14 @@
 class Solution:
     def calculate(self, s: str) -> int:
-        mulDiv = {"/" , "*"}
-        addSub = {"+", "-"}
 
         def handleOp(prev, op, cur) -> str:
-            print("operation: ", prev,op,cur)
+            # print("operation: ", prev,op,cur)
             match op:
                 case "*":
                     return str(int(prev)*int(cur))
                 case "/":
-                    if int(prev)*int(cur) < 0: # one of them is negative, round towards zero
-                        return str(math.ceil(int(prev)/int(cur)))
-                    else:
-                        return str(math.floor(int(prev)/int(cur)))
+                    res = int(prev) / int(cur) 
+                    return math.ceil(res) if res < 0 else math.floor(res)
                 case "-":
                     return str(int(prev)-int(cur))
                 case "+":
