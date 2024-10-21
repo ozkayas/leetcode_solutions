@@ -5,10 +5,25 @@
 #         self.left = left
 #         self.right = right
 class Solution:
+    def __init__(self):
+        self.last = None
     def flatten(self, root: Optional[TreeNode]) -> None:
         """
         Do not return anything, modify root in-place instead.
         """
+    # https://www.youtube.com/watch?v=Ra5B0sue45A
+        if not root: return
+
+        self.flatten(root.right)
+        self.flatten(root.left)
+        root.right = self.last
+        root.left = None
+        self.last = root
+
+
+# Solution using O(n) space
+"""
+
         arr = []
         def dfs(node):
             if not node: return
@@ -27,4 +42,5 @@ class Solution:
 
         return root
 
+"""
         
