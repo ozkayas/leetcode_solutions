@@ -1,35 +1,37 @@
 class Solution:
     def minEatingSpeed(self, piles: List[int], h: int) -> int:
-        piles.sort()
-
-        def hour_for_k(k:int) -> int:
+        # Calculate how many hours needed for given k eating speed
+        def calculateHours(k:int) -> int:
             h = 0
             for p in piles:
                 h += math.ceil(p/k)
             return h
 
-        ### Binary Search for each possible k
-        l, r = 1, piles[-1]
+        piles.sort()
+        lo, hi = 1 , piles[-1] 
+        targetEatingSpeed = -1
 
-        while l <= r:
-            k = (l+r)//2
-
-            if hour_for_k(k) > h: # KOKO is slow, we must find a bigger k
-                l = k + 1
+        while lo <= hi:
+            mid = lo + (hi-lo)//2
+            hour = calculateHours(mid)
+            if hour <= h: # koko eats within h, this is OK, but can slow down
+                targetEatingSpeed = mid
+                hi = mid -1
             else:
-                r = k - 1
+                lo = mid +1
 
-        return r+1
+        return targetEatingSpeed
 
 
 
-'''    
-# Calculate hour for a pile
-h:
-    
-   [4, 11, 20, 23, 30]  h = 6
-    i                   -> ceils of 4/4 + 11/4 + 20/4 + 23/4 + 30/4 needed_hour
 
-    
-  
-  '''
+"""
+min: 1 max: 11
+3 6 7 11
+
+4 banana/hour -> helpermethod
+def hours(speed) -> hours:
+
+
+
+"""
