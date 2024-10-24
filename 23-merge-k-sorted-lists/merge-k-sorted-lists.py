@@ -4,28 +4,28 @@
 #         self.val = val
 #         self.next = next
 class Solution:
+
     def mergeKLists(self, lists: List[Optional[ListNode]]) -> Optional[ListNode]:
-        if not lists: return None
-
+        # need id to stop comparison between tuples and not compare node objects
+        Node = namedtuple("Node", ["val","id","node"])
+        # fill heap with first nodes of each list
         minHeap = []
+        for ls in lists:
+            if ls:
+                minHeap.append(Node(ls.val, id(ls), ls))
         heapq.heapify(minHeap)
-        # fill heap with first of each linked list
-        for l in lists:
-            if l:
-                heapq.heappush(minHeap, (l.val,id(l), l))
 
-        dummyHead = ListNode()
-        head = dummyHead
-
+        newHead = ListNode()
+        dummy = newHead
         while minHeap:
-            _ , _ , node = heapq.heappop(minHeap)
-            dummyHead.next = node
-            dummyHead = dummyHead.next
-            if node.next:
-                heapq.heappush(minHeap, (node.next.val,id(node.next), node.next))
+            _, __, curNode = heapq.heappop(minHeap)
+            dummy.next = curNode
+            dummy = dummy.next 
+            if curNode.next:
+                heapq.heappush(minHeap, Node(curNode.next.val, id(curNode.next),curNode.next))
 
-        return head.next
-
+        return newHead.next
+        
 
 
         
