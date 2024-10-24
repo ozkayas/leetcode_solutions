@@ -1,37 +1,31 @@
 class Solution:
     def threeSum(self, nums: List[int]) -> List[List[int]]:
-        
+        N = len(nums)
         nums.sort()
         ans = []
-        
-        for i in range(len(nums)-2):
-            # move i until hitting a new number
+
+        for i in range(N-2):
             if i != 0 and nums[i] == nums[i-1]:
                 continue
 
-            # set 2 pointers for the trailing part after i th index    
-            l, r = i+1, len(nums)-1
-            target = -1*nums[i]
+            l, r = i+1, N-1
             while l < r:
-                if nums[l]+nums[r] < target:
-                    l += 1
-                elif nums[l]+nums[r] > target:
-                    r -= 1
-                else:
+                total = nums[i]+nums[l]+nums[r]
+                if total == 0:
                     ans.append([nums[i],nums[l],nums[r]])
                     curL = nums[l]
-                    curR = nums[r]
                     while nums[l] == curL and l < r:
-                        l += 1
+                        l+=1
+                    curR = nums[r]
                     while nums[r] == curR and l < r:
-                        r -= 1
-                
+                        r-=1
+
+                elif total > 0:
+                    r -= 1
+                else:
+                    l +=1
+
         return ans
-
-
-'''
-solution is O(n2)
-'''
-
+            
 
         
