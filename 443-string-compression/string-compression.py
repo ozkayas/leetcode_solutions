@@ -1,26 +1,24 @@
 class Solution:
-    ## Helper method will return the prefix group length
-    ## [a, a, a, b,b] => (a,3) , 
-    def groupLen(self, chars: List[str]) -> tuple:
-        first = chars[0]
-        for i in range(len(chars)):
-            if chars[i] != first:
-                return (first, i)
-        return (first, len(chars))
-
     def compress(self, chars: List[str]) -> int:
-        w,r  = -1, 0
-        while r < len(chars):
-            ch, n = self.groupLen(chars[r:])
-            ## do stuff
-            w += 1
-            chars[w] = ch
-            if n > 1:
-                for i in range(len(str(n))):
-                    w += 1
-                    chars[w] = str(n)[i]
-            r += n
-             
-        return w + 1
+        w = r = 0
+        cur_char = chars[0]
+        count = 0
 
-        
+        while r < len(chars):
+            while r < len(chars) and chars[r] == cur_char:
+                count += 1
+                r += 1
+            
+            chars[w] = cur_char
+            w += 1
+
+            if count > 1:
+                for digit in str(count):
+                    chars[w] = digit
+                    w += 1
+
+            if r < len(chars):
+                cur_char = chars[r]
+                count = 0
+
+        return w
