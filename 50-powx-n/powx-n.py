@@ -4,15 +4,16 @@ class Solution:
         if n == 1: return x
 
         @cache
-        def poww(x:float, n:int) -> float:
-            #base cases
-            if n == 1: return x
-
-            sub =  poww(x, n // 2)
+        def pow_helper(x:float, n:int) -> float:
+            if n == 1:
+                return x
+            half = pow_helper(x, n//2)
+    
             if n % 2 == 0:
-                return sub * sub
+                return half * half
             else:
-                return x * sub * sub
-            
-        return poww(x,n) if n > 0 else 1/poww(x,-n)
+                return x * half * half
+
+        return pow_helper(x,n) if n > 0 else 1/pow_helper(x,-n)
+        
         
