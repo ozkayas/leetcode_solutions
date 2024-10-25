@@ -10,26 +10,21 @@ class Node:
 class Solution:
     def copyRandomList(self, head: 'Optional[Node]') -> 'Optional[Node]':
         if not head: return None
-        copies = dict()
+        clones = dict()
         cur = head
         while cur:
-            copies[cur] = Node(cur.val)
+            clones[cur] = Node(cur.val)
             cur = cur.next
         
         cur = head
         while cur:
-            copyOfCur = copies[cur]
             if cur.next:
-                copyOfCur.next = copies[cur.next]
+                clones[cur].next = clones[cur.next]
             if cur.random:
-                copyOfCur.random = copies[cur.random]
+                clones[cur].random = clones[cur.random]
             cur = cur.next
+
+        return clones[head]
+
         
-        newHead = copies[head]
-        return newHead 
-        
-
-
-
-
         
