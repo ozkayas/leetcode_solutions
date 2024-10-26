@@ -9,16 +9,21 @@ class Solution:
             return 0 <= r < R and 0 <= c < C and matrix[r][c] != None
 
         def nextCell(r, c) -> tuple:
-            dr, dc = directions[0]
-            if isValid(r+dr, c+dc):
-                return (r+dr, c+dc)
-            else: # change direction
+            tryCount = 1
+            while tryCount < 5 and not isValid(r +directions[0][0], c +directions[0][1]):
+                tryCount += 1
                 directions.append(directions.popleft())
-                dr, dc = directions[0]
-                if isValid(r+dr,c+dc):
-                    return (r+dr, c+dc)
-                else:
-                    return None
+            return (r +directions[0][0], c +directions[0][1]) if tryCount < 5 else None
+            # dr, dc = directions[0]
+            # if isValid(r+dr, c+dc):
+            #     return (r+dr, c+dc)
+            # else: # change direction
+            #     directions.append(directions.popleft())
+            #     dr, dc = directions[0]
+            #     if isValid(r+dr,c+dc):
+            #         return (r+dr, c+dc)
+            #     else:
+            #         return None
 
 
         ans = []
