@@ -18,7 +18,7 @@ class Solution:
             cur = bfsQ.popleft()
             courses_order.append(cur)
              
-            if len(courses_order) > numCourses: return False
+            # if len(courses_order) > numCourses: return False
             
             #update inDegrees
             for nei in adj[cur]:
