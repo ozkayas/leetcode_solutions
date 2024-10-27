@@ -15,14 +15,13 @@ class Solution:
     
         courses_order = []
         while bfsQ:
-            cur = bfsQ.popleft()
-            courses_order.append(cur)
-             
-            # if len(courses_order) > numCourses: return False
-            
-            #update inDegrees
-            for nei in adj[cur]:
-                inDegrees[nei] -= 1
-                if inDegrees[nei] == 0:
-                    bfsQ.append(nei)
+            for _ in range(len(bfsQ)):
+                cur = bfsQ.popleft()
+                courses_order.append(cur)
+                
+                #update inDegrees
+                for nei in adj[cur]:
+                    inDegrees[nei] -= 1
+                    if inDegrees[nei] == 0:
+                        bfsQ.append(nei)
         return len(courses_order) == numCourses
