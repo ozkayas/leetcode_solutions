@@ -1,22 +1,21 @@
 class Solution:
     def removeDuplicates(self, nums: List[int]) -> int:
-        w,r = 0,0
-        hMap = {}
+        w, r = 0, 0
+
 
         while r < len(nums):
-            hMap[nums[r]] = hMap.get(nums[r], 0) + 1
-            if(nums[r] > nums[w]):
-                w+=1
-                nums[w] = nums[r]
-            if(nums[r] == nums[w]):
-                if hMap[nums[r]] == 2:
-                    w+=1
-                    nums[w] = nums[r]
+            count = 0
+            curNum = nums[r]
+            while r < len(nums) and nums[r] == curNum:
+                r += 1
+                count +=1
+            
+            for _ in range(min(2, count)):
+                nums[w] = curNum
+                w += 1
 
+        return w
 
+            
 
-            r+=1
-
-
-        return w + 1
         
