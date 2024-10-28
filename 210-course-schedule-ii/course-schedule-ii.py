@@ -1,33 +1,28 @@
 class Solution:
     def findOrder(self, numCourses: int, prerequisites: List[List[int]]) -> List[int]:
-        adj = defaultdict(list) ## ajd[prereq] = [courses...]
-        orders = []
-        in_degrees = [0 for _ in range(numCourses)] ## in_degrees[course] = count of preReqs/indegrees
+        order = []
+        adj = defaultdict(list)
+        inDeg = [0 for _ in range(numCourses)]
 
-        for course, preReq in prerequisites:
-            adj[preReq].append(course)
-            in_degrees[course] += 1
-
-        bfs_q = deque()
-        for course, indegree in enumerate(in_degrees):
-            if indegree == 0:
-                bfs_q.append(course)
+        for to, fr in prerequisites:
+            adj[fr].append(to)
+            inDeg[to] += 1
         
-        while bfs_q:
-            cur = bfs_q.popleft()
+        bfsQ = deque()
+        for i in range(numCourses):
+            if inDeg[i] == 0:
+                bfsQ.append(i)
+        
+        while bfsQ:
+            for _ in range(len(bfsQ)):
+                cur = bfsQ.popleft()
+                order.append(cur)
+                # update indeg table
+                for nei in adj[cur]:
+                    inDeg[nei] -= 1
+                    if inDeg[nei] == 0:
+                        bfsQ.append(nei)
 
-            orders.append(cur)
+        return order if len(order)==numCourses else []
 
-            #check if cycle exists
-            if len(orders) > numCourses:
-                return []
-            
-            # Remove cur from indegrees list
-            for course in adj[cur]:
-                in_degrees[course] -= 1
-                if in_degrees[course] == 0: # There is no in_degree/preRef for this course now, so add to the queue
-                    bfs_q.append(course)
-
-
-        return orders if len(orders) == numCourses else []
         
