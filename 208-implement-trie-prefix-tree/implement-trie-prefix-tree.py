@@ -1,20 +1,17 @@
-class TrieNode:
+class Node:
     def __init__(self):
         self.children = dict()
         self.isWord = False
 
 class Trie:
-
     def __init__(self):
-        self.root = TrieNode()
-        
+        self.root = Node()
 
     def insert(self, word: str) -> None:
         cur = self.root
         for w in word:
             if w not in cur.children:
-                cur.children[w] = TrieNode()
-
+                cur.children[w] = Node()
             cur = cur.children[w]
         cur.isWord = True
 
