@@ -1,40 +1,25 @@
+from collections import deque
+from typing import List
+
 class Solution:
     def maxSlidingWindow(self, nums: List[int], k: int) -> List[int]:
-
-        # Update heap with lazy removal and return the top of the heap
-        def currentMax(maxHeap, removed) -> int:
-            while maxHeap and maxHeap[0][1] in removed:
-                val, indx = heapq.heappop(maxHeap)
-                removed.discard(indx)
-            return maxHeap[0][0]
-
-
-        # Lets hold the indexes of removed from heap, lazy removal
-        removed = set()
-        # init heap, will hold tuples value & index => {(1,0),(3,1),(-1,2)}
-        maxHeap = []
-        for i in range(k):
-            maxHeap.append((-nums[i], i))
-        heapq.heapify(maxHeap)
+        q = deque()  # Will store indices of elements in `nums`
         ans = []
-        ans.append(-maxHeap[0][0])
 
+        for i in range(len(nums)):
+            # Remove elements not in the current sliding window
+            if q and q[0] < i - k + 1:
+                q.popleft()
 
+            # Remove all elements smaller than the current element from the deque
+            while q and nums[q[-1]] < nums[i]:
+                q.pop()
 
-        # Shift window and update heap, then write the max
-        l, r = 0, k-1
-        while r < len(nums)-1:
-            removed.add(l)
+            # Add the current element index
+            q.append(i)
 
-            heapq.heappush(maxHeap, (-nums[r+1], r+1))
+            # Append the maximum element of the current window to the answer list
+            if i >= k - 1:
+                ans.append(nums[q[0]])
 
-            maxInWindow = currentMax(maxHeap, removed)
-            ans.append(-maxInWindow)
-            l += 1
-            r += 1
         return ans
-
-
-
-        
-        
