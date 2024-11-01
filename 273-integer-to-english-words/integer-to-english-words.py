@@ -1,4 +1,4 @@
-class Solution:
+class Solution:        
     toWord = {
             1000000000: "Billion", 1000000: "Million", 1000: "Thousand",
             100: "Hundred", 90: "Ninety", 80: "Eighty", 70: "Seventy",
@@ -12,18 +12,14 @@ class Solution:
     def numberToWords(self, num: int) -> str:
         if num == 0: return "Zero"
 
-        ans = []
         for n, txt in self.toWord.items():
             if num >= n:
-                #prefix - depens on if num > 100 or not
-                prefix = (self.numberToWords(num//n) + " ") if num >= 100 else ""
-
+                prefix = (self.numberToWords(num // n) + " ") if num >= 100 else ""
                 unit = txt
-
-                suffix = "" if num % n == 0 else " " + self.numberToWords(num % n)
+                suffix = "" if num % n == 0 else (" " + self.numberToWords(num % n))
 
                 return prefix + unit + suffix
 
-        return ""
-        
-        
+
+
+
