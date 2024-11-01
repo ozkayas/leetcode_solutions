@@ -1,36 +1,37 @@
 class Solution:
-    def minWindow(self, s: str, t: str) -> str:
-        if t == "": return ""
+    def minWindow(self, s:str, t: str) -> str:
+        freqT = Counter(t) # Indicator if we depleted all 
+        l, r = 0, 0
+        completedCharCounter = 0 # should reach len(freqT) ,for the validity of the window
+        res = None
 
-        output, res = float("inf"), ""
-        lookup = Counter(t)
-        count = len(lookup) # count == 0 means window contains t
-        st, end = 0, 0
+        def updateRes(l,r):
+            nonlocal res
+            if res == None or (r-l+1) < len(res):
+                res = s[l:r+1]
 
-        while end < len(s):
-            # Move end pointer until windown contains t
-            while end < len(s) and count != 0:
-                cur = s[end]
-                if cur in lookup:
-                    lookup[cur] -= 1
-                    if lookup[cur] == 0:
-                        count -= 1
-                end += 1
-
-            # Move start pointer until window doesnt cointain t
-            while st < end and count == 0:
-                if end-st < output:
-                    output = end-st
-                    res = s[st:end]
-
-                cur = s[st]
-                if cur in lookup:
-                    lookup[cur] += 1
-                    if lookup[cur] > 0:
-                        count += 1
-                
-                st += 1
+        while r < len(s):
+            ch = s[r]
+            # We process if we are interested in this char: it is also in t
+            if ch in freqT:
+                freqT[ch] -= 1
+                if freqT[ch] == 0: 
+                    completedCharCounter += 1
             
-        return res
-                
+            # Shrink window until window is not valid
+            while completedCharCounter == len(freqT):
+                # Save this substring as a potential result
+                updateRes(l, r)
 
+                leftMostCh = s[l]
+                if leftMostCh in freqT:
+                    freqT[leftMostCh] += 1
+                    if freqT[leftMostCh] > 0:
+                        completedCharCounter -= 1
+
+                l += 1 
+
+            r += 1
+        return res if res else ""
+
+        
