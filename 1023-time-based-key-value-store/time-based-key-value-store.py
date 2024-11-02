@@ -12,11 +12,11 @@ class TimeMap:
         
         values = self.table[key]
         if timestamp < values[0][0]: return ""
-        targetIdx = bisect_left(values, (timestamp,))
-        # timestamp not in the values, return last value
-        if targetIdx == len(values):
-            return values[-1][1]
+        if timestamp > values[-1][0]: return values[-1][-1]
 
+
+        targetIdx = bisect_left(values, (timestamp,))
+        
         # if timestamp exists return that index, else return the previous  
         if values[targetIdx][0] == timestamp:
             return values[targetIdx][1]
