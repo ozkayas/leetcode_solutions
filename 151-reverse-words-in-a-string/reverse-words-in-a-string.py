@@ -1,14 +1,20 @@
 class Solution:
     def reverseWords(self, s: str) -> str:
-        list_s = s.split(" ")
-        ans = []
-        while list_s:
-            last = list_s.pop()
-            if last.isalnum():
-                ans.append(last)
 
-        return " ".join(ans)
+        strBuilder = deque()
 
+        start = -1
+        i = 0
 
+        while i < len(s):
+            if s[i] == " ":
+                i += 1
+            else:
+                start = i
+                while i < len(s) and s[i] != " ":
+                    i += 1 
+                sub = s[start:i]
+                strBuilder.appendleft(sub)
 
+        return " ".join(strBuilder)
         
