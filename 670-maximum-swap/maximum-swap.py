@@ -1,44 +1,24 @@
 class Solution:
     def maximumSwap(self, num: int) -> int:
-        Max = namedtuple("Max", ["value", "index"])
-        
-        numList = [int(ch) for ch in str(num)]
-        N = len(numList)
+        indexTable = [-1 for _ in range(10)]
+        numAsList = [int(ch) for ch in str(num)]
 
-        # holds Max(value, index)
-        maxOnRight = [Max(0,N) for _ in range(N)] # [Max, Max] 
-        maxOnRight[-1] = Max(numList[-1], N-1) 
-        for i in range(N-2, -1, -1):
-            if numList[i] > maxOnRight[i+1].value:
-                maxOnRight[i] = Max(numList[i],i)
-            else:
-                maxOnRight[i] = maxOnRight[i+1]
+        # last seen index of each digit
+        # 2736 -> [-1, -1, 0, 2, -1, -1, 3, 1, -1, -1]
+        for i, n in enumerate(numAsList):
+            indexTable[n] = i
 
-        # Second pass from left, swap as soon as finding a max value greter than this
-        for i,n in enumerate(numList):
-            if n < maxOnRight[i].value:
-                j = maxOnRight[i].index
-                numList[i], numList[j] = numList[j], numList[i]
-                return int("".join([str(num) for num in numList]))
-
-        
-        return int("".join([str(n) for n in numList]))
+        for i, n in enumerate(numAsList):
+            # look for all digits bigger than this, and if exists swap
+            for digit in range(9, n, -1):
+                if indexTable[digit] > i:
+                    numAsList[i], numAsList[indexTable[digit]] = numAsList[indexTable[digit]], numAsList[i]
+                    return int("".join([str(num) for num in numAsList]))
 
 
-
-
+        return int("".join([str(num) for num in numAsList]))
 
         
 
 
-"""
-1st pass:
-right to left, hold maxSoFar and index of it
-2nd pass:
-mx =  
-273619 
-     i
-
-
-
-"""
+        
