@@ -1,6 +1,7 @@
 class Solution:
     def countAndSay(self, n: int) -> str:
         
+        @cache
         def RLE(s:str) ->str:
             strBuilder = ""
             i = 0
