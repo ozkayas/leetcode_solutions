@@ -8,46 +8,41 @@
 class Codec:
 
     def serialize(self, root):
-        # Level order traverse, ser = "123##45####"
-        serialList = []
-        bfsStack = deque([root])
-        while bfsStack:
-            cur = bfsStack.popleft()
-            if not cur:
-                serialList.append("#")
-                continue
-            else:
-                serialList.append(str(cur.val))
-            bfsStack.append(cur.left)
-            bfsStack.append(cur.right)
-        # print("".join(serialList))
-        return ",".join(serialList)
+        if not root: return "#"
+        output = []
+        bfsQ = deque([root])
+        while bfsQ:
+            cur = bfsQ.popleft()
+            output.append(str(cur.val) if cur else "#")
+            if cur:
+                bfsQ.append(cur.left)
+                bfsQ.append(cur.right)
+        return ",".join(output)
 
     def deserialize(self, data):
-        if not data: return None
-        tokens = data.split(",")
-        if tokens[0] == "#": return None
-
-        root = TreeNode(int(tokens[0]))
-        if len(tokens) == 1: return root
-        bfs = deque([root])
-        i = 1
+        if data == "#": return None
         
-        while bfs and i < len(data):
-            cur = bfs.popleft()
-            if i < len(tokens) and tokens[i] != "#":
-                cur.left = TreeNode(tokens[i])
-                bfs.append(cur.left)
+        data = data.split(",")
+        i = 0
+        root = TreeNode(data[i])
+
+        bfsQ = deque([root])
+        while bfsQ:
+            cur = bfsQ.popleft()
+            # Read children from data and continue building tree
             i += 1
-            if i < len(data) and tokens[i] != "#":
-                cur.right = TreeNode(tokens[i])
-                bfs.append(cur.right)
+            if i < len(data) and data[i] != "#":
+                leftChild = TreeNode(data[i])
+                bfsQ.append(leftChild)
+                cur.left = leftChild
             i += 1
-
-        return root 
-
-
-
+            if i < len(data) and data[i]  != "#":
+                rightChild = TreeNode(data[i])
+                bfsQ.append(rightChild)
+                cur.right = rightChild
+        
+        return root
+   
 
 # Your Codec object will be instantiated and called as such:
 # ser = Codec()
