@@ -1,36 +1,24 @@
 class Solution:
     def canChange(self, start: str, target: str) -> bool:
-        start_length = len(start)
-        # pointers for start string and target string
-        start_index, target_index = (0, 0)
+        s, t = 0, 0
+        S = len(start)  # We only need one length variable since they must be equal
 
-        while start_index < start_length or target_index < start_length:
-            # skip underscores in start
-            while start_index < start_length and start[start_index] == "_":
-                start_index += 1
+        while s < S or t < S:  # Changed to OR instead of AND
+            while s < S and start[s] == "_":
+                s += 1
+            while t < S and target[t] == "_":
+                t += 1
 
-            # skip underscores in target
-            while target_index < start_length and target[target_index] == "_":
-                target_index += 1
-
-            # if one string exhausted, both strings should be exhausted
-            if start_index == start_length or target_index == start_length:
-                return (
-                    start_index == start_length and target_index == start_length
-                )
-
-            # check if the pieces match and follow movement rules
-            if (
-                start[start_index] != target[target_index]
-                or (start[start_index] == "L" and start_index < target_index)
-                or (start[start_index] == "R" and start_index > target_index)
-            ):
+            # If one string exhausted, both strings should be exhausted
+            if s == S or t == S:
+                return s == S and t == S  # Simplified condition
+               
+            if (start[s] != target[t] or 
+                (start[s] == "L" and s < t) or 
+                (start[s] == "R" and s > t)):
                 return False
 
-            start_index += 1
-            target_index += 1
-
-        # if all conditions satisfied, return true
-        return True
-            
+            s += 1
+            t += 1
         
+        return True
