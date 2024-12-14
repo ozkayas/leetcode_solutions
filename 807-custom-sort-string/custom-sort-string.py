@@ -1,16 +1,23 @@
 class Solution:
     def customSortString(self, order: str, s: str) -> str:
-        cnt = Counter(s)
-        res = ''
+        sFreq = defaultdict(int)
+        for ch in s:
+            sFreq[ch] += 1
+        # print(sFreq)
 
-        for ch in order:
-            if ch in cnt:
-                for i in range(cnt[ch]):
-                    res += ch
-                del cnt[ch]
+        output = []
+        for o in order:
+            if o in sFreq:
+                for _ in range(sFreq[o]):
+                     output.append(o)
+                del sFreq[o]
+
+        if len(sFreq) > 0:
+            for k,v in sFreq.items():
+                for _ in range(v):
+                    output.append(k)
+            
+        return "".join(output)
+
+
         
-        for ch in cnt:
-            for i in range(cnt[ch]):
-                res += ch
-        
-        return res
