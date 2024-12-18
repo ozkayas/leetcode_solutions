@@ -3,13 +3,10 @@ class Solution:
         stack = []
 
         for i, p in enumerate(prices):
-            if not stack:
-                stack.append(i)
-            else:
-                while stack and prices[stack[-1]] >= p:
-                    prices[stack[-1]] -= p
-                    stack.pop()
-                stack.append(i)
+            while stack and prices[stack[-1]] >= p:
+                prices[stack[-1]] -= p
+                stack.pop()
+            stack.append(i)
         return prices
 
 
