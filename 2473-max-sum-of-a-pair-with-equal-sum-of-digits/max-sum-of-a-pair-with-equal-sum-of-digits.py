@@ -12,11 +12,7 @@ class Solution:
             return sm
 
         def maxTwo(nums: list[int]) ->int:
-            if len(nums) < 3:
-                return nums
-            else:
-                nums.sort()
-                return nums[-2:]
+            return nums if len(nums) < 3 else sorted(nums)[-2:]
 
         for i, n in enumerate(nums):
             sumN = sumOfDigits(n)
