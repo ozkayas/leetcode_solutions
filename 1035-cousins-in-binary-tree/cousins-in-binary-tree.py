@@ -6,8 +6,16 @@
 #         self.right = right
 class Solution:
     def isCousins(self, root: Optional[TreeNode], x: int, y: int) -> bool:
-        def checkIfCousinsInThisLevel(nodes:Set[int]) -> bool:
-            return x in nodes and y in nodes and nodes[x] != nodes[y]
+        def checkIfCousinsInThisLevel(nodes:Set[int]) -> Optional[bool]:
+            xInLevel = x in nodes 
+            yInLevel = y in nodes
+
+            if xInLevel and yInLevel and nodes[x] != nodes[y]:
+                return True
+            if xInLevel or yInLevel:
+                return False
+            return None
+
 
 
         bfsQ = deque([(root, None)]) # Holds (node,parent)
@@ -22,8 +30,9 @@ class Solution:
                 if n.right:
                     bfsQ.append((n.right, n))
 
-            if checkIfCousinsInThisLevel(nodes):
-                return True
+            currentCheck = checkIfCousinsInThisLevel(nodes)
+            if currentCheck != None:
+                return currentCheck
 
         return False
             
