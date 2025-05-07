@@ -6,29 +6,30 @@
 #         self.right = right
 class Solution:
     def isCousins(self, root: Optional[TreeNode], x: int, y: int) -> bool:
-        # node,level,parent information, when found
-        xNode, yNode = None, None
-
-        def dfs(node: Optional[TreeNode], level: int, parent: int) -> bool:
-            if not node:
-                return
-
-            nonlocal xNode, yNode
-            #If find any of them, no need to go deeper, because they can not be cousins,if a deeper y is found
-            if node.val == x:
-                xNode = (node.val, level, parent) 
-                return
-            if node.val == y:
-                yNode = (node.val, level, parent) 
-                return
-
-            dfs(node.left, level+1, node.val)
-            dfs(node.right, level+1, node.val)
+        def checkIfCousinsInThisLevel(nodes:Set[int]) -> bool:
+            return x in nodes and y in nodes and nodes[x] != nodes[y]
 
 
-        dfs(root, 0, None)
-        if not xNode or not yNode:
-            return False
-        return xNode[1] == yNode[1] and xNode[2] != yNode[2]
-        
+        bfsQ = deque([(root, None)]) # Holds (node,parent)
+
+        while bfsQ:
+            nodes  = dict() # nodes at this level with parent
+            for _ in range(len(bfsQ)):
+                n, parentOfN = bfsQ.popleft()
+                nodes[n.val] = parentOfN
+                if n.left:
+                    bfsQ.append((n.left, n))
+                if n.right:
+                    bfsQ.append((n.right, n))
+
+            if checkIfCousinsInThisLevel(nodes):
+                return True
+
+        return False
+            
+
+
+
+
+
         
