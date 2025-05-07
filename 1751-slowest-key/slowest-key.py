@@ -1,26 +1,20 @@
 class Solution:
     def slowestKey(self, releaseTimes: List[int], keysPressed: str) -> str:
-        prevReleaseTime = 0
-        # hold max value and key
-        maxSoFar = (0,"")
+        longest = None # hold key;value as a tuple
+        for i in range(len(keysPressed)):
+            key = keysPressed[i]
 
-        for i, time in enumerate(releaseTimes):
-            duration = time - prevReleaseTime
-            prevReleaseTime = time
-            # print(f"duration: {duration}")
-            # print(f"maxSoFar: {maxSoFar}")
+            # Starting condition
+            if i == 0:
+                longest = (key, releaseTimes[i])
+            else:
+                thisVal = releaseTimes[i]-releaseTimes[i-1]
+                #Found a longer value
+                if thisVal > longest[1]:
+                    longest = (key, thisVal)
+                #Found equal, then check lexicograph. position
+                elif thisVal == longest[1] and key > longest[0]:
+                    longest = (key, thisVal)
 
-            # We found a longer time with largest key
-            if duration > maxSoFar[0]:
-                maxSoFar = (duration, keysPressed[i])
-            elif duration == maxSoFar[0] and keysPressed[i]> maxSoFar[1]:
-                maxSoFar = (duration, keysPressed[i])
-
-
-
-        return maxSoFar[1]
-
-
-
-
+        return longest[0]
         
