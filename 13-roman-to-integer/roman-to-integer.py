@@ -15,13 +15,11 @@ class Solution:
                 total += table[roman]
                 lastAdded = table[roman]
             else:
-                if table[roman] <= lastAdded:
-                    total += table[roman]
-                    lastAdded = table[roman]
-                else:
+                if table[roman] > lastAdded:
                     total -= lastAdded*2
-                    total += table[roman]
-                    lastAdded = table[roman]
+                total += table[roman]
+                lastAdded = table[roman]
+                
         return total
 
 
