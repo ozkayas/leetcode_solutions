@@ -1,0 +1,1 @@
+<h2>minimum-sum-of-mountain-triplets-i Notes</h2><hr>[ Time taken: 27 m 16 s ]
