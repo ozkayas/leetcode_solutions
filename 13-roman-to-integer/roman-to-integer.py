@@ -11,15 +11,11 @@ class Solution:
         lastAdded = 0
         total = 0
         for roman in s:
-            if lastAdded == 0:
-                total += table[roman]
-                lastAdded = table[roman]
-            else:
-                if table[roman] > lastAdded:
-                    total -= lastAdded*2
-                total += table[roman]
-                lastAdded = table[roman]
-                
+            if lastAdded != 0 and table[roman] > lastAdded:
+                total -= lastAdded*2
+            total += table[roman]
+            lastAdded = table[roman]
+
         return total
 
 
