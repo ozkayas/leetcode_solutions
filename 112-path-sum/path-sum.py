@@ -8,27 +8,22 @@ class Solution:
     def hasPathSum(self, root: Optional[TreeNode], targetSum: int) -> bool:
         if not root: return False
 
-        ans = False
-
         def isLeaf(node) -> bool:
             return not node.left and not node.right
 
+        def dfs(node, curSum) -> bool:
+            if isLeaf(node) and (node.val + curSum == targetSum):
+                return True
+            leftPath, rightPath = None, None
+            if node.left:
+                leftPath = dfs(node.left, node.val + curSum)
+            if node.right:
+                rightPath = dfs(node.right, node.val + curSum)
+            if leftPath or rightPath:
+                return True
+            return False
 
-        def dfs(node, sumUptoThis):
-            nonlocal ans
-            if not node or ans: return
+        return dfs(root, 0)
 
-            # print(f"node: {node.val}")
-            # print(f"sumUptoThis: {sumUptoThis}")
-            if (node.val + sumUptoThis) == targetSum and isLeaf(node):
-                # print(f"found {node.val}")
-                ans = True
-                return
-            else:
-                dfs(node.left, node.val+sumUptoThis)
-                dfs(node.right, node.val+sumUptoThis)
 
-        dfs(root, 0)
-
-        return ans
         
