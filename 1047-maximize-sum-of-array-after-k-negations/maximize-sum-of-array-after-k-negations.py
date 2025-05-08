@@ -1,26 +1,10 @@
 class Solution:
     def largestSumAfterKNegations(self, nums: List[int], k: int) -> int:
-        minHeap = nums[:]
-        heapq.heapify(minHeap)
+        heapq.heapify(nums)
 
-        for i in range(k):
-            cur = heapq.heappop(minHeap)
-            if cur < 0:
-                heapq.heappush(minHeap, -cur)
-            elif cur == 0:
-                break
-            else:
-                # print(f"{minHeap} - {cur} - i:{i}")
-                heapq.heappush(minHeap, -cur)
-                if (k-i) % 2 != 0:
-                    break
-                    
-        return sum(minHeap)
-
-
-"""
--4 -3 -1 2 4 5
- ^
-
-"""
+        for _ in range(k):
+            smallest = heapq.heappop(nums)
+            heapq.heappush(nums, -smallest)
+        
+        return sum(nums)
         
