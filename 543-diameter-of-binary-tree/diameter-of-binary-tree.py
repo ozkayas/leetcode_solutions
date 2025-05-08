@@ -12,9 +12,9 @@ class Solution:
             if not node: return 0
             leftDepth = dfs(node.left)
             rightDepth = dfs(node.right)
-            self.max = max(self.max, leftDepth+rightDepth+1)
+            self.max = max(self.max, leftDepth+rightDepth)
             return max(leftDepth,rightDepth) +1
 
         dfs(root)
-        return self.max-1
+        return self.max
         
