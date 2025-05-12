@@ -1,17 +1,17 @@
 class Solution:
     def lengthOfLIS(self, nums: List[int]) -> int:
-        dp = [1 for _ in range(len(nums))]
-        lead = 0
+        N = len(nums)
+        dp = [1 for _ in range(N)]
 
-        # leader & follower pointers
-        while lead < len(nums):
-            for i in range(lead):
-                if nums[i] < nums[lead]:
-                    dp[lead] = max(dp[lead], dp[i] + 1)
-
-            lead += 1
+        leader = 0
+        while leader < N:
+            for i in range(leader):
+                if nums[i] < nums[leader]:
+                    dp[leader] = max(dp[leader], dp[i]+1)
+            leader += 1
 
         return max(dp)
+
 
 
         
