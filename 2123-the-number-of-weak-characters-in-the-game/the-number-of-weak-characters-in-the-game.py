@@ -1,28 +1,26 @@
 class Solution:
     def numberOfWeakCharacters(self, properties: List[List[int]]) -> int:
-        properties.sort(key = lambda i: (i[0], -i[1]))
+        # bucket sort algo
+        bucket = defaultdict(list)
+        max_at, min_at = 0, float('inf')
+        for a,d in properties:
+            bucket[a].append(d)
+            max_at = max(max_at, a)
+            min_at = min(min_at, a)
 
-        stack = []
-        weaks = 0
+        # Reverse loop from the max_at to min_at, however skip max_at, no player in this bucket is weak
+        max_def_prev = max(bucket[max_at]) # max def of the previous bucket players
+        result = 0
         
-        # this is told in the hints, we pop since this is a weak player and count
-        for a, d in properties:
-            while stack and stack[-1] < d:
-                stack.pop()
-                weaks += 1
-            stack.append(d)
-        return weaks 
+        for at in range(max_at-1, min_at-1, -1):
+            if not bucket[at]: continue
 
+            max_def_cur = 0
+            for defense in bucket[at]:
+                max_def_cur = max(max_def_cur, defense)
+                if defense < max_def_prev:
+                    result += 1
+            # Re-assign max_def_prev before jumping tot he next bucket
+            max_def_prev = max(max_def_prev, max_def_cur)
 
-
-        
-"""
-[5,5],[6,3],[3,6],[6,8],[5,7]
-
-36
-57
-55
-68
-63
-
-"""
+        return result
