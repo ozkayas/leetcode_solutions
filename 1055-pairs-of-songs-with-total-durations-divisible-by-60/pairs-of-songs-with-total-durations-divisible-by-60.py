@@ -1,15 +1,12 @@
 class Solution:
     def numPairsDivisibleBy60(self, time: List[int]) -> int:
-        secMap = defaultdict(int)
-        count = 0
-
+        buckets = [0 for _ in range(60)]
+        pairs = 0
         for t in time:
-            t = t%60
-            pairOfThis = (60-t)%60
-            count += secMap[pairOfThis]
-            secMap[t] += 1
-        
-        return count
-        
+            key = t % 60
+            pairs += buckets[(60-key)%60]
+            buckets[key] += 1 
 
+        return pairs
+        
         
