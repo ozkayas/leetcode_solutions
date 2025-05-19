@@ -1,23 +1,38 @@
 class Solution:
     def findCircleNum(self, isConnected: List[List[int]]) -> int:
         N = len(isConnected)
-        visited = set()
-        provinces = 0
-
-        def dfs(i:int):
-            visited.add(i)
-            # loop on neighs
-            for j in range(N):
-                if i != j and isConnected[i][j] and (j not in visited):
-                    dfs(j)
-                    
-
-        
+        parent = dict()
         for i in range(N):
-            if i not in visited:
-                provinces += 1
-                dfs(i)
+            parent[i] = i
 
-        return provinces
+        def find(i:int) -> int: # returns parent/root
+            pointer = i
+            while parent[pointer] != pointer:
+                pointer = parent[pointer]
+
+            root = pointer
+            pointer = i
+            while pointer != root:
+                pointerParent = parent[pointer]
+                parent[pointer] = root
+                pointer = pointerParent
+            
+            return root
+        
+        def union(u:int, v:int):
+            rootU = find(u)
+            rootV = find(v)
+            parent[rootV] = rootU
+
+        for i in range(N):
+            for j in range(i+1,N):
+                if isConnected[i][j] == 1:
+                    union(i,j)
+
+        roots = set()
+        for i in range(N):
+            roots.add(find(i))
+
+        return  len(set(roots))
 
         
