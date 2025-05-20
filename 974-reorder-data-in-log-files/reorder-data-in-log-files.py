@@ -1,13 +1,14 @@
 class Solution:
     def reorderLogFiles(self, logs: List[str]) -> List[str]:
-        def helper(s:str):
-            left, right = s.split(" ", 1)
-            if right[0].isdigit():
-                return (1,)
+
+
+        def order(log:str):
+            (tip, data) = log.split(" ", 1)
+            if data[0].isalpha(): # if letter type
+                return (0, data, tip)
             else:
-                return (0, right, left)
+                return (1, None)
+            
 
-
-
-        return sorted(logs, key = helper)
+        return sorted(logs, key=order)
         
