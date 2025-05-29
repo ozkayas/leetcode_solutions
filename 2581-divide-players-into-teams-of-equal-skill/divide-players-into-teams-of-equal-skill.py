@@ -1,23 +1,25 @@
 class Solution:
     def dividePlayers(self, skill: List[int]) -> int:
-        sm = sum(skill)
-        N = len(skill)
-        nOfTeams = N/2
-        teamSkill = sm / nOfTeams
-        if sm % nOfTeams != 0: return -1
+        N, total =len(skill), sum(skill)
+        teams = N//2
+        if total % teams != 0: return -1
 
+        target = total // teams
         ans = 0
-        skill.sort()
         l, r = 0, N-1
+        skill.sort()
 
         while l < r:
-            sm = skill[l] + skill[r]
-            if sm != teamSkill: return -1
-            ans += skill[l] * skill[r]
-        
-            l += 1
-            r -= 1
-        
+            if skill[l] + skill[r] != target:
+                return -1
+            else:
+                ans += skill[l]*skill[r]
+                l += 1
+                r -= 1
+
         return ans
+
+
+                    
 
         
