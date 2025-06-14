@@ -1,16 +1,17 @@
 class MinStack:
-    StackData = namedtuple("StackData", ["val", "minSoFar"])
+    Data = namedtuple("Data",["val","minSoFar"])
 
     def __init__(self):
         self.stack = []
 
     def push(self, val: int) -> None:
-        if not self.stack: 
-            self.stack.append(self.StackData(val, val))
+        if not self.stack:
+            self.stack.append(self.Data(val,val))
         else:
-            minSoFar = min(val, self.stack[-1].minSoFar)
-            self.stack.append(self.StackData(val, minSoFar))
+            minSoFar = min(self.stack[-1].minSoFar, val)
+            self.stack.append(self.Data(val, minSoFar)) 
         
+
     def pop(self) -> None:
         self.stack.pop()
 
@@ -19,7 +20,6 @@ class MinStack:
 
     def getMin(self) -> int:
         return self.stack[-1].minSoFar
-        
 
 
 # Your MinStack object will be instantiated and called as such:
