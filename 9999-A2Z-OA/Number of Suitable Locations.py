@@ -104,3 +104,21 @@ def suitableLocations(center, d) -> int:
 print(suitableLocations([-2, 1, 0], 8))  # 3
 print(suitableLocations([2, 0, 3, -4], 22))  # 5
 print(suitableLocations([-3,2,2], 8))  # 0
+
+
+# Write me a loop which will count starts between pipes and give me a map of the count of stars for pipe intervals
+# for example |*|**|*** should return { [1,3]:1, [3,5]:2} because there is 1 star between 1 and 3 and 2 stars between 3 and 5
+def countStars(s):
+    count = {}
+    start = None
+    for i in range(len(s)):
+        if s[i] == "|":
+            if start is not None:
+                count[(start, i)] = s[start+1:i].count("*")
+                start = None
+            else:
+                start = i
+    return count
+
+print(countStars("|*|**|***"))  # { [1,3]:1, [3,5]:2
+

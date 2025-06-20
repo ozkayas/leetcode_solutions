@@ -84,13 +84,13 @@ def maximizeNegativePnLMonths(pnl: List[int]):
                 heapq.heappush(maxHeap, -pnl[i])
             else:
                 pSum += pnl[i]
-        print(maxHeap)
+        # print(maxHeap)
     return count
     
-pnl = [5,5,1,1,1,1,1]
+pnl = [1,1,5,2,4,2,3,4,5,5]
 print(maximizeNegativePnLMonths(pnl))
-pnl = [5, 3, 1, 2]
-print(maximizeNegativePnLMonths(pnl))
+# pnl = [5, 3, 1, 2]
+# print(maximizeNegativePnLMonths(pnl))
 
 
 '''

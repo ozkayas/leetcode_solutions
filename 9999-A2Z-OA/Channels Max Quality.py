@@ -80,38 +80,38 @@ def calculateMedianSum(packets:List[int], n:int) -> int:
 packets = [1, 2, 3 , 4 , 5] 
 n = 2
 print(calculateMedianSum(packets, n))
-packets = [5, 2, 2, 1, 5, 3]
+packets = [2, 2, 1, 5, 3]
 n = 2
 print(calculateMedianSum(packets, n))
-
-
-### Another solution:
-def solution(packets, channels):
-    if len(packets) < 1 or len(packets) > 500000:
-        return
-    for i in range(len(packets)):
-        if packets[i] < 1 or packets[i] > 1000000000:
-            return
-    if channels < 1 or channels > len(packets):
-        return
-    if channels == 1:
-        result = sum(packets)
-        print(result)
-    packets_sorted = sorted(packets, reverse=True)
-    result = 0
-    for i in range(channels - 1):
-        result += packets_sorted[i]
-    median_temp = packets_sorted[channels - 1:len(packets_sorted)]
-    print(median_temp)
-    temp = 0
-    if len(median_temp) % 2 == 0:
-        temp = (median_temp[len(median_temp) // 2] + median_temp[len(median_temp) // 2 - 1]) / 2
-    else:
-        temp = (median_temp[len(median_temp) // 2])
-
-    result += temp
-
-    print(math.ceil(result))
+#
+#
+# ### Another solution:
+# def solution(packets, channels):
+#     if len(packets) < 1 or len(packets) > 500000:
+#         return
+#     for i in range(len(packets)):
+#         if packets[i] < 1 or packets[i] > 1000000000:
+#             return
+#     if channels < 1 or channels > len(packets):
+#         return
+#     if channels == 1:
+#         result = sum(packets)
+#         print(result)
+#     packets_sorted = sorted(packets, reverse=True)
+#     result = 0
+#     for i in range(channels - 1):
+#         result += packets_sorted[i]
+#     median_temp = packets_sorted[channels - 1:len(packets_sorted)]
+#     print(median_temp)
+#     temp = 0
+#     if len(median_temp) % 2 == 0:
+#         temp = (median_temp[len(median_temp) // 2] + median_temp[len(median_temp) // 2 - 1]) / 2
+#     else:
+#         temp = (median_temp[len(median_temp) // 2])
+#
+#     result += temp
+#
+#     print(math.ceil(result))
 
 
 ### Approach 3 ; quick select for better performance
@@ -173,7 +173,8 @@ def max_median_distribute_channels(nums, k):
     return res
 
 
-arr = [1, 2, 3, 2, 1, 5]
-k = 3
+# arr = [1, 2, 3, 2, 1, 5]
+arr = [2, 2, 1, 5, 3]
+k = 2
 result = max_median_distribute_channels(arr, k)
 print(result)
