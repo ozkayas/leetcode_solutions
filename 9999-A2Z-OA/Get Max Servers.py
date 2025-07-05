@@ -9,45 +9,64 @@ def getMaxServers(powers):
     if not powers:
         return 0
     
-    def is_valid_subarray(arr):
-        zeros = [i for i, x in enumerate(arr) if x == 0]
-        if zeros:
-            return False
-
-        ones = [i for i, x in enumerate(arr) if x == 1]
-        if not ones:
-            return True
-        if len(arr) == 1:
-            return True
-        if len(ones) == 1:
-            return ones[0] == 0 or ones[0] == len(arr)-1
-        if len(ones) == 2:
-            return ones[0] == 0 and ones[1] == len(arr)-1
-        return False
-    
     # Count the frequency of each power level
     power_count = {}
     for power in powers:
-        if power in power_count:
-            power_count[power] += 1
-        else:
-            power_count[power] = 1
+        power_count[power] = power_count.get(power, 0) + 1
     
     # Bucket sort the powers, from min to max
+    if not power_count:
+        return 0
     min_power = min(power_count.keys())
     max_power = max(power_count.keys())
     buckets = [0] * (max_power - min_power + 1)
     for power, count in power_count.items():
         buckets[power - min_power] = count
-    print(f"Buckets: {buckets}")
 
-    # Sliding window, expand using is_valid_subarray helper function
+    # Optimized O(R) sliding window
     max_servers = 0
     left = 0
+    current_sum = 0
+    zeros = 0
+    ones = 0
+
     for right in range(len(buckets)):
-        while left < right and not is_valid_subarray(buckets[left:right+1]):
+        # Add the right element to the window
+        count = buckets[right]
+        current_sum += count
+        if count == 0:
+            zeros += 1
+        elif count == 1:
+            ones += 1
+
+        # Shrink the window from the left until it's valid
+        # A window is invalid if:
+        # 1. It contains a gap (a power with 0 servers).
+        # 2. It contains more than 2 powers with only 1 server.
+        while zeros > 0 or ones > 2:
+            # Remove the left element from the window
+            left_count = buckets[left]
+            current_sum -= left_count
+            if left_count == 0:
+                zeros -= 1
+            elif left_count == 1:
+                ones -= 1
             left += 1
-        max_servers = max(max_servers, sum(buckets[left:right+1])) 
+        
+        # A special case for validity: if there are 2 'ones',
+        # they must be at the ends of the current window.
+        # If not, shrink the window.
+        if ones == 2 and buckets[left] != 1:
+             # The left element must be a '1', but it isn't.
+             # This is an invalid state, so we subtract the left element
+             # and continue to the next iteration without updating max_servers.
+             current_sum -= buckets[left]
+             if buckets[left] == 1: # This condition will not be met here, but good for correctness
+                 ones -= 1
+             left += 1
+             continue
+
+        max_servers = max(max_servers, current_sum)
 
     return max_servers
 
