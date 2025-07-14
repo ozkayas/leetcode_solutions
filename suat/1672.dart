@@ -6,7 +6,7 @@ main() {
     [7, 1, 3],
     [1, 9, 5]
   ];
-  var result = Solution().maximumWealth(accounts);
+  Solution().maximumWealth(accounts);
   return 0;
 }
 

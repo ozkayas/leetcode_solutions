@@ -1,8 +1,7 @@
-import 'dart:math';
 
 main() {
   var num = 14;
-  var result = SolutionII().numberOfSteps(num);
+  SolutionII().numberOfSteps(num);
   // var result = Solution().numberOfSteps(num);
   return 0;
 }

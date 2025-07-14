@@ -1,9 +1,7 @@
-import 'dart:collection';
-import 'dart:math';
 
 main() {
   int n = 15;
-  var result = Solution().fizzBuzz(n);
+  Solution().fizzBuzz(n);
   return 0;
 }
 

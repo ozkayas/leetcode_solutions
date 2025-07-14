@@ -1,4 +1,3 @@
-import 'dart:math';
 
 void main() {
   var nums = [2, 3, 5, 1, 3];
